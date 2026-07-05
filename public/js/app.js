@@ -16,11 +16,13 @@
   var WM_REF_W = 1000;      // watermark size reference width
 
   var state = {
-    kind: null,
+    hasPdf: false,          // was any source a PDF (drives the default download format)
     fileName: "documento",
     pages: [],
     current: 0,
     resultPage: 0,
+    grayscale: false,       // optional: desaturate the whole document
+    format: "image",        // chosen download format: "image" | "pdf"
     wm: SL.defaultWatermark()
   };
 
@@ -50,11 +52,15 @@
 
   function reset() {
     state.pages = [];
-    state.kind = null;
+    state.hasPdf = false;
     state.current = 0;
     state.resultPage = 0;
+    state.grayscale = false;
+    state.format = "image";
     state.wm = SL.defaultWatermark();
     if (els.fileInput) els.fileInput.value = "";
+    if (editor) editor.setGrayscale(false);
+    var g = $("gray-toggle"); if (g) g.checked = false;
     syncWatermarkControls();
     show("upload");
   }
@@ -126,27 +132,54 @@
     });
   }
 
-  function handleFile(file) {
-    if (!file) return;
-    var isPdf = file.type === "application/pdf" || /\.pdf$/i.test(file.name);
-    var isImg = /^image\//.test(file.type) || /\.(png|jpe?g|gif|webp|bmp)$/i.test(file.name);
-    if (!isPdf && !isImg) {
-      alert("Formato no compatible. Usa una imagen (PNG, JPG…) o un PDF.");
+  function classify(file) {
+    if (file.type === "application/pdf" || /\.pdf$/i.test(file.name)) return "pdf";
+    if (/^image\//.test(file.type) || /\.(png|jpe?g|gif|webp|bmp|heic|heif)$/i.test(file.name)) return "img";
+    return null;
+  }
+
+  // Turn one file into an array of page objects.
+  function processFile(file) {
+    if (classify(file) === "pdf") {
+      return readFileAsArrayBuffer(file).then(loadPdf);
+    }
+    return loadImageBitmap(file).then(function (bmp) { return [bitmapToPage(bmp)]; });
+  }
+
+  // Accept several files at once (e.g. anverso + reverso). Pages are
+  // concatenated in the order the files were given.
+  function handleFiles(fileList) {
+    var files = Array.prototype.slice.call(fileList || []);
+    if (!files.length) return;
+
+    var accepted = [], hasPdf = false;
+    files.forEach(function (f) {
+      var kind = classify(f);
+      if (kind) { accepted.push(f); if (kind === "pdf") hasPdf = true; }
+    });
+    if (!accepted.length) {
+      alert("Formato no compatible. Usa imágenes (PNG, JPG…) o PDF.");
       return;
     }
-    state.fileName = file.name.replace(/\.[^.]+$/, "") || "documento";
-    busy(true, "Preparando tu documento…");
 
-    var work;
-    if (isPdf) {
-      state.kind = "pdf";
-      work = readFileAsArrayBuffer(file).then(loadPdf);
-    } else {
-      state.kind = "image";
-      work = loadImageBitmap(file).then(function (bmp) { return [bitmapToPage(bmp)]; });
-    }
+    state.hasPdf = hasPdf;
+    state.format = hasPdf ? "pdf" : "image";
+    state.fileName = accepted.length === 1
+      ? (accepted[0].name.replace(/\.[^.]+$/, "") || "documento")
+      : "documentos";
 
-    work.then(function (pages) {
+    busy(true, accepted.length > 1 ? "Preparando tus documentos…" : "Preparando tu documento…");
+
+    // Process sequentially so page order is deterministic.
+    var pages = [];
+    var chain = Promise.resolve();
+    accepted.forEach(function (f) {
+      chain = chain.then(function () {
+        return processFile(f).then(function (p) { pages = pages.concat(p); });
+      });
+    });
+
+    chain.then(function () {
       if (!pages.length) throw new Error("Documento vacío");
       state.pages = pages;
       state.current = 0;
@@ -168,6 +201,7 @@
       editor.onChange = updateRedactContinue;
       editor.setTool("brush");
     }
+    editor.setGrayscale(state.grayscale);
     editor.setPage(state.pages[state.current]);
     updatePageNav();
     updateRedactContinue();
@@ -290,27 +324,49 @@
     var host = $("wm-preview-host");
     var page = state.pages[state.current] || state.pages[0];
     if (!page) return;
-    var composite = compose(page, state.wm);
+    // Compose at a capped resolution so the dense pattern stays snappy while
+    // dragging sliders; the exported file always uses full resolution.
+    var composite = composeAt(page, state.wm, previewWidthFor(host));
     drawScaledInto(host, composite);
+  }
+
+  function previewWidthFor(host) {
+    var dpr = Math.min(global.devicePixelRatio || 1, 2);
+    return Math.min(900, (host.clientWidth || 460) * dpr);
   }
 
   /* ------------------------------------------------------------------ *
    * Compose + result
    * ------------------------------------------------------------------ */
+  // Full-resolution composite (used for export).
   function compose(page, wm) {
+    return composeAt(page, wm, page.base.width);
+  }
+
+  // Composite the page at a target width: base (optionally grayscale) +
+  // redaction bars + watermark. Watermark size stays visually identical at any
+  // resolution because it scales with the canvas width.
+  function composeAt(page, wm, targetW) {
+    var scale = Math.min(1, targetW / page.base.width);
     var c = document.createElement("canvas");
-    c.width = page.base.width;
-    c.height = page.base.height;
+    c.width = Math.max(1, Math.round(page.base.width * scale));
+    c.height = Math.max(1, Math.round(page.base.height * scale));
     var ctx = c.getContext("2d");
-    SL.paintPage(ctx, page);
+    ctx.save();
+    ctx.scale(scale, scale);
+    SL.paintPage(ctx, page, state.grayscale);
+    ctx.restore();
     SL.renderWatermark(ctx, c.width, c.height, wm, c.width / WM_REF_W);
     return c;
   }
 
   function drawScaledInto(host, srcCanvas) {
     var dpr = Math.min(global.devicePixelRatio || 1, 2);
-    var maxW = host.clientWidth || 460;
-    var maxH = Math.min(global.innerHeight * 0.6, 560);
+    var cs = global.getComputedStyle ? global.getComputedStyle(host) : null;
+    var padX = cs ? parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight) : 0;
+    var padY = cs ? parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom) : 0;
+    var maxW = Math.max(1, (host.clientWidth || 460) - padX);
+    var maxH = Math.max(1, Math.min(global.innerHeight * 0.58, 560) - padY);
     var scale = Math.min(maxW / srcCanvas.width, maxH / srcCanvas.height, 1);
     var cssW = srcCanvas.width * scale, cssH = srcCanvas.height * scale;
     var cv = host.querySelector("canvas");
@@ -328,15 +384,27 @@
     state.resultPage = Math.min(state.current, state.pages.length - 1);
     var multi = state.pages.length > 1;
     $("result-nav").hidden = !multi;
+    syncFormatButtons();
     renderResult();
     $("btn-share").style.display = navigator.share ? "" : "none";
+  }
+
+  function syncFormatButtons() {
+    document.querySelectorAll("[data-fmt]").forEach(function (b) {
+      b.classList.toggle("is-active", b.dataset.fmt === state.format);
+    });
+    var multiImg = state.format === "image" && state.pages.length > 1;
+    $("format-note").textContent = multiImg
+      ? "Se descargará un .zip con una imagen por página."
+      : (state.format === "pdf" ? "Un PDF con todas las páginas." : "Una imagen PNG.");
   }
   function renderResult() {
     if (state.pages.length > 1) {
       $("result-page-label").textContent = (state.resultPage + 1) + " / " + state.pages.length;
     }
-    var composite = compose(state.pages[state.resultPage], state.wm);
-    drawScaledInto($("result-host"), composite);
+    var host = $("result-host");
+    var composite = composeAt(state.pages[state.resultPage], state.wm, previewWidthFor(host));
+    drawScaledInto(host, composite);
   }
   function gotoResultPage(delta) {
     var n = state.resultPage + delta;
@@ -354,14 +422,42 @@
     });
   }
 
+  // Build the download in the format the user picked (state.format).
   function buildOutput() {
-    if (state.kind === "image") {
+    return state.format === "pdf" ? buildPdf() : buildImage();
+  }
+
+  function buildImage() {
+    if (state.pages.length === 1) {
       var c = compose(state.pages[0], state.wm);
       return canvasToBlob(c, "image/png").then(function (blob) {
         return { blob: blob, name: state.fileName + "-protegido.png", type: "image/png" };
       });
     }
-    // PDF: flatten every page into an image and rebuild the PDF.
+    // Several pages -> a .zip with one PNG per page.
+    var files = [];
+    var chain = Promise.resolve();
+    state.pages.forEach(function (page, i) {
+      chain = chain.then(function () {
+        var c = compose(page, state.wm);
+        return canvasToBlob(c, "image/png").then(function (blob) {
+          return blob.arrayBuffer();
+        }).then(function (buf) {
+          files.push({ name: "pagina-" + (i + 1) + ".png", data: new Uint8Array(buf) });
+        });
+      });
+    });
+    return chain.then(function () {
+      return {
+        blob: makeZip(files),
+        name: state.fileName + "-protegido.zip",
+        type: "application/zip"
+      };
+    });
+  }
+
+  function buildPdf() {
+    // Flatten every page into an image and rebuild the PDF (redaction destroyed).
     var PDFLib = global.PDFLib;
     return PDFLib.PDFDocument.create().then(function (doc) {
       var chain = Promise.resolve();
@@ -386,6 +482,48 @@
         };
       });
     });
+  }
+
+  /* Minimal store-only ZIP writer (no compression, no dependency) so several
+   * protected images can be downloaded as one file. */
+  var CRC_TABLE = (function () {
+    var t = [];
+    for (var n = 0; n < 256; n++) {
+      var c = n;
+      for (var k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+      t[n] = c >>> 0;
+    }
+    return t;
+  })();
+  function crc32(bytes) {
+    var crc = 0 ^ (-1);
+    for (var i = 0; i < bytes.length; i++) crc = (crc >>> 8) ^ CRC_TABLE[(crc ^ bytes[i]) & 0xFF];
+    return (crc ^ (-1)) >>> 0;
+  }
+  function makeZip(files) {
+    var enc = new TextEncoder();
+    function u16(n) { return [n & 255, (n >> 8) & 255]; }
+    function u32(n) { return [n & 255, (n >>> 8) & 255, (n >>> 16) & 255, (n >>> 24) & 255]; }
+    var parts = [], central = [], offset = 0;
+    files.forEach(function (f) {
+      var name = enc.encode(f.name), data = f.data, crc = crc32(data);
+      var local = [].concat(
+        u32(0x04034b50), u16(20), u16(0), u16(0), u16(0), u16(0),
+        u32(crc), u32(data.length), u32(data.length), u16(name.length), u16(0));
+      var header = new Uint8Array(local);
+      parts.push(header, name, data);
+      var cen = [].concat(
+        u32(0x02014b50), u16(20), u16(20), u16(0), u16(0), u16(0), u16(0),
+        u32(crc), u32(data.length), u32(data.length),
+        u16(name.length), u16(0), u16(0), u16(0), u16(0), u32(0), u32(offset));
+      central.push(new Uint8Array(cen), name);
+      offset += header.length + name.length + data.length;
+    });
+    var centralSize = central.reduce(function (s, p) { return s + p.length; }, 0);
+    var eocd = new Uint8Array([].concat(
+      u32(0x06054b50), u16(0), u16(0), u16(files.length), u16(files.length),
+      u32(centralSize), u32(offset), u16(0)));
+    return new Blob(parts.concat(central, [eocd]), { type: "application/zip" });
   }
 
   function download() {
@@ -430,7 +568,7 @@
     // upload
     var dz = $("dropzone");
     els.fileInput.addEventListener("change", function (e) {
-      if (e.target.files && e.target.files[0]) handleFile(e.target.files[0]);
+      if (e.target.files && e.target.files.length) handleFiles(e.target.files);
     });
     ["dragenter", "dragover"].forEach(function (ev) {
       dz.addEventListener(ev, function (e) { e.preventDefault(); dz.classList.add("is-drag"); });
@@ -439,7 +577,7 @@
       dz.addEventListener(ev, function (e) { e.preventDefault(); dz.classList.remove("is-drag"); });
     });
     dz.addEventListener("drop", function (e) {
-      if (e.dataTransfer.files && e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+      if (e.dataTransfer.files && e.dataTransfer.files.length) handleFiles(e.dataTransfer.files);
     });
 
     // nav buttons (data-nav)
@@ -471,6 +609,10 @@
     });
     document.querySelectorAll("[data-page]").forEach(function (b) {
       b.addEventListener("click", function () { gotoPage(b.dataset.page === "next" ? 1 : -1); });
+    });
+    $("gray-toggle").addEventListener("change", function (e) {
+      state.grayscale = e.target.checked;
+      if (editor) editor.setGrayscale(state.grayscale);
     });
 
     // watermark controls
@@ -504,6 +646,9 @@
     // result actions
     $("btn-download").addEventListener("click", download);
     $("btn-share").addEventListener("click", share);
+    document.querySelectorAll("[data-fmt]").forEach(function (b) {
+      b.addEventListener("click", function () { state.format = b.dataset.fmt; syncFormatButtons(); });
+    });
     document.querySelectorAll("[data-rpage]").forEach(function (b) {
       b.addEventListener("click", function () { gotoResultPage(b.dataset.rpage === "next" ? 1 : -1); });
     });

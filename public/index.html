@@ -18,15 +18,15 @@
           <span class="brand__dot"></span>
           <span class="brand__name">IDprotector</span>
         </div>
-        <h1 class="title">Protege tus documentos<br />antes de compartirlos</h1>
+        <h1 class="title">Prepara tus documentos<br />antes de enviarlos</h1>
         <p class="lead">
-          Oculta los datos que no quieras mostrar y añade una marca de agua rastreable.
+          Cubre los datos que prefieras reservar y añade una marca de agua personalizada.
           Todo ocurre <strong>dentro de tu navegador</strong>: tus archivos nunca se suben a
           ningún servidor.
         </p>
 
         <label id="dropzone" class="dropzone" for="file-input">
-          <input id="file-input" type="file" accept="image/*,application/pdf" hidden />
+          <input id="file-input" type="file" accept="image/*,application/pdf" multiple hidden />
           <div class="dropzone__inner">
             <div class="dropzone__icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
@@ -35,8 +35,8 @@
               </svg>
             </div>
             <div class="dropzone__text">
-              <strong>Arrastra tu documento aquí</strong>
-              <span>o pulsa para elegir una imagen o PDF</span>
+              <strong>Arrastra tus documentos aquí</strong>
+              <span>o pulsa para elegir imágenes o PDF. Puedes subir varios archivos.</span>
             </div>
           </div>
         </label>
@@ -95,8 +95,14 @@
             </button>
           </div>
 
+          <label class="toggle toggle--row">
+            <input type="checkbox" id="gray-toggle" />
+            <span class="toggle__track"><span class="toggle__thumb"></span></span>
+            <span class="toggle__label">Convertir el documento a escala de grises</span>
+          </label>
+
           <button type="button" class="btn btn--primary" data-nav="watermark" id="redact-continue">Continuar</button>
-          <p class="hint" id="redact-hint">Consejo: usa el zoom para ocultar con precisión matrículas, direcciones o números de documento.</p>
+          <p class="hint" id="redact-hint">Consejo: el pincel dibuja barras rectas; arrastra desde un extremo al otro. Usa el zoom para ocultar con precisión matrículas, direcciones o números de documento.</p>
         </div>
       </div>
     </section>
@@ -107,8 +113,8 @@
         <button class="back" data-nav="redact" type="button">&larr; Atrás</button>
         <div class="step step--wide">
           <div class="step__head">
-            <h2 class="title title--sm">Añade una marca de agua rastreable</h2>
-            <p class="lead lead--sm">Indica el uso permitido y a quién autorizas. Ese texto se convierte en una marca de agua difícil de eliminar.</p>
+            <h2 class="title title--sm">Añade una marca de agua personalizada</h2>
+            <p class="lead lead--sm">Indica el uso permitido y el destinatario autorizado. Ese texto se integra sobre el documento como marca de agua.</p>
           </div>
 
           <div class="wm-layout">
@@ -176,7 +182,7 @@
         <div class="step">
           <div class="step__head">
             <h2 class="title title--sm">Tu documento está listo para compartir de forma segura</h2>
-            <p class="lead lead--sm">La marca de agua combina tu documento con los datos del destinatario. Es rastreable, lo que da un fuerte incentivo para mantenerlo seguro.</p>
+            <p class="lead lead--sm">La marca de agua queda integrada en el archivo final junto al documento y los datos del destinatario.</p>
           </div>
 
           <div id="result-host" class="stage stage--result"></div>
@@ -184,6 +190,15 @@
             <button type="button" data-rpage="prev" class="pagenav__btn">‹</button>
             <span id="result-page-label" class="pagenav__label">1 / 1</span>
             <button type="button" data-rpage="next" class="pagenav__btn">›</button>
+          </div>
+
+          <div class="format">
+            <span class="format__label">Formato de descarga</span>
+            <div class="format__seg" role="radiogroup" aria-label="Formato de descarga">
+              <button type="button" class="format__btn" data-fmt="image">Imagen</button>
+              <button type="button" class="format__btn" data-fmt="pdf">PDF</button>
+            </div>
+            <span class="format__note" id="format-note"></span>
           </div>
 
           <div class="result-actions">
@@ -203,7 +218,7 @@
   </div>
 
   <footer class="site-foot">
-    <span>IDprotector · autohospedado · <span id="app-version">v0.1.0</span></span>
+    <span>IDprotector · autohospedado · <span id="app-version">v0.1.1</span></span>
     <span class="site-foot__priv">Nada de lo que subes sale de este dispositivo.</span>
   </footer>
 

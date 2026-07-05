@@ -7,7 +7,7 @@
   var SL = global.SL || (global.SL = {});
 
   SL.BRAND = "IDprotector";
-  SL.VERSION = "v0.1.0";
+  SL.VERSION = "v0.1.1";
 
   // Available patterns (id + human label). Order defines UI order.
   SL.PATTERNS = [
@@ -65,13 +65,38 @@
     for (var i = 0; i < reps; i++) row += unit;
     var rowW = ctx.measureText(row).width;
 
+    var amp = opts.wave ? fontPx * 0.42 : 0;
+    var waveK = 2 * Math.PI / (fontPx * 5.5);
+
     var rowIndex = 0;
     for (var y = -diag; y <= diag; y += lineH) {
       var offset = (rowIndex % 2 === 0) ? 0 : unitW / 2;
-      ctx.fillText(row, -rowW / 2 - offset, y);
+      if (opts.wave) {
+        drawWavyRow(ctx, row, -rowW / 2 - offset, y, amp, waveK, rowIndex * 1.3);
+      } else {
+        ctx.fillText(row, -rowW / 2 - offset, y);
+      }
       rowIndex++;
     }
     ctx.restore();
+  }
+
+  // Draw a row of text following a sine curve for the densest pattern.
+  function drawWavyRow(ctx, text, x0, y0, amp, k, phase) {
+    var penX = x0;
+    for (var i = 0; i < text.length; i++) {
+      var ch = text.charAt(i);
+      var cw = ctx.measureText(ch).width;
+      var cx = penX + cw / 2;
+      var yy = y0 + amp * Math.sin(cx * k + phase);
+      var slope = Math.atan(amp * k * Math.cos(cx * k + phase));
+      ctx.save();
+      ctx.translate(cx, yy);
+      ctx.rotate(slope);
+      ctx.fillText(ch, -cw / 2, 0);
+      ctx.restore();
+      penX += cw;
+    }
   }
 
   // Draw one big centred diagonal line of text, scaled to fit.
@@ -126,10 +151,10 @@
         break;
       case "dense":
       default:
-        // Busy, multi-directional "anti-scan" pattern (matches the reference look).
-        tile(ctx, w, h, Object.assign({}, base, { angle: -30, alpha: a, diamonds: true, lineFactor: 1.9 }));
-        tile(ctx, w, h, Object.assign({}, base, { angle: 20, alpha: a * 0.62, fontPx: fontPx * 0.82, diamonds: true, lineFactor: 2.5 }));
-        tile(ctx, w, h, Object.assign({}, base, { angle: 0, alpha: a * 0.5, fontPx: fontPx * 0.7, diamonds: false, lineFactor: 3.1 }));
+        // Busy, multi-directional pattern with curved rows.
+        tile(ctx, w, h, Object.assign({}, base, { angle: -30, alpha: a, diamonds: true, lineFactor: 1.9, wave: true }));
+        tile(ctx, w, h, Object.assign({}, base, { angle: 22, alpha: a * 0.62, fontPx: fontPx * 0.82, diamonds: true, lineFactor: 2.5, wave: true }));
+        tile(ctx, w, h, Object.assign({}, base, { angle: 0, alpha: a * 0.5, fontPx: fontPx * 0.7, diamonds: false, lineFactor: 3.1, wave: true }));
         break;
     }
 
@@ -161,7 +186,7 @@
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, w, hgt);
     SL.renderWatermark(ctx, w, hgt, {
-      enabled: true, text: "SAFER", pattern: patternId,
+      enabled: true, text: "ID", pattern: patternId,
       opacity: 0.55, size: 7, color: color || "#111111", footer: false
     }, 1);
   };

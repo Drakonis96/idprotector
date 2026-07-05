@@ -4,27 +4,33 @@
 [![Docker Hub](https://img.shields.io/docker/pulls/drakonis96/idprotector?logo=docker)](https://hub.docker.com/r/drakonis96/idprotector)
 [![License: MIT](https://img.shields.io/badge/License-MIT-informational.svg)](LICENSE)
 
-**Protege tu DNI y tus documentos antes de compartirlos.** Oculta los datos que no
-quieras mostrar y añade una marca de agua rastreable que desincentiva el uso
-indebido. Todo el procesamiento ocurre **dentro del navegador**: tus archivos nunca
-se suben a ningún servidor.
+**Prepara tu DNI y tus documentos antes de enviarlos.** Cubre la información
+que prefieras no mostrar y añade una marca de agua con el uso autorizado. Todo el
+procesamiento ocurre **dentro del navegador**: tus archivos nunca se suben a ningún
+servidor.
 
-App **autohospedable** con Docker. Inspirada en el concepto de herramientas como
-saferlayer.com, pero como proyecto independiente y autoalojable.
+App **autohospedable** con Docker, pensada para proteger identificadores
+personales (DNI, pasaportes, permisos) de forma totalmente privada.
 
 ![flujo: subir → ocultar → marca de agua → compartir](public/assets/favicon.svg)
 
 ## Características
 
-- 🖌️ **Ocultar datos** — pincel que pinta rectángulos opacos en cualquier ángulo,
-  con varios tamaños, zoom para precisión y deshacer. Lo que tapas desaparece de
-  verdad (las páginas se rasterizan al exportar, no queda texto oculto debajo).
+- 🖌️ **Ocultar datos** — pincel que dibuja **barras rectas** (nunca torcidas) en
+  cualquier ángulo, con varios grosores, zoom para precisión y deshacer. Lo que
+  tapas desaparece de verdad (las páginas se rasterizan al exportar, no queda
+  texto oculto debajo).
 - 💧 **Marca de agua opcional y configurable** — texto de uso/destinatario, y
   ajuste de **patrón** (Seguro, Diagonal, Malla, Rejilla, Central), **opacidad**,
   **tamaño**, **color** y pie de página.
+- 🌑 **Escala de grises opcional** — convierte el documento (imagen o PDF) a
+  blanco y negro con un interruptor.
 - 🖼️ **Imágenes y PDF** — PNG, JPG, WebP… y PDF de una o varias páginas.
-- 📤 **Descargar o compartir** — usa la hoja de compartir del sistema cuando está
-  disponible.
+- 🗂️ **Varios archivos a la vez** — sube p. ej. anverso y reverso juntos; se
+  combinan en un mismo documento protegido.
+- 📤 **Descargar como PDF o imagen** — elige el formato al descargar (varias
+  páginas en imagen se entregan en un `.zip`). También compartir con la hoja del
+  sistema cuando está disponible.
 - 🔒 **100% local y privado** — sin subidas, sin base de datos, sin analítica.
   Funciona **sin conexión** una vez cargada.
 
@@ -101,7 +107,7 @@ cd public && python3 -m http.server 8683
 
 ## Cómo se usa
 
-1. **Sube** una imagen o un PDF (arrastrar y soltar, o pulsar para elegir).
+1. **Sube** una imagen, varias imágenes o un PDF (arrastrar y soltar, o pulsar para elegir).
 2. **Oculta** los datos sensibles deslizando el pincel; ajusta el tamaño y usa el
    zoom para precisión.
 3. **Marca de agua** (opcional): escribe el uso autorizado y ajusta patrón,

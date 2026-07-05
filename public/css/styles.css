@@ -52,7 +52,7 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
   font-weight: 800;
   font-size: clamp(28px, 5vw, 44px);
   line-height: 1.06;
-  letter-spacing: -0.5px;
+  letter-spacing: 0;
   margin: 0 0 16px;
 }
 .title--sm { font-size: clamp(23px, 3.6vw, 32px); }
@@ -199,7 +199,10 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
   content: ""; width: var(--d); height: var(--d);
   background: var(--ink); border-radius: 3px;
 }
-.brush.is-active { box-shadow: 0 0 0 2px var(--accent); }
+.brush.is-active {
+  background: #e9fbfd;
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
 
 /* ---------- buttons ---------- */
 .btn {
@@ -222,7 +225,13 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
 .result-actions { display: flex; flex-direction: column; gap: 12px; margin-top: 22px; }
 
 /* ---------- watermark layout ---------- */
-.wm-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start; }
+.wm-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  align-items: start;
+  margin-bottom: 24px;
+}
 @media (max-width: 760px) { .wm-layout { grid-template-columns: 1fr; } }
 
 .wm-controls { display: flex; flex-direction: column; gap: 20px; }
@@ -284,9 +293,35 @@ textarea:focus, input:focus { outline: none; border-color: var(--coral); }
 .wm-options { display: flex; flex-direction: column; gap: 18px; }
 .wm-options.is-off { opacity: .4; pointer-events: none; filter: grayscale(1); }
 
-.wm-preview__host { background: var(--bg-soft); border: 1px solid var(--line); min-height: 200px; padding: 8px; }
-.wm-preview__caption { text-align: center; font-size: 12.5px; color: var(--ink-soft); margin: 10px 0 0; }
-@media (max-width: 760px) { .wm-preview { position: sticky; top: 10px; } }
+.wm-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.wm-preview__host {
+  background: var(--black);
+  border: 1px solid var(--line);
+  min-height: 220px;
+  padding: 14px;
+  box-shadow: var(--shadow);
+}
+.wm-preview__caption {
+  order: -1;
+  width: fit-content;
+  max-width: 100%;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 9px 16px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  margin: 0 auto;
+}
+@media (max-width: 760px) {
+  .wm-preview { position: static; }
+}
 
 /* ---------- busy overlay ---------- */
 .busy {
@@ -316,3 +351,57 @@ textarea:focus, input:focus { outline: none; border-color: var(--coral); }
 .stage__host.is-brush { cursor: crosshair; }
 .stage__host.is-pan { cursor: grab; }
 .stage__host.is-pan:active { cursor: grabbing; }
+
+/* ---------- grayscale toggle row (redact screen) ---------- */
+.toggle--row {
+  display: flex; width: 100%;
+  gap: 12px; align-items: center;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  margin: 0 0 18px;
+}
+.toggle--row .toggle__label { font-weight: 600; }
+
+/* ---------- download format selector (result screen) ---------- */
+.format { text-align: center; margin: 22px 0 4px; }
+.format__label { display: block; font-size: 14px; font-weight: 700; margin-bottom: 12px; }
+.format__seg {
+  display: inline-flex; gap: 4px;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 999px; padding: 4px;
+}
+.format__btn {
+  border: 0; background: none; cursor: pointer;
+  padding: 10px 26px; border-radius: 999px;
+  font-family: var(--font-round); font-weight: 700; font-size: 15px;
+  color: var(--ink-soft); transition: background .15s, color .15s;
+}
+.format__btn.is-active { background: var(--black); color: #fff; }
+.format__note { display: block; font-size: 12.5px; color: var(--ink-soft); margin-top: 12px; }
+
+@media (max-width: 520px) {
+  .wrap { padding: 26px 16px 48px; }
+  .stage { padding: 10px; border-radius: 16px; }
+  .stage--result { padding: 10px; }
+  .stage__host, .wm-preview__host { border-radius: 9px; }
+  .wm-preview__host { min-height: 170px; padding: 12px; }
+  .toolbar {
+    width: 100%;
+    border-radius: 16px;
+    justify-content: center;
+    gap: 6px;
+    padding: 9px 10px;
+  }
+  .toolbar__sep { display: none; }
+  .tool { width: 35px; height: 35px; }
+  .brush { width: 31px; height: 31px; }
+  .toggle--row {
+    align-items: flex-start;
+    padding: 13px 14px;
+  }
+  .format__seg { display: flex; width: 100%; }
+  .format__btn { flex: 1; padding: 10px 12px; }
+}

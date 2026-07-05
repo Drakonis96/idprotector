@@ -1,7 +1,8 @@
 /* IDprotector — redaction editor.
- * The brush stamps fully-opaque rectangles along the drag path, oriented to the
- * movement direction (any angle) and sized by the selected brush. Nothing behind
- * a rectangle survives export because pages are rasterised on the way out. */
+ * Each brush stroke draws ONE straight, fully-opaque rectangle from the point
+ * where you pressed to the point where you release: any angle you like, but it
+ * never bends along the path of your finger. Nothing behind a rectangle
+ * survives export because pages are rasterised on the way out. */
 (function (global) {
   "use strict";
   var SL = global.SL || (global.SL = {});
@@ -19,10 +20,30 @@
   SL.fillRotatedRect = fillRotatedRect;
 
   // Draw base image + all redaction rectangles for a page onto ctx (image space).
-  SL.paintPage = function (ctx, page) {
+  // When grayscale is true the underlying document is desaturated (the black
+  // redaction bars and any watermark added later keep their own colour).
+  SL.paintPage = function (ctx, page, grayscale) {
+    if (grayscale) ctx.filter = "grayscale(1)";
     ctx.drawImage(page.base, 0, 0);
+    if (grayscale) ctx.filter = "none";
     for (var i = 0; i < page.rects.length; i++) fillRotatedRect(ctx, page.rects[i]);
   };
+
+  // Build one straight rectangle spanning a -> b (image space).
+  function rectFromTo(a, b, thick) {
+    var dx = b.x - a.x, dy = b.y - a.y;
+    var len = Math.sqrt(dx * dx + dy * dy);
+    if (len < 0.6) {
+      return { cx: b.x, cy: b.y, w: thick, h: thick, angle: 0 };
+    }
+    return {
+      cx: (a.x + b.x) / 2,
+      cy: (a.y + b.y) / 2,
+      w: len + thick,          // extend by half the thickness at each rounded end
+      h: thick,
+      angle: Math.atan2(dy, dx)
+    };
+  }
 
   function Editor(host) {
     this.host = host;
@@ -38,9 +59,10 @@
     this.tx = 0; this.ty = 0;   // pan offset in canvas backing px
     this.dpr = Math.min(global.devicePixelRatio || 1, 2);
 
+    this.grayscale = false;
     this.drawing = false;
-    this.last = null;
-    this.stroke = null;         // rects added during the current stroke
+    this.anchor = null;         // where the current straight stroke started
+    this.pending = null;        // live rectangle being dragged (not committed yet)
     this.pointers = new Map();
     this.pinch = null;
 
@@ -62,6 +84,8 @@
   };
 
   Editor.prototype.setBrush = function (px) { this.brush = px; };
+
+  Editor.prototype.setGrayscale = function (on) { this.grayscale = !!on; this.render(); };
 
   // Compute canvas backing size and the fit scale so the page fits the host width.
   Editor.prototype.relayout = function (reset) {
@@ -118,7 +142,8 @@
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     var m = this.viewMatrix();
     ctx.setTransform(m.s, 0, 0, m.s, m.tx, m.ty);
-    SL.paintPage(ctx, this.page);
+    SL.paintPage(ctx, this.page, this.grayscale);
+    if (this.pending) fillRotatedRect(ctx, this.pending);
   };
 
   Editor.prototype.zoomAt = function (factor, bx, by) {
@@ -141,26 +166,31 @@
     this.scale = 1; this.tx = 0; this.ty = 0; this.clampPan(); this.render();
   };
 
-  // Stamp a rectangle covering the segment from a to b (image space).
-  Editor.prototype.stampSegment = function (a, b) {
-    var dx = b.x - a.x, dy = b.y - a.y;
-    var len = Math.sqrt(dx * dx + dy * dy);
-    var thick = this.brush;
-    var rect;
-    if (len < 0.6) {
-      // a tap: a small square oriented naturally
-      rect = { cx: b.x, cy: b.y, w: thick, h: thick, angle: 0 };
-    } else {
-      rect = {
-        cx: (a.x + b.x) / 2,
-        cy: (a.y + b.y) / 2,
-        w: len + thick,          // overlap so consecutive stamps leave no gaps
-        h: thick,
-        angle: Math.atan2(dy, dx)
-      };
+  // Begin a straight stroke at image point a.
+  Editor.prototype.beginStroke = function (a) {
+    this.drawing = true;
+    this.anchor = a;
+    this.pending = rectFromTo(a, a, this.brush);
+    this.render();
+  };
+  // Update the live straight rectangle as the pointer moves.
+  Editor.prototype.updateStroke = function (b) {
+    if (!this.drawing) return;
+    this.pending = rectFromTo(this.anchor, b, this.brush);
+    this.render();
+  };
+  // Commit the straight rectangle as a single undoable step.
+  Editor.prototype.commitStroke = function () {
+    if (!this.drawing) return;
+    this.drawing = false;
+    if (this.pending) {
+      this.page.rects.push(this.pending);
+      this.page.undo.push(1);
     }
-    this.page.rects.push(rect);
-    this.stroke.push(rect);
+    this.pending = null;
+    this.anchor = null;
+    this.render();
+    if (this.onChange) this.onChange();
   };
 
   Editor.prototype.undo = function () {
@@ -179,7 +209,10 @@
       self.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
 
       if (self.pointers.size === 2) {
+        // second finger down: abandon any in-progress stroke and start pinch-zoom
         self.drawing = false;
+        self.pending = null;
+        self.render();
         self.startPinch();
         return;
       }
@@ -187,12 +220,8 @@
         self.panStart = { x: e.clientX, y: e.clientY, tx: self.tx, ty: self.ty };
         return;
       }
-      // brush
-      self.drawing = true;
-      self.stroke = [];
-      self.last = self.toImage(e.clientX, e.clientY);
-      self.stampSegment(self.last, self.last);
-      self.render();
+      // brush: start a straight stroke
+      self.beginStroke(self.toImage(e.clientX, e.clientY));
     });
 
     c.addEventListener("pointermove", function (e) {
@@ -209,22 +238,14 @@
         return;
       }
       if (!self.drawing) return;
-      var p = self.toImage(e.clientX, e.clientY);
-      self.stampSegment(self.last, p);
-      self.last = p;
-      self.render();
+      self.updateStroke(self.toImage(e.clientX, e.clientY));
     });
 
     function endPointer(e) {
       try { if (c.hasPointerCapture && c.hasPointerCapture(e.pointerId)) c.releasePointerCapture(e.pointerId); } catch (err) {}
       self.pointers.delete(e.pointerId);
       if (self.pointers.size < 2) self.pinch = null;
-      if (self.drawing) {
-        self.drawing = false;
-        if (self.stroke && self.stroke.length) self.page.undo.push(self.stroke.length);
-        self.stroke = null;
-        if (self.onChange) self.onChange();
-      }
+      if (self.drawing) self.commitStroke();
       self.panStart = null;
     }
     c.addEventListener("pointerup", endPointer);
