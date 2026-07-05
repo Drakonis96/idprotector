@@ -104,11 +104,13 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
 .lead strong { color: var(--ink); }
 
 /* ---------- brand ---------- */
-.brand { display: flex; align-items: center; gap: 10px; margin-bottom: 26px; }
-.brand__dot {
-  width: 16px; height: 16px; border-radius: 5px;
-  background: var(--coral);
-  box-shadow: 4px 0 0 -3px var(--accent), 8px 0 0 -6px var(--ink);
+.brand { display: flex; align-items: center; gap: 11px; margin-bottom: 26px; }
+.brand__logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: block;
+  box-shadow: 0 6px 16px rgba(40, 30, 20, 0.10);
 }
 .brand__name { font-family: var(--font-round); font-weight: 800; font-size: 19px; letter-spacing: -0.3px; }
 
@@ -154,6 +156,17 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
   color: var(--ink-soft); font-size: 14px;
 }
 .privacy li { display: flex; align-items: center; gap: 7px; }
+.privacy__ico {
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  color: var(--ink);
+  background: rgba(255,255,255,.72);
+  border: 1px solid var(--line);
+}
 
 /* ---------- steps ---------- */
 .step { max-width: 620px; margin: 0 auto; }

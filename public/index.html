@@ -27,7 +27,7 @@
     <section id="screen-upload" class="screen is-active">
       <div class="wrap wrap--narrow">
         <div class="brand">
-          <span class="brand__dot"></span>
+          <img class="brand__logo" src="assets/favicon.svg" width="32" height="32" alt="" aria-hidden="true" />
           <span class="brand__name">IDprotector</span>
         </div>
         <h1 class="title" data-i18n-html="upload.title">Prepara tus documentos<br />antes de enviarlos</h1>
@@ -54,9 +54,37 @@
         </label>
 
         <ul class="privacy">
-          <li><span class="privacy__ico">🔒</span> <span data-i18n="privacy.local">Procesamiento 100% local</span></li>
-          <li><span class="privacy__ico">🚫</span> <span data-i18n="privacy.noCloud">Cero subidas a la nube</span></li>
-          <li><span class="privacy__ico">📴</span> <span data-i18n="privacy.offline">Funciona sin conexión</span></li>
+          <li>
+            <span class="privacy__ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="5" y="11" width="14" height="10" rx="2" />
+                <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+              </svg>
+            </span>
+            <span data-i18n="privacy.local">Procesamiento 100% local</span>
+          </li>
+          <li>
+            <span class="privacy__ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16.5 18H8a5 5 0 1 1 1.6-9.7A6 6 0 0 1 20 12.5" />
+                <path d="M4 4l16 16" />
+              </svg>
+            </span>
+            <span data-i18n="privacy.noCloud">Cero subidas a la nube</span>
+          </li>
+          <li>
+            <span class="privacy__ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 8.8A15.8 15.8 0 0 1 6.2 6.6" />
+                <path d="M10.2 5.2A16.4 16.4 0 0 1 22 8.8" />
+                <path d="M5 13a10.7 10.7 0 0 1 3.1-1.9" />
+                <path d="M12.2 10.4A10.8 10.8 0 0 1 19 13" />
+                <path d="M8.5 17a5 5 0 0 1 7 0" />
+                <path d="M4 4l16 16" />
+              </svg>
+            </span>
+            <span data-i18n="privacy.offline">Funciona sin conexión</span>
+          </li>
         </ul>
       </div>
     </section>
@@ -320,7 +348,7 @@
   </div>
 
   <footer class="site-foot">
-    <span>IDprotector · <span data-i18n="footer.selfHosted">autohospedado</span> · <span id="app-version">v0.2.0</span></span>
+    <span>IDprotector · <span data-i18n="footer.selfHosted">autohospedado</span> · <span id="app-version">v0.2.1</span></span>
     <span class="site-foot__priv" data-i18n="footer.privacy">Nada de lo que subes sale de este dispositivo.</span>
   </footer>
 
