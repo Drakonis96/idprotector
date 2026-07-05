@@ -64,6 +64,17 @@
       "wm.color": "Color",
       "wm.custom": "Personalizado",
       "wm.footer": "Añadir pie de página con firma de protección",
+      "legal.title": "Información legal del descargable",
+      "legal.eu": "Normativa Europea de Protección de Datos",
+      "legal.national": "Agencia Española de Protección de Datos",
+      "legal.contactEmail": "Correo electrónico de contacto",
+      "legal.personalEmail": "Email personal",
+      "legal.message": "Mensaje legal",
+      "legal.emailPlaceholder": "nombre@dominio.com",
+      "legal.messagePlaceholder": "Mensaje que se integrará en el descargable",
+      "legal.defaultMessage": "Válido únicamente a efectos de identificación en el trámite indicado. No constituye firma, autorización contractual ni consentimiento para usos distintos.",
+      "legal.outputContactEmail": "Correo electrónico de contacto",
+      "legal.outputPersonalEmail": "Email personal",
       "wm.preview": "Vista previa en vivo",
       "wm.generate": "Generar documento protegido",
       "wm.continueNoWatermark": "Continuar sin marca de agua",
@@ -149,6 +160,17 @@
       "wm.color": "Color",
       "wm.custom": "Custom",
       "wm.footer": "Add protection signature footer",
+      "legal.title": "Download legal information",
+      "legal.eu": "European Data Protection Regulation",
+      "legal.national": "Irish Data Protection Commission",
+      "legal.contactEmail": "Contact email",
+      "legal.personalEmail": "Personal email",
+      "legal.message": "Legal notice",
+      "legal.emailPlaceholder": "name@example.com",
+      "legal.messagePlaceholder": "Notice embedded in the download",
+      "legal.defaultMessage": "Valid only for identity verification in the stated procedure. It does not constitute a signature, contractual authorization, or consent for other purposes.",
+      "legal.outputContactEmail": "Contact email",
+      "legal.outputPersonalEmail": "Personal email",
       "wm.preview": "Live preview",
       "wm.generate": "Generate protected document",
       "wm.continueNoWatermark": "Continue without watermark",
@@ -234,6 +256,17 @@
       "wm.color": "Couleur",
       "wm.custom": "Personnalisé",
       "wm.footer": "Ajouter un pied de page avec signature de protection",
+      "legal.title": "Informations légales du téléchargement",
+      "legal.eu": "Règlement européen sur la protection des données",
+      "legal.national": "Commission Nationale de l'Informatique et des Libertés",
+      "legal.contactEmail": "E-mail de contact",
+      "legal.personalEmail": "E-mail personnel",
+      "legal.message": "Mention légale",
+      "legal.emailPlaceholder": "nom@domaine.com",
+      "legal.messagePlaceholder": "Mention intégrée au téléchargement",
+      "legal.defaultMessage": "Valable uniquement pour la vérification d'identité dans la démarche indiquée. Ne constitue ni signature, ni autorisation contractuelle, ni consentement à d'autres usages.",
+      "legal.outputContactEmail": "E-mail de contact",
+      "legal.outputPersonalEmail": "E-mail personnel",
       "wm.preview": "Aperçu en direct",
       "wm.generate": "Générer le document protégé",
       "wm.continueNoWatermark": "Continuer sans filigrane",
@@ -319,6 +352,17 @@
       "wm.color": "Cor",
       "wm.custom": "Personalizado",
       "wm.footer": "Adicionar rodapé com assinatura de proteção",
+      "legal.title": "Informação legal da transferência",
+      "legal.eu": "Regulamento Europeu de Proteção de Dados",
+      "legal.national": "Comissão Nacional de Proteção de Dados",
+      "legal.contactEmail": "E-mail de contacto",
+      "legal.personalEmail": "E-mail pessoal",
+      "legal.message": "Aviso legal",
+      "legal.emailPlaceholder": "nome@dominio.com",
+      "legal.messagePlaceholder": "Aviso integrado na transferência",
+      "legal.defaultMessage": "Válido apenas para verificação de identidade no procedimento indicado. Não constitui assinatura, autorização contratual nem consentimento para outros fins.",
+      "legal.outputContactEmail": "E-mail de contacto",
+      "legal.outputPersonalEmail": "E-mail pessoal",
       "wm.preview": "Pré-visualização em direto",
       "wm.generate": "Gerar documento protegido",
       "wm.continueNoWatermark": "Continuar sem marca de água",
@@ -404,6 +448,17 @@
       "wm.color": "Farbe",
       "wm.custom": "Benutzerdefiniert",
       "wm.footer": "Fußzeile mit Schutzsignatur hinzufügen",
+      "legal.title": "Rechtliche Angaben im Download",
+      "legal.eu": "Europäische Datenschutz-Grundverordnung",
+      "legal.national": "Der Bundesbeauftragte für den Datenschutz und die Informationsfreiheit",
+      "legal.contactEmail": "Kontakt-E-Mail",
+      "legal.personalEmail": "Private E-Mail",
+      "legal.message": "Rechtlicher Hinweis",
+      "legal.emailPlaceholder": "name@domain.de",
+      "legal.messagePlaceholder": "Hinweis im Download",
+      "legal.defaultMessage": "Nur zur Identitätsprüfung im angegebenen Vorgang gültig. Stellt weder eine Unterschrift noch eine vertragliche Genehmigung oder Einwilligung für andere Zwecke dar.",
+      "legal.outputContactEmail": "Kontakt-E-Mail",
+      "legal.outputPersonalEmail": "Private E-Mail",
       "wm.preview": "Live-Vorschau",
       "wm.generate": "Geschütztes Dokument erzeugen",
       "wm.continueNoWatermark": "Weiter ohne Wasserzeichen",
@@ -489,6 +544,17 @@
       "wm.color": "Colore",
       "wm.custom": "Personalizzato",
       "wm.footer": "Aggiungi piè di pagina con firma di protezione",
+      "legal.title": "Informazioni legali del download",
+      "legal.eu": "Regolamento europeo sulla protezione dei dati",
+      "legal.national": "Garante per la protezione dei dati personali",
+      "legal.contactEmail": "E-mail di contatto",
+      "legal.personalEmail": "E-mail personale",
+      "legal.message": "Avviso legale",
+      "legal.emailPlaceholder": "nome@dominio.it",
+      "legal.messagePlaceholder": "Avviso integrato nel download",
+      "legal.defaultMessage": "Valido esclusivamente per la verifica dell'identità nella procedura indicata. Non costituisce firma, autorizzazione contrattuale né consenso per usi diversi.",
+      "legal.outputContactEmail": "E-mail di contatto",
+      "legal.outputPersonalEmail": "E-mail personale",
       "wm.preview": "Anteprima live",
       "wm.generate": "Genera documento protetto",
       "wm.continueNoWatermark": "Continua senza filigrana",
@@ -537,6 +603,45 @@
   }
   SL.t = t;
 
+  var EU_REGULATION_URLS = {
+    es: "https://eur-lex.europa.eu/eli/reg/2016/679/oj/spa",
+    en: "https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng",
+    fr: "https://eur-lex.europa.eu/eli/reg/2016/679/oj/fra",
+    pt: "https://eur-lex.europa.eu/eli/reg/2016/679/oj/por",
+    de: "https://eur-lex.europa.eu/eli/reg/2016/679/oj/deu",
+    it: "https://eur-lex.europa.eu/eli/reg/2016/679/oj/ita"
+  };
+
+  var NATIONAL_AUTHORITY_URLS = {
+    es: "https://www.aepd.es/",
+    en: "https://www.dataprotection.ie/",
+    fr: "https://www.cnil.fr/",
+    pt: "https://www.cnpd.pt/",
+    de: "https://www.bfdi.bund.de/",
+    it: "https://www.garanteprivacy.it/"
+  };
+
+  function defaultExportFooter() {
+    return {
+      euLink: true,
+      nationalLink: true,
+      contactEmailEnabled: false,
+      contactEmail: "",
+      personalEmailEnabled: false,
+      personalEmail: "",
+      messageEnabled: true,
+      message: t("legal.defaultMessage"),
+      messageCustom: false
+    };
+  }
+
+  function isDefaultLegalMessage(text) {
+    var trimmed = (text || "").trim();
+    return Object.keys(I18N).some(function (lang) {
+      return I18N[lang]["legal.defaultMessage"] === trimmed;
+    });
+  }
+
   var state = {
     hasPdf: false,          // was any source a PDF (drives the default download format)
     fileName: "documento",
@@ -546,7 +651,8 @@
     resultPage: 0,
     grayscale: false,       // optional: desaturate the whole document
     format: "image",        // chosen download format: "image" | "pdf"
-    wm: SL.defaultWatermark()
+    wm: SL.defaultWatermark(),
+    exportFooter: defaultExportFooter()
   };
 
   var editor = null;
@@ -556,8 +662,20 @@
   function $(id) { return document.getElementById(id); }
 
   function setLanguage(lang) {
+    var previousLang = currentLang;
     currentLang = I18N[lang] ? lang : "es";
+    syncExportFooterLanguage(previousLang);
     applyTranslations();
+  }
+
+  function syncExportFooterLanguage(previousLang) {
+    if (!state || !state.exportFooter) return;
+    var footer = state.exportFooter;
+    var previousDefault = I18N[previousLang] && I18N[previousLang]["legal.defaultMessage"];
+    if (!footer.messageCustom || footer.message === previousDefault || isDefaultLegalMessage(footer.message)) {
+      footer.message = t("legal.defaultMessage");
+      footer.messageCustom = false;
+    }
   }
 
   function applyTranslations() {
@@ -586,6 +704,7 @@
     updatePatternLabels();
     updateRedactContinueSafe();
     updateWatermarkControlsSafe();
+    syncExportFooterControlsSafe();
     if ($("screen-watermark") && $("screen-watermark").classList.contains("is-active")) schedulePreview();
     if ($("screen-result") && $("screen-result").classList.contains("is-active")) renderResult();
   }
@@ -597,6 +716,10 @@
   function updateWatermarkControlsSafe() {
     if ($("wm-continue")) updateWmContinue();
     if ($("format-note")) syncFormatButtons();
+  }
+
+  function syncExportFooterControlsSafe() {
+    if ($("legal-eu")) syncExportFooterControls();
   }
 
   function busy(on, text) {
@@ -627,10 +750,12 @@
     state.grayscale = false;
     state.format = "image";
     state.wm = SL.defaultWatermark();
+    state.exportFooter = defaultExportFooter();
     if (els.fileInput) els.fileInput.value = "";
     if (editor) editor.setGrayscale(false);
     var g = $("gray-toggle"); if (g) g.checked = false;
     syncWatermarkControls();
+    syncExportFooterControls();
     show("upload");
   }
 
@@ -909,8 +1034,46 @@
     updateWmContinue();
   }
 
+  function syncExportFooterControls() {
+    var footer = state.exportFooter;
+    $("legal-eu").checked = footer.euLink;
+    $("legal-national").checked = footer.nationalLink;
+    $("legal-contact-enabled").checked = footer.contactEmailEnabled;
+    $("legal-contact-email").value = footer.contactEmail;
+    $("legal-personal-enabled").checked = footer.personalEmailEnabled;
+    $("legal-personal-email").value = footer.personalEmail;
+    $("legal-message-enabled").checked = footer.messageEnabled;
+    $("legal-message").value = footer.message;
+    updateExportFooterInputState();
+    updateWmContinue();
+  }
+
+  function updateExportFooterInputState() {
+    $("legal-contact-email").disabled = !state.exportFooter.contactEmailEnabled;
+    $("legal-personal-email").disabled = !state.exportFooter.personalEmailEnabled;
+    $("legal-message").disabled = !state.exportFooter.messageEnabled;
+  }
+
+  function hasExportFooterSelection() {
+    var footer = state.exportFooter;
+    return !!(
+      footer.euLink ||
+      footer.nationalLink ||
+      (footer.contactEmailEnabled && footer.contactEmail.trim()) ||
+      (footer.personalEmailEnabled && footer.personalEmail.trim()) ||
+      (footer.messageEnabled && footer.message.trim())
+    );
+  }
+
+  function exportFooterChanged() {
+    updateExportFooterInputState();
+    updateWmContinue();
+    schedulePreview();
+    if ($("screen-result") && $("screen-result").classList.contains("is-active")) renderResult();
+  }
+
   function updateWmContinue() {
-    $("wm-continue").textContent = state.wm.enabled
+    $("wm-continue").textContent = (state.wm.enabled || hasExportFooterSelection())
       ? t("wm.generate")
       : t("wm.continueNoWatermark");
   }
@@ -992,20 +1155,137 @@
     return composeAt(page, wm, page.base.width);
   }
 
+  function buildExportFooterContent() {
+    var footer = state.exportFooter;
+    var rows = [];
+    var message = footer.message.trim();
+    var contactEmail = footer.contactEmail.trim();
+    var personalEmail = footer.personalEmail.trim();
+    if (footer.messageEnabled && message) {
+      rows.push({ kind: "message", text: message });
+    }
+    if (footer.euLink) {
+      rows.push({
+        kind: "link",
+        text: t("legal.eu") + ": " + (EU_REGULATION_URLS[currentLang] || EU_REGULATION_URLS.es)
+      });
+    }
+    if (footer.nationalLink) {
+      rows.push({
+        kind: "link",
+        text: t("legal.national") + ": " + (NATIONAL_AUTHORITY_URLS[currentLang] || NATIONAL_AUTHORITY_URLS.es)
+      });
+    }
+    if (footer.contactEmailEnabled && contactEmail) {
+      rows.push({ kind: "contact", text: t("legal.outputContactEmail") + ": " + contactEmail });
+    }
+    if (footer.personalEmailEnabled && personalEmail) {
+      rows.push({ kind: "contact", text: t("legal.outputPersonalEmail") + ": " + personalEmail });
+    }
+    return rows.length ? rows : null;
+  }
+
+  function wrapText(ctx, text, maxWidth) {
+    var words = String(text || "").split(/\s+/).filter(Boolean);
+    var lines = [];
+    var line = "";
+    words.forEach(function (word) {
+      var test = line ? line + " " + word : word;
+      if (line && ctx.measureText(test).width > maxWidth) {
+        lines.push(line);
+        line = word;
+      } else {
+        line = test;
+      }
+    });
+    if (line) lines.push(line);
+    return lines.length ? lines : [""];
+  }
+
+  function layoutExportFooter(ctx, w, rows, scale) {
+    var padX = Math.max(18, 24 * scale);
+    var padY = Math.max(14, 18 * scale);
+    var gap = Math.max(6, 8 * scale);
+    var fontPx = Math.max(12, 13 * scale);
+    var maxWidth = Math.max(1, w - padX * 2);
+    var items = [];
+    var total = padY * 2;
+    rows.forEach(function (row, i) {
+      var weight = row.kind === "message" ? "700" : "600";
+      var font = weight + " " + fontPx + "px -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif";
+      ctx.font = font;
+      var lines = wrapText(ctx, row.text, maxWidth);
+      var lineH = fontPx * 1.38;
+      items.push({
+        lines: lines,
+        font: font,
+        lineH: lineH,
+        color: row.kind === "link" ? "#145ca8" : "#1c1a17"
+      });
+      total += lines.length * lineH;
+      if (i < rows.length - 1) total += gap;
+    });
+    return {
+      height: Math.ceil(total),
+      padX: padX,
+      padY: padY,
+      gap: gap,
+      items: items
+    };
+  }
+
+  function measureExportFooterHeight(w, rows, scale) {
+    var scratch = document.createElement("canvas").getContext("2d");
+    return layoutExportFooter(scratch, w, rows, scale).height;
+  }
+
+  function drawExportFooter(ctx, y, w, rows, scale) {
+    var layout = layoutExportFooter(ctx, w, rows, scale);
+    ctx.save();
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, y, w, layout.height);
+    ctx.fillStyle = "#e2d8cd";
+    ctx.fillRect(0, y, w, Math.max(1, Math.round(scale)));
+    var cursor = y + layout.padY;
+    layout.items.forEach(function (item, i) {
+      ctx.font = item.font;
+      ctx.fillStyle = item.color;
+      ctx.textBaseline = "top";
+      item.lines.forEach(function (line) {
+        ctx.fillText(line, layout.padX, cursor);
+        cursor += item.lineH;
+      });
+      if (i < layout.items.length - 1) cursor += layout.gap;
+    });
+    ctx.restore();
+  }
+
   // Composite the page at a target width: base (optionally grayscale) +
-  // redaction bars + watermark. Watermark size stays visually identical at any
-  // resolution because it scales with the canvas width.
+  // redaction bars + watermark + optional legal export footer. Watermark size
+  // stays visually identical at any resolution because it scales with the
+  // canvas width.
   function composeAt(page, wm, targetW) {
     var scale = Math.min(1, targetW / page.base.width);
+    var w = Math.max(1, Math.round(page.base.width * scale));
+    var docH = Math.max(1, Math.round(page.base.height * scale));
+    var exportFooterRows = buildExportFooterContent();
+    var exportFooterScale = w / WM_REF_W;
+    var exportFooterH = exportFooterRows ? measureExportFooterHeight(w, exportFooterRows, exportFooterScale) : 0;
     var c = document.createElement("canvas");
-    c.width = Math.max(1, Math.round(page.base.width * scale));
-    c.height = Math.max(1, Math.round(page.base.height * scale));
+    c.width = w;
+    c.height = docH + exportFooterH;
     var ctx = c.getContext("2d");
     ctx.save();
     ctx.scale(scale, scale);
     SL.paintPage(ctx, page, state.grayscale);
     ctx.restore();
-    SL.renderWatermark(ctx, c.width, c.height, wm, c.width / WM_REF_W);
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(0, 0, c.width, docH);
+    ctx.clip();
+    SL.renderWatermark(ctx, c.width, docH, wm, c.width / WM_REF_W);
+    ctx.restore();
+    if (exportFooterRows) drawExportFooter(ctx, docH, c.width, exportFooterRows, exportFooterScale);
     return c;
   }
 
@@ -1304,6 +1584,39 @@
     $("wm-footer").addEventListener("change", function (e) {
       state.wm.footer = e.target.checked;
       schedulePreview();
+    });
+    $("legal-eu").addEventListener("change", function (e) {
+      state.exportFooter.euLink = e.target.checked;
+      exportFooterChanged();
+    });
+    $("legal-national").addEventListener("change", function (e) {
+      state.exportFooter.nationalLink = e.target.checked;
+      exportFooterChanged();
+    });
+    $("legal-contact-enabled").addEventListener("change", function (e) {
+      state.exportFooter.contactEmailEnabled = e.target.checked;
+      exportFooterChanged();
+    });
+    $("legal-contact-email").addEventListener("input", function (e) {
+      state.exportFooter.contactEmail = e.target.value;
+      exportFooterChanged();
+    });
+    $("legal-personal-enabled").addEventListener("change", function (e) {
+      state.exportFooter.personalEmailEnabled = e.target.checked;
+      exportFooterChanged();
+    });
+    $("legal-personal-email").addEventListener("input", function (e) {
+      state.exportFooter.personalEmail = e.target.value;
+      exportFooterChanged();
+    });
+    $("legal-message-enabled").addEventListener("change", function (e) {
+      state.exportFooter.messageEnabled = e.target.checked;
+      exportFooterChanged();
+    });
+    $("legal-message").addEventListener("input", function (e) {
+      state.exportFooter.message = e.target.value;
+      state.exportFooter.messageCustom = !isDefaultLegalMessage(e.target.value);
+      exportFooterChanged();
     });
     document.querySelectorAll("[data-wmpage]").forEach(function (b) {
       b.addEventListener("click", function () { gotoWmPreviewPage(b.dataset.wmpage === "next" ? 1 : -1); });

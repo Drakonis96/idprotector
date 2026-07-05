@@ -182,6 +182,49 @@
                   <span class="toggle__label" data-i18n="wm.footer">Añadir pie de página con firma de protección</span>
                 </label>
               </div>
+
+              <div class="legal-options" id="legal-options">
+                <span class="field__label" data-i18n="legal.title">Información legal del descargable</span>
+
+                <label class="toggle toggle--sm">
+                  <input type="checkbox" id="legal-eu" checked />
+                  <span class="toggle__track"><span class="toggle__thumb"></span></span>
+                  <span class="toggle__label" data-i18n="legal.eu">Normativa Europea de Protección de Datos</span>
+                </label>
+
+                <label class="toggle toggle--sm">
+                  <input type="checkbox" id="legal-national" checked />
+                  <span class="toggle__track"><span class="toggle__thumb"></span></span>
+                  <span class="toggle__label" data-i18n="legal.national">Agencia Española de Protección de Datos</span>
+                </label>
+
+                <div class="legal-options__field">
+                  <label class="toggle toggle--sm">
+                    <input type="checkbox" id="legal-contact-enabled" />
+                    <span class="toggle__track"><span class="toggle__thumb"></span></span>
+                    <span class="toggle__label" data-i18n="legal.contactEmail">Correo electrónico de contacto</span>
+                  </label>
+                  <input type="email" id="legal-contact-email" placeholder="nombre@dominio.com" data-i18n-placeholder="legal.emailPlaceholder" />
+                </div>
+
+                <div class="legal-options__field">
+                  <label class="toggle toggle--sm">
+                    <input type="checkbox" id="legal-personal-enabled" />
+                    <span class="toggle__track"><span class="toggle__thumb"></span></span>
+                    <span class="toggle__label" data-i18n="legal.personalEmail">Email personal</span>
+                  </label>
+                  <input type="email" id="legal-personal-email" placeholder="nombre@dominio.com" data-i18n-placeholder="legal.emailPlaceholder" />
+                </div>
+
+                <div class="legal-options__field">
+                  <label class="toggle toggle--sm">
+                    <input type="checkbox" id="legal-message-enabled" checked />
+                    <span class="toggle__track"><span class="toggle__thumb"></span></span>
+                    <span class="toggle__label" data-i18n="legal.message">Mensaje legal</span>
+                  </label>
+                  <textarea id="legal-message" maxlength="260" rows="3" placeholder="Mensaje que se integrará en el descargable" data-i18n-placeholder="legal.messagePlaceholder"></textarea>
+                </div>
+              </div>
             </div>
 
             <div class="wm-preview">
@@ -243,7 +286,7 @@
   </div>
 
   <footer class="site-foot">
-    <span>IDprotector · <span data-i18n="footer.selfHosted">autohospedado</span> · <span id="app-version">v0.1.2</span></span>
+    <span>IDprotector · <span data-i18n="footer.selfHosted">autohospedado</span> · <span id="app-version">v0.1.3</span></span>
     <span class="site-foot__priv" data-i18n="footer.privacy">Nada de lo que subes sale de este dispositivo.</span>
   </footer>
 

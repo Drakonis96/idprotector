@@ -284,7 +284,7 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
 .field__val { color: var(--ink-soft); font-weight: 600; font-variant-numeric: tabular-nums; }
 .field__counter { font-size: 12.5px; color: var(--ink-soft); text-align: right; }
 
-textarea, input[type="text"] {
+textarea, input[type="text"], input[type="email"] {
   font-family: var(--font-mono);
   font-size: 14.5px;
   color: var(--ink);
@@ -296,6 +296,11 @@ textarea, input[type="text"] {
   width: 100%;
 }
 textarea:focus, input:focus { outline: none; border-color: var(--coral); }
+input:disabled, textarea:disabled {
+  color: var(--ink-soft);
+  background: var(--bg-soft);
+  opacity: .7;
+}
 
 /* range */
 .field--range input[type="range"] { width: 100%; accent-color: var(--coral); }
@@ -343,6 +348,32 @@ textarea:focus, input:focus { outline: none; border-color: var(--coral); }
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   padding: 12px;
+}
+
+.legal-options {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+}
+.legal-options .toggle {
+  display: flex;
+  max-width: 100%;
+}
+.legal-options .toggle__label {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.legal-options__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.legal-options__field input,
+.legal-options__field textarea {
+  font-size: 13px;
+  padding: 11px 12px;
 }
 
 .wm-preview {
