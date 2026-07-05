@@ -7,16 +7,17 @@
   var SL = global.SL || (global.SL = {});
 
   SL.BRAND = "IDprotector";
-  SL.VERSION = "v0.1.5";
+  SL.VERSION = "v0.1.6";
 
   // Available patterns (id + human label). Order defines UI order.
   SL.PATTERNS = [
-    { id: "dense",    label: "Seguro" },
-    { id: "diagonal", label: "Diagonal" },
-    { id: "mesh",     label: "Malla" },
-    { id: "grid",     label: "Rejilla" },
-    { id: "single",   label: "Central" },
-    { id: "manual",   label: "Manual" }
+    { id: "dense",       label: "Seguro" },
+    { id: "topographic", label: "Topográfico" },
+    { id: "diagonal",    label: "Diagonal" },
+    { id: "mesh",        label: "Malla" },
+    { id: "grid",        label: "Rejilla" },
+    { id: "single",      label: "Central" },
+    { id: "manual",      label: "Manual" }
   ];
 
   SL.SWATCHES = ["#111111", "#e0362a", "#1d6fd6", "#178a4c", "#7a3ff2", "#8a8a8a"];
@@ -98,6 +99,77 @@
     }
   }
 
+  // Draw a row of text whose baseline follows a 2D "height field", so
+  // consecutive rows curve together into flowing topographic-style contours.
+  function drawFieldRow(ctx, text, x0, rowY, field) {
+    var penX = x0;
+    for (var i = 0; i < text.length; i++) {
+      var ch = text.charAt(i);
+      var cw = ctx.measureText(ch).width;
+      var cx = penX + cw / 2;
+      var yy = field(cx, rowY);
+      var slope = Math.atan2(field(cx + 4, rowY) - field(cx - 4, rowY), 8);
+      ctx.save();
+      ctx.translate(cx, yy);
+      ctx.rotate(slope);
+      ctx.fillText(ch, -cw / 2, 0);
+      ctx.restore();
+      penX += cw;
+    }
+  }
+
+  // Dense repeated text flowing along interwoven contour lines, mimicking the
+  // guilloché / "valid only for background check" security print of an ID.
+  function topographic(ctx, w, h, opts) {
+    var fontPx = opts.fontPx;
+    var diag = Math.sqrt(w * w + h * h);
+
+    // A smooth height field summing a few sines. Dependence on both x and the
+    // row's y makes neighbouring rows share the wave, forming contour bands.
+    function fieldFor(A1, A2, A3, phase) {
+      var k1 = 2 * Math.PI / (fontPx * 14);
+      var k2 = 2 * Math.PI / (fontPx * 24);
+      var k3 = 2 * Math.PI / (fontPx * 40);
+      var ky1 = 2 * Math.PI / (fontPx * 20);
+      var ky2 = 2 * Math.PI / (fontPx * 34);
+      return function (x, rowY) {
+        return rowY
+          + A1 * Math.sin(x * k1 + rowY * ky1 + phase)
+          + A2 * Math.sin(x * k2 - rowY * ky2 + phase * 1.7)
+          + A3 * Math.cos((x * 0.7 + rowY * 1.6) * k3 + phase);
+      };
+    }
+
+    function pass(angle, lineH, rowOffset, fontScale, alpha, field) {
+      var fs = fontPx * fontScale;
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = opts.color;
+      ctx.font = "600 " + fs + "px Georgia, 'Times New Roman', serif";
+      ctx.textBaseline = "middle";
+      ctx.textAlign = "left";
+      ctx.translate(w / 2, h / 2);
+      ctx.rotate(angle * Math.PI / 180);
+      var unit = opts.text + "  ◆  ";
+      var unitW = Math.max(ctx.measureText(unit).width, 1);
+      var reps = Math.ceil((diag * 1.6) / unitW) + 2;
+      var row = "";
+      for (var i = 0; i < reps; i++) row += unit;
+      var rowW = ctx.measureText(row).width;
+      for (var y = -diag; y <= diag; y += lineH) {
+        var offset = rowOffset ? unitW / 2 : 0;
+        drawFieldRow(ctx, row, -rowW / 2 - offset, y, field);
+      }
+      ctx.restore();
+    }
+
+    var lineH = fontPx * 1.5;
+    // Main contour print, plus a finer half-offset pass that fills the gaps for
+    // the dense, hard-to-remove look of the reference document.
+    pass(-12, lineH, false, 1, opts.alpha, fieldFor(fontPx * 0.66, fontPx * 0.34, fontPx * 0.20, 0));
+    pass(-12, lineH, true, 0.7, opts.alpha * 0.5, fieldFor(fontPx * 0.58, fontPx * 0.30, fontPx * 0.18, 1.9));
+  }
+
   // Draw one big centred diagonal line of text, scaled to fit.
   function single(ctx, w, h, opts) {
     var diag = Math.sqrt(w * w + h * h);
@@ -165,6 +237,9 @@
         break;
       case "manual":
         manual(ctx, w, h, wm, { text: text, color: color, alpha: a, fontPx: fontPx });
+        break;
+      case "topographic":
+        topographic(ctx, w, h, { text: text, color: color, alpha: a, fontPx: fontPx });
         break;
       case "grid":
         tile(ctx, w, h, Object.assign({}, base, { angle: 0, alpha: a, diamonds: false, lineFactor: 2.6 }));
