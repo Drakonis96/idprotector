@@ -7,7 +7,7 @@
   var SL = global.SL || (global.SL = {});
 
   SL.BRAND = "IDprotector";
-  SL.VERSION = "v0.2.2";
+  SL.VERSION = "v0.2.3";
 
   // Available patterns (id + human label). Order defines UI order.
   SL.PATTERNS = [

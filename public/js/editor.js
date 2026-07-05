@@ -703,7 +703,13 @@
         self.panStart = { x: e.clientX, y: e.clientY, tx: self.tx, ty: self.ty };
         return;
       }
-      if (Math.abs(self.straightenPreview) >= 0.05) return;
+      // A straighten preview is only a preview: bake it into the page before the
+      // brush or crop touches the canvas, otherwise drawing on the rotated
+      // preview would silently do nothing until the user applied it by hand.
+      if (Math.abs(self.straightenPreview) >= 0.05) {
+        self.straightenPage(self.straightenPreview);
+        if (self.onStraightenApplied) self.onStraightenApplied();
+      }
       var p = self.toImage(e.clientX, e.clientY);
       if (self.tool === "crop") {
         self.beginCrop(p);

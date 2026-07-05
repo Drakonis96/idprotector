@@ -1017,6 +1017,7 @@
       editor.onSelectionChange = updateRedactionSelection;
       editor.onCropChange = updateCropControls;
       editor.onPageChange = updateRedactState;
+      editor.onStraightenApplied = function () { setStraightenValue(0); };
       editor.setTool("brush");
     }
     editor.setGrayscale(state.grayscale);
