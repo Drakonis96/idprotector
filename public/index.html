@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+  <title>IDprotector · Protege tus documentos</title>
+  <meta name="description" content="Oculta datos sensibles y añade marcas de agua a tu DNI y documentos. 100% en tu navegador: nada se sube a ningún servidor." />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <main id="app">
+
+    <!-- ======================= UPLOAD ======================= -->
+    <section id="screen-upload" class="screen is-active">
+      <div class="wrap wrap--narrow">
+        <div class="brand">
+          <span class="brand__dot"></span>
+          <span class="brand__name">IDprotector</span>
+        </div>
+        <h1 class="title">Protege tus documentos<br />antes de compartirlos</h1>
+        <p class="lead">
+          Oculta los datos que no quieras mostrar y añade una marca de agua rastreable.
+          Todo ocurre <strong>dentro de tu navegador</strong>: tus archivos nunca se suben a
+          ningún servidor.
+        </p>
+
+        <label id="dropzone" class="dropzone" for="file-input">
+          <input id="file-input" type="file" accept="image/*,application/pdf" hidden />
+          <div class="dropzone__inner">
+            <div class="dropzone__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 16V4M12 4l-4 4M12 4l4 4" />
+                <path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" />
+              </svg>
+            </div>
+            <div class="dropzone__text">
+              <strong>Arrastra tu documento aquí</strong>
+              <span>o pulsa para elegir una imagen o PDF</span>
+            </div>
+          </div>
+        </label>
+
+        <ul class="privacy">
+          <li><span class="privacy__ico">🔒</span> Procesamiento 100% local</li>
+          <li><span class="privacy__ico">🚫</span> Cero subidas a la nube</li>
+          <li><span class="privacy__ico">📴</span> Funciona sin conexión</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ======================= REDACT ======================= -->
+    <section id="screen-redact" class="screen">
+      <div class="wrap">
+        <button class="back" data-nav="upload" type="button">&larr; Atrás</button>
+        <div class="step">
+          <div class="step__head">
+            <h2 class="title title--sm">Oculta los datos que no quieras que vea el receptor</h2>
+            <p class="lead lead--sm">Desliza el dedo (o el ratón) sobre las zonas que quieras ocultar y haz zoom para pintar con más precisión.</p>
+          </div>
+
+          <div id="editor-stage" class="stage">
+            <div id="editor-canvas-host" class="stage__host"></div>
+            <div id="page-nav" class="pagenav" hidden>
+              <button type="button" data-page="prev" class="pagenav__btn">‹</button>
+              <span id="page-label" class="pagenav__label">1 / 1</span>
+              <button type="button" data-page="next" class="pagenav__btn">›</button>
+            </div>
+          </div>
+
+          <div class="toolbar">
+            <button type="button" id="tool-undo" class="tool tool--icon" title="Deshacer" aria-label="Deshacer">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-1"/></svg>
+            </button>
+            <span class="toolbar__sep"></span>
+            <div class="brushes" role="radiogroup" aria-label="Tamaño del pincel">
+              <button type="button" class="brush" data-size="10" style="--d:8px"  aria-label="Muy fino"></button>
+              <button type="button" class="brush" data-size="20" style="--d:12px" aria-label="Fino"></button>
+              <button type="button" class="brush is-active" data-size="34" style="--d:18px" aria-label="Medio"></button>
+              <button type="button" class="brush" data-size="52" style="--d:24px" aria-label="Grueso"></button>
+              <button type="button" class="brush" data-size="74" style="--d:30px" aria-label="Muy grueso"></button>
+            </div>
+            <span class="toolbar__sep"></span>
+            <button type="button" id="tool-pan" class="tool tool--icon" title="Mover / desplazar" aria-label="Mover">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20M12 2l-3 3M12 2l3 3M12 22l-3-3M12 22l3-3M2 12l3-3M2 12l3 3M22 12l-3-3M22 12l-3 3"/></svg>
+            </button>
+            <button type="button" id="tool-zoom-out" class="tool tool--icon" title="Alejar" aria-label="Alejar">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M8 11h6M21 21l-4.3-4.3"/></svg>
+            </button>
+            <button type="button" id="tool-zoom-in" class="tool tool--icon" title="Acercar" aria-label="Acercar">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M11 8v6M8 11h6M21 21l-4.3-4.3"/></svg>
+            </button>
+            <button type="button" id="tool-zoom-reset" class="tool tool--icon" title="Ajustar" aria-label="Ajustar">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V5a1 1 0 0 1 1-1h4M20 9V5a1 1 0 0 0-1-1h-4M4 15v4a1 1 0 0 0 1 1h4M20 15v4a1 1 0 0 1-1 1h-4"/></svg>
+            </button>
+          </div>
+
+          <button type="button" class="btn btn--primary" data-nav="watermark" id="redact-continue">Continuar</button>
+          <p class="hint" id="redact-hint">Consejo: usa el zoom para ocultar con precisión matrículas, direcciones o números de documento.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= WATERMARK ======================= -->
+    <section id="screen-watermark" class="screen">
+      <div class="wrap">
+        <button class="back" data-nav="redact" type="button">&larr; Atrás</button>
+        <div class="step step--wide">
+          <div class="step__head">
+            <h2 class="title title--sm">Añade una marca de agua rastreable</h2>
+            <p class="lead lead--sm">Indica el uso permitido y a quién autorizas. Ese texto se convierte en una marca de agua difícil de eliminar.</p>
+          </div>
+
+          <div class="wm-layout">
+            <div class="wm-controls">
+              <label class="field">
+                <span class="field__label">Uso y destinatario autorizados</span>
+                <textarea id="wm-text" maxlength="100" rows="3" placeholder="Ej.: Solo válido para la verificación de identidad de Banco XYZ, 05/07/2026"></textarea>
+                <span class="field__counter"><span id="wm-count">100</span> caracteres restantes</span>
+              </label>
+
+              <label class="toggle">
+                <input type="checkbox" id="wm-enabled" checked />
+                <span class="toggle__track"><span class="toggle__thumb"></span></span>
+                <span class="toggle__label">Aplicar marca de agua</span>
+              </label>
+
+              <div id="wm-options" class="wm-options">
+                <div class="field">
+                  <span class="field__label">Patrón</span>
+                  <div id="wm-patterns" class="patterns" role="radiogroup" aria-label="Patrón de marca de agua"></div>
+                </div>
+
+                <label class="field field--range">
+                  <span class="field__label">Opacidad <span class="field__val" id="wm-opacity-val">18%</span></span>
+                  <input type="range" id="wm-opacity" min="4" max="80" value="18" />
+                </label>
+
+                <label class="field field--range">
+                  <span class="field__label">Tamaño <span class="field__val" id="wm-size-val">22 px</span></span>
+                  <input type="range" id="wm-size" min="10" max="60" value="22" />
+                </label>
+
+                <div class="field field--color">
+                  <span class="field__label">Color</span>
+                  <div class="swatches" id="wm-swatches"></div>
+                  <label class="colorpick">
+                    <input type="color" id="wm-color" value="#111111" />
+                    <span>Personalizado</span>
+                  </label>
+                </div>
+
+                <label class="toggle toggle--sm">
+                  <input type="checkbox" id="wm-footer" checked />
+                  <span class="toggle__track"><span class="toggle__thumb"></span></span>
+                  <span class="toggle__label">Añadir pie de página con firma de protección</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="wm-preview">
+              <div id="wm-preview-host" class="wm-preview__host"></div>
+              <p class="wm-preview__caption">Vista previa en vivo</p>
+            </div>
+          </div>
+
+          <button type="button" class="btn btn--primary" data-nav="result" id="wm-continue">Generar documento protegido</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= RESULT ======================= -->
+    <section id="screen-result" class="screen">
+      <div class="wrap">
+        <button class="back" data-nav="watermark" type="button">&larr; Atrás</button>
+        <div class="step">
+          <div class="step__head">
+            <h2 class="title title--sm">Tu documento está listo para compartir de forma segura</h2>
+            <p class="lead lead--sm">La marca de agua combina tu documento con los datos del destinatario. Es rastreable, lo que da un fuerte incentivo para mantenerlo seguro.</p>
+          </div>
+
+          <div id="result-host" class="stage stage--result"></div>
+          <div id="result-nav" class="pagenav pagenav--center" hidden>
+            <button type="button" data-rpage="prev" class="pagenav__btn">‹</button>
+            <span id="result-page-label" class="pagenav__label">1 / 1</span>
+            <button type="button" data-rpage="next" class="pagenav__btn">›</button>
+          </div>
+
+          <div class="result-actions">
+            <button type="button" id="btn-share" class="btn btn--primary">Compartir</button>
+            <button type="button" id="btn-download" class="btn btn--outline">Descargar</button>
+          </div>
+          <button type="button" class="linkbtn" data-nav="reset">Proteger más documentos</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="busy" class="busy" hidden>
+    <div class="busy__spinner"></div>
+    <p id="busy-text">Procesando…</p>
+  </div>
+
+  <footer class="site-foot">
+    <span>IDprotector · autohospedado · <span id="app-version">v1.0.0</span></span>
+    <span class="site-foot__priv">Nada de lo que subes sale de este dispositivo.</span>
+  </footer>
+
+  <script src="vendor/pdf.min.js"></script>
+  <script src="vendor/pdf-lib.min.js"></script>
+  <script src="js/watermark.js"></script>
+  <script src="js/editor.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

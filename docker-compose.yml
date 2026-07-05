@@ -1,0 +1,21 @@
+services:
+  idprotector:
+    build: .
+    image: idprotector:latest
+    container_name: idprotector
+    ports:
+      - "8683:8683"
+    restart: unless-stopped
+    # No volumes, no env, no network calls: the container never receives
+    # or stores user documents — all processing happens in the browser.
+    read_only: true
+    tmpfs:
+      - /var/cache/nginx
+      - /var/run
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8683/healthz"]
+      interval: 30s
+      timeout: 3s
+      retries: 3

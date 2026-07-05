@@ -1,0 +1,169 @@
+/* IDprotector — watermark rendering (100% client-side).
+ * Draws a configurable, tiled watermark onto a 2D canvas context.
+ * No network, no storage — pure pixels. */
+(function (global) {
+  "use strict";
+
+  var SL = global.SL || (global.SL = {});
+
+  SL.BRAND = "IDprotector";
+  SL.VERSION = "v1.0.0";
+
+  // Available patterns (id + human label). Order defines UI order.
+  SL.PATTERNS = [
+    { id: "dense",    label: "Seguro" },
+    { id: "diagonal", label: "Diagonal" },
+    { id: "mesh",     label: "Malla" },
+    { id: "grid",     label: "Rejilla" },
+    { id: "single",   label: "Central" }
+  ];
+
+  SL.SWATCHES = ["#111111", "#e0362a", "#1d6fd6", "#178a4c", "#7a3ff2", "#8a8a8a"];
+
+  SL.defaultWatermark = function () {
+    return {
+      enabled: true,
+      text: "",
+      pattern: "dense",
+      opacity: 0.18,   // 0..1
+      size: 22,        // font px, relative to a 1000px-wide reference
+      color: "#111111",
+      footer: true
+    };
+  };
+
+  function hexToRgb(hex) {
+    var h = hex.replace("#", "");
+    if (h.length === 3) h = h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+    var n = parseInt(h, 16);
+    return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+  }
+
+  // Draw rows of repeated text at a given angle across the whole canvas.
+  function tile(ctx, w, h, opts) {
+    var angle = opts.angle * Math.PI / 180;
+    var fontPx = opts.fontPx;
+    var diag = Math.sqrt(w * w + h * h);
+
+    ctx.save();
+    ctx.globalAlpha = opts.alpha;
+    ctx.fillStyle = opts.color;
+    ctx.font = "600 " + fontPx + "px Georgia, 'Times New Roman', serif";
+    ctx.textBaseline = "middle";
+    ctx.textAlign = "left";
+
+    ctx.translate(w / 2, h / 2);
+    ctx.rotate(angle);
+
+    var sep = opts.diamonds ? "   ◆   " : "      ";
+    var unit = opts.text + sep;
+    var unitW = Math.max(ctx.measureText(unit).width, 1);
+    var lineH = fontPx * opts.lineFactor;
+
+    var reps = Math.ceil((diag * 1.4) / unitW) + 2;
+    var row = "";
+    for (var i = 0; i < reps; i++) row += unit;
+    var rowW = ctx.measureText(row).width;
+
+    var rowIndex = 0;
+    for (var y = -diag; y <= diag; y += lineH) {
+      var offset = (rowIndex % 2 === 0) ? 0 : unitW / 2;
+      ctx.fillText(row, -rowW / 2 - offset, y);
+      rowIndex++;
+    }
+    ctx.restore();
+  }
+
+  // Draw one big centred diagonal line of text, scaled to fit.
+  function single(ctx, w, h, opts) {
+    var diag = Math.sqrt(w * w + h * h);
+    ctx.save();
+    ctx.globalAlpha = opts.alpha;
+    ctx.fillStyle = opts.color;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.translate(w / 2, h / 2);
+    ctx.rotate(-Math.PI / 6);
+    var fs = opts.fontPx * 3.2;
+    ctx.font = "700 " + fs + "px Georgia, serif";
+    var guard = 0;
+    while (ctx.measureText(opts.text).width > diag * 0.86 && fs > 8 && guard++ < 200) {
+      fs -= 2;
+      ctx.font = "700 " + fs + "px Georgia, serif";
+    }
+    ctx.fillText(opts.text, 0, 0);
+    ctx.restore();
+  }
+
+  /**
+   * Render the watermark onto ctx covering (w x h) pixels.
+   * wm: watermark state object. `scale` maps the reference size to actual px
+   * so a preview and a full-res export look identical.
+   */
+  SL.renderWatermark = function (ctx, w, h, wm, scale) {
+    if (!wm || !wm.enabled) return;
+    var text = (wm.text && wm.text.trim()) ? wm.text.trim() : "SIN AUTORIZAR";
+    scale = scale || 1;
+    var fontPx = Math.max(6, wm.size * scale);
+    var color = wm.color || "#111111";
+    var a = Math.min(0.95, Math.max(0.02, wm.opacity));
+
+    var base = { text: text, color: color, fontPx: fontPx };
+
+    switch (wm.pattern) {
+      case "single":
+        single(ctx, w, h, { text: text, color: color, alpha: a, fontPx: fontPx });
+        break;
+      case "grid":
+        tile(ctx, w, h, Object.assign({}, base, { angle: 0, alpha: a, diamonds: false, lineFactor: 2.6 }));
+        break;
+      case "mesh":
+        tile(ctx, w, h, Object.assign({}, base, { angle: -28, alpha: a * 0.8, diamonds: false, lineFactor: 2.4 }));
+        tile(ctx, w, h, Object.assign({}, base, { angle: 28, alpha: a * 0.8, diamonds: false, lineFactor: 2.4 }));
+        break;
+      case "diagonal":
+        tile(ctx, w, h, Object.assign({}, base, { angle: -30, alpha: a, diamonds: true, lineFactor: 2.3 }));
+        break;
+      case "dense":
+      default:
+        // Busy, multi-directional "anti-scan" pattern (matches the reference look).
+        tile(ctx, w, h, Object.assign({}, base, { angle: -30, alpha: a, diamonds: true, lineFactor: 1.9 }));
+        tile(ctx, w, h, Object.assign({}, base, { angle: 20, alpha: a * 0.62, fontPx: fontPx * 0.82, diamonds: true, lineFactor: 2.5 }));
+        tile(ctx, w, h, Object.assign({}, base, { angle: 0, alpha: a * 0.5, fontPx: fontPx * 0.7, diamonds: false, lineFactor: 3.1 }));
+        break;
+    }
+
+    if (wm.footer) drawFooter(ctx, w, h, scale, color);
+  };
+
+  function drawFooter(ctx, w, h, scale, color) {
+    var pad = 14 * scale;
+    var fs = Math.max(9, 12 * scale);
+    ctx.save();
+    ctx.globalAlpha = 0.9;
+    ctx.fillStyle = color;
+    ctx.textBaseline = "alphabetic";
+    ctx.font = "italic " + fs + "px Georgia, serif";
+    ctx.textAlign = "left";
+    ctx.fillText("Protegido con " + SL.BRAND, pad, h - pad);
+    ctx.textAlign = "right";
+    ctx.globalAlpha = 0.65;
+    ctx.font = fs + "px Georgia, serif";
+    ctx.fillText(SL.VERSION, w - pad, h - pad);
+    ctx.restore();
+  }
+
+  // Small standalone thumbnail used by the pattern picker.
+  SL.renderThumb = function (canvas, patternId, color) {
+    var ctx = canvas.getContext("2d");
+    var w = canvas.width, hgt = canvas.height;
+    ctx.clearRect(0, 0, w, hgt);
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, w, hgt);
+    SL.renderWatermark(ctx, w, hgt, {
+      enabled: true, text: "SAFER", pattern: patternId,
+      opacity: 0.55, size: 7, color: color || "#111111", footer: false
+    }, 1);
+  };
+
+})(window);

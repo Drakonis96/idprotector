@@ -1,0 +1,7 @@
+.git
+.gitignore
+*.md
+scratchpad
+verify
+test
+.DS_Store
