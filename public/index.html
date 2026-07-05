@@ -84,6 +84,12 @@
             <button type="button" id="tool-undo" class="tool tool--icon" title="Deshacer" aria-label="Deshacer" data-i18n-title="tool.undo" data-i18n-aria="tool.undo">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-1"/></svg>
             </button>
+            <button type="button" id="tool-delete-redaction" class="tool tool--icon" title="Eliminar barra seleccionada" aria-label="Eliminar barra seleccionada" data-i18n-title="tool.deleteRedaction" data-i18n-aria="tool.deleteRedaction" disabled>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 15h10l1-15"/><path d="M10 11v6M14 11v6"/></svg>
+            </button>
+            <button type="button" id="tool-copy-redaction" class="tool tool--icon" title="Aplicar barra a todas las páginas" aria-label="Aplicar barra a todas las páginas" data-i18n-title="tool.copyRedaction" data-i18n-aria="tool.copyRedaction" disabled>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M5 16H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/><path d="M12 13h3M13.5 11.5v3"/></svg>
+            </button>
             <span class="toolbar__sep"></span>
             <div class="brushes" role="radiogroup" aria-label="Tamaño del pincel" data-i18n-aria="brush.group">
               <button type="button" class="brush" data-size="10" style="--d:8px"  aria-label="Muy fino" data-i18n-aria="brush.veryThin"></button>
@@ -104,6 +110,31 @@
             </button>
             <button type="button" id="tool-zoom-reset" class="tool tool--icon" title="Ajustar" aria-label="Ajustar" data-i18n-title="tool.fit" data-i18n-aria="tool.fit">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V5a1 1 0 0 1 1-1h4M20 9V5a1 1 0 0 0-1-1h-4M4 15v4a1 1 0 0 0 1 1h4M20 15v4a1 1 0 0 1-1 1h-4"/></svg>
+            </button>
+          </div>
+
+          <div class="page-tools" aria-label="Ajustes de página" data-i18n-aria="pageTools.group">
+            <button type="button" id="page-rotate-left" class="tool tool--icon" title="Girar a la izquierda" aria-label="Girar a la izquierda" data-i18n-title="pageTools.rotateLeft" data-i18n-aria="pageTools.rotateLeft">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"/><path d="M21 17a8 8 0 0 1-13.7-5.6A8 8 0 0 1 20 5.4"/></svg>
+            </button>
+            <button type="button" id="page-rotate-right" class="tool tool--icon" title="Girar a la derecha" aria-label="Girar a la derecha" data-i18n-title="pageTools.rotateRight" data-i18n-aria="pageTools.rotateRight">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7v6h-6"/><path d="M3 17a8 8 0 0 0 13.7-5.6A8 8 0 0 0 4 5.4"/></svg>
+            </button>
+            <span class="toolbar__sep"></span>
+            <button type="button" id="page-crop-mode" class="tool tool--icon" title="Recortar" aria-label="Recortar" data-i18n-title="pageTools.crop" data-i18n-aria="pageTools.crop">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M18 22V8a2 2 0 0 0-2-2H2"/></svg>
+            </button>
+            <button type="button" id="page-crop-apply" class="tool tool--icon" title="Aplicar recorte" aria-label="Aplicar recorte" data-i18n-title="pageTools.applyCrop" data-i18n-aria="pageTools.applyCrop" disabled>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            </button>
+            <span class="toolbar__sep"></span>
+            <label class="straighten">
+              <span class="straighten__label" data-i18n="pageTools.straighten">Enderezar</span>
+              <input type="range" id="page-straighten" min="-10" max="10" step="0.5" value="0" aria-label="Enderezar" data-i18n-aria="pageTools.straighten" />
+              <span class="straighten__val" id="page-straighten-val">0°</span>
+            </label>
+            <button type="button" id="page-straighten-apply" class="tool tool--icon" title="Aplicar enderezado" aria-label="Aplicar enderezado" data-i18n-title="pageTools.applyStraighten" data-i18n-aria="pageTools.applyStraighten" disabled>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
             </button>
           </div>
 
@@ -289,7 +320,7 @@
   </div>
 
   <footer class="site-foot">
-    <span>IDprotector · <span data-i18n="footer.selfHosted">autohospedado</span> · <span id="app-version">v0.1.8</span></span>
+    <span>IDprotector · <span data-i18n="footer.selfHosted">autohospedado</span> · <span id="app-version">v0.2.0</span></span>
     <span class="site-foot__priv" data-i18n="footer.privacy">Nada de lo que subes sale de este dispositivo.</span>
   </footer>
 

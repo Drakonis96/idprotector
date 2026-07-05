@@ -41,6 +41,15 @@
       "tool.zoomOut": "Alejar",
       "tool.zoomIn": "Acercar",
       "tool.fit": "Ajustar",
+      "tool.deleteRedaction": "Eliminar barra seleccionada",
+      "tool.copyRedaction": "Aplicar barra a todas las páginas",
+      "pageTools.group": "Ajustes de página",
+      "pageTools.rotateLeft": "Girar a la izquierda",
+      "pageTools.rotateRight": "Girar a la derecha",
+      "pageTools.crop": "Recortar",
+      "pageTools.applyCrop": "Aplicar recorte",
+      "pageTools.straighten": "Enderezar",
+      "pageTools.applyStraighten": "Aplicar enderezado",
       "brush.group": "Tamaño del pincel",
       "brush.veryThin": "Muy fino",
       "brush.thin": "Fino",
@@ -140,6 +149,15 @@
       "tool.zoomOut": "Zoom out",
       "tool.zoomIn": "Zoom in",
       "tool.fit": "Fit",
+      "tool.deleteRedaction": "Delete selected bar",
+      "tool.copyRedaction": "Apply bar to every page",
+      "pageTools.group": "Page adjustments",
+      "pageTools.rotateLeft": "Rotate left",
+      "pageTools.rotateRight": "Rotate right",
+      "pageTools.crop": "Crop",
+      "pageTools.applyCrop": "Apply crop",
+      "pageTools.straighten": "Straighten",
+      "pageTools.applyStraighten": "Apply straightening",
       "brush.group": "Brush size",
       "brush.veryThin": "Very thin",
       "brush.thin": "Thin",
@@ -239,6 +257,15 @@
       "tool.zoomOut": "Réduire",
       "tool.zoomIn": "Agrandir",
       "tool.fit": "Ajuster",
+      "tool.deleteRedaction": "Supprimer la barre sélectionnée",
+      "tool.copyRedaction": "Appliquer la barre à toutes les pages",
+      "pageTools.group": "Réglages de page",
+      "pageTools.rotateLeft": "Pivoter à gauche",
+      "pageTools.rotateRight": "Pivoter à droite",
+      "pageTools.crop": "Recadrer",
+      "pageTools.applyCrop": "Appliquer le recadrage",
+      "pageTools.straighten": "Redresser",
+      "pageTools.applyStraighten": "Appliquer le redressement",
       "brush.group": "Taille du pinceau",
       "brush.veryThin": "Très fin",
       "brush.thin": "Fin",
@@ -338,6 +365,15 @@
       "tool.zoomOut": "Afastar",
       "tool.zoomIn": "Aproximar",
       "tool.fit": "Ajustar",
+      "tool.deleteRedaction": "Eliminar barra selecionada",
+      "tool.copyRedaction": "Aplicar barra a todas as páginas",
+      "pageTools.group": "Ajustes da página",
+      "pageTools.rotateLeft": "Rodar para a esquerda",
+      "pageTools.rotateRight": "Rodar para a direita",
+      "pageTools.crop": "Recortar",
+      "pageTools.applyCrop": "Aplicar recorte",
+      "pageTools.straighten": "Endireitar",
+      "pageTools.applyStraighten": "Aplicar endireitamento",
       "brush.group": "Tamanho do pincel",
       "brush.veryThin": "Muito fino",
       "brush.thin": "Fino",
@@ -437,6 +473,15 @@
       "tool.zoomOut": "Verkleinern",
       "tool.zoomIn": "Vergrößern",
       "tool.fit": "Einpassen",
+      "tool.deleteRedaction": "Ausgewählten Balken löschen",
+      "tool.copyRedaction": "Balken auf alle Seiten anwenden",
+      "pageTools.group": "Seiteneinstellungen",
+      "pageTools.rotateLeft": "Nach links drehen",
+      "pageTools.rotateRight": "Nach rechts drehen",
+      "pageTools.crop": "Zuschneiden",
+      "pageTools.applyCrop": "Zuschnitt anwenden",
+      "pageTools.straighten": "Begradigen",
+      "pageTools.applyStraighten": "Begradigung anwenden",
       "brush.group": "Pinselgröße",
       "brush.veryThin": "Sehr dünn",
       "brush.thin": "Dünn",
@@ -536,6 +581,15 @@
       "tool.zoomOut": "Riduci",
       "tool.zoomIn": "Ingrandisci",
       "tool.fit": "Adatta",
+      "tool.deleteRedaction": "Elimina barra selezionata",
+      "tool.copyRedaction": "Applica barra a tutte le pagine",
+      "pageTools.group": "Regolazioni pagina",
+      "pageTools.rotateLeft": "Ruota a sinistra",
+      "pageTools.rotateRight": "Ruota a destra",
+      "pageTools.crop": "Ritaglia",
+      "pageTools.applyCrop": "Applica ritaglio",
+      "pageTools.straighten": "Raddrizza",
+      "pageTools.applyStraighten": "Applica raddrizzamento",
       "brush.group": "Dimensione pennello",
       "brush.veryThin": "Molto sottile",
       "brush.thin": "Sottile",
@@ -959,13 +1013,18 @@
   function enterRedact() {
     if (!editor) {
       editor = new SL.Editor($("editor-canvas-host"));
-      editor.onChange = updateRedactContinue;
+      editor.onChange = updateRedactState;
+      editor.onSelectionChange = updateRedactionSelection;
+      editor.onCropChange = updateCropControls;
+      editor.onPageChange = updateRedactState;
       editor.setTool("brush");
     }
     editor.setGrayscale(state.grayscale);
     editor.setPage(state.pages[state.current]);
     updatePageNav();
-    updateRedactContinue();
+    setStraightenValue(0);
+    syncEditorToolButtons();
+    updateRedactState();
   }
 
   function updatePageNav() {
@@ -981,12 +1040,64 @@
     $("redact-continue").textContent = any ? t("redact.continue") : t("redact.continueNoRedaction");
   }
 
+  function updateRedactState() {
+    updateRedactContinue();
+    updateRedactionSelection(editor ? editor.getSelectedRect() : null);
+    updateCropControls(editor ? editor.getCropRect() : null);
+  }
+
+  function updateRedactionSelection(rect) {
+    var has = !!rect;
+    if ($("tool-delete-redaction")) $("tool-delete-redaction").disabled = !has;
+    if ($("tool-copy-redaction")) $("tool-copy-redaction").disabled = !has || state.pages.length < 2;
+  }
+
+  function updateCropControls(crop) {
+    if ($("page-crop-apply")) $("page-crop-apply").disabled = !crop;
+  }
+
+  function syncEditorToolButtons() {
+    if (!editor) return;
+    $("tool-pan").classList.toggle("is-active", editor.tool === "pan");
+    $("page-crop-mode").classList.toggle("is-active", editor.tool === "crop");
+  }
+
+  function setEditorTool(tool) {
+    if (!editor) return;
+    editor.setTool(tool);
+    syncEditorToolButtons();
+  }
+
+  function setStraightenValue(value) {
+    var rounded = Math.round(parseFloat(value || 0) * 10) / 10;
+    if ($("page-straighten")) $("page-straighten").value = rounded;
+    if ($("page-straighten-val")) $("page-straighten-val").textContent = rounded + "°";
+    if ($("page-straighten-apply")) $("page-straighten-apply").disabled = Math.abs(rounded) < 0.05;
+  }
+
+  function copySelectedRedactionToPages() {
+    if (!editor) return;
+    var rect = editor.getSelectedRect();
+    if (!rect || state.pages.length < 2) return;
+    var source = state.pages[state.current];
+    state.pages.forEach(function (page, i) {
+      if (i === state.current) return;
+      var clone = SL.cloneRedactionForPage(rect, source, page);
+      page.rects.push(clone);
+      if (!page.undo) page.undo = [];
+      page.undo.push({ type: "add", index: page.rects.length - 1 });
+    });
+    updateRedactContinue();
+  }
+
   function gotoPage(delta) {
     var n = state.current + delta;
     if (n < 0 || n >= state.pages.length) return;
     state.current = n;
     editor.setPage(state.pages[n]);
     updatePageNav();
+    setStraightenValue(0);
+    syncEditorToolButtons();
   }
 
   /* ------------------------------------------------------------------ *
@@ -1603,23 +1714,41 @@
     });
 
     // redact tools
-    $("tool-undo").addEventListener("click", function () { editor.undo(); updateRedactContinue(); });
+    $("tool-undo").addEventListener("click", function () { editor.undo(); updateRedactState(); });
+    $("tool-delete-redaction").addEventListener("click", function () { editor.deleteSelected(); updateRedactState(); });
+    $("tool-copy-redaction").addEventListener("click", function () { copySelectedRedactionToPages(); updateRedactState(); });
     $("tool-zoom-in").addEventListener("click", function () { editor.zoomButton(1.2); });
     $("tool-zoom-out").addEventListener("click", function () { editor.zoomButton(1 / 1.2); });
     $("tool-zoom-reset").addEventListener("click", function () { editor.resetView(); });
     var panBtn = $("tool-pan");
     panBtn.addEventListener("click", function () {
-      var pan = !panBtn.classList.contains("is-active");
-      panBtn.classList.toggle("is-active", pan);
-      editor.setTool(pan ? "pan" : "brush");
+      setEditorTool(editor.tool === "pan" ? "brush" : "pan");
     });
     document.querySelectorAll(".brush").forEach(function (b) {
       b.addEventListener("click", function () {
         document.querySelectorAll(".brush").forEach(function (x) { x.classList.remove("is-active"); });
         b.classList.add("is-active");
         editor.setBrush(parseInt(b.dataset.size, 10));
-        if (panBtn.classList.contains("is-active")) { panBtn.classList.remove("is-active"); editor.setTool("brush"); }
+        setEditorTool("brush");
       });
+    });
+    $("page-rotate-left").addEventListener("click", function () { editor.rotatePage(-1); updateRedactState(); });
+    $("page-rotate-right").addEventListener("click", function () { editor.rotatePage(1); updateRedactState(); });
+    $("page-crop-mode").addEventListener("click", function () {
+      setEditorTool(editor.tool === "crop" ? "brush" : "crop");
+    });
+    $("page-crop-apply").addEventListener("click", function () {
+      if (editor.applyCrop()) setEditorTool("brush");
+      updateRedactState();
+    });
+    $("page-straighten").addEventListener("input", function (e) { setStraightenValue(e.target.value); });
+    $("page-straighten-apply").addEventListener("click", function () {
+      var degrees = parseFloat($("page-straighten").value || "0");
+      if (editor.straightenPage(degrees)) {
+        setStraightenValue(0);
+        setEditorTool("brush");
+      }
+      updateRedactState();
     });
     document.querySelectorAll("[data-page]").forEach(function (b) {
       b.addEventListener("click", function () { gotoPage(b.dataset.page === "next" ? 1 : -1); });

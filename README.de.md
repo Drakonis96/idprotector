@@ -35,6 +35,11 @@ zu schützen.
   (nie schiefe) zeichnet, mit mehreren Stärken, Zoom für Präzision und
   Rückgängig. Was Sie abdecken, ist wirklich weg (die Seiten werden beim Export
   gerastert, darunter bleibt kein verborgener Text).
+- ✏️ **Abdeckungen bearbeiten und wiederverwenden** — wählen Sie einen Balken aus,
+  um ihn zu verschieben, zu skalieren oder zu löschen, und wenden Sie dieselbe
+  Abdeckung auf alle Seiten an, wenn ein Dokument dieselben Felder wiederholt.
+- 📐 **Seiteneinstellungen** — drehen, zuschneiden und begradigen Sie jede Seite
+  vor dem Export, nützlich für Handyfotos und leicht schiefe Scans.
 - 💧 **Optionales, konfigurierbares Wasserzeichen** — Text für
   Verwendung/Empfänger, automatische Muster oder ein verschiebbarer
   **Manuell**-Modus, plus Einstellungen für **Deckkraft**, **Größe**, **Farbe**,

@@ -32,6 +32,11 @@ A **self-hostable** app with Docker, designed to protect personal identifiers
   any angle, with several thicknesses, zoom for precision and undo. What you
   cover is really gone (pages are rasterized on export, no hidden text remains
   underneath).
+- ✏️ **Edit and reuse redactions** — select a bar to move, resize or delete it,
+  and apply the same redaction to every page when a document repeats the same
+  fields.
+- 📐 **Page adjustments** — rotate, crop and straighten each page before
+  exporting, useful for mobile photos and slightly skewed scans.
 - 💧 **Optional, configurable watermark** — use/recipient text, automatic
   patterns or a draggable **Manual** mode, plus **opacity**, **size**, **color**,
   angle and footer adjustments.

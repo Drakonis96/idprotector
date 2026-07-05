@@ -33,6 +33,11 @@ personali (carte d'identità, passaporti, permessi) in modo totalmente privato.
   con qualsiasi angolazione, con vari spessori, zoom per la precisione e annulla.
   Ciò che copri sparisce davvero (le pagine vengono rasterizzate all'esportazione,
   non resta testo nascosto sotto).
+- ✏️ **Modificare e riutilizzare le coperture** — seleziona una barra per
+  spostarla, ridimensionarla o eliminarla, e applica la stessa copertura a tutte
+  le pagine quando il documento ripete gli stessi campi.
+- 📐 **Regolazioni pagina** — ruota, ritaglia e raddrizza ogni pagina prima
+  dell'esportazione, utile per foto da telefono e scansioni leggermente storte.
 - 💧 **Filigrana opzionale e configurabile** — testo di uso/destinatario, motivi
   automatici o modalità **Manuale** trascinabile, e regolazione di **opacità**,
   **dimensione**, **colore**, angolo e piè di pagina.

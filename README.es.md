@@ -33,6 +33,11 @@ personales (DNI, pasaportes, permisos) de forma totalmente privada.
   cualquier ángulo, con varios grosores, zoom para precisión y deshacer. Lo que
   tapas desaparece de verdad (las páginas se rasterizan al exportar, no queda
   texto oculto debajo).
+- ✏️ **Editar y reutilizar ocultaciones** — selecciona una barra para moverla,
+  redimensionarla o eliminarla, y aplica la misma ocultación a todas las páginas
+  cuando el documento repite los mismos campos.
+- 📐 **Ajustes de página** — gira, recorta y endereza cada página antes de
+  exportar, útil para fotos de móvil y escaneos ligeramente torcidos.
 - 💧 **Marca de agua opcional y configurable** — texto de uso/destinatario,
   patrones automáticos o modo **Manual** arrastrable, y ajuste de **opacidad**,
   **tamaño**, **color**, ángulo y pie de página.

@@ -34,6 +34,12 @@ privada.
   qualquer ângulo, com várias espessuras, zoom para precisão e anular. O que
   cobre desaparece mesmo (as páginas são rasterizadas ao exportar, não fica texto
   oculto por baixo).
+- ✏️ **Editar e reutilizar ocultações** — selecione uma barra para a mover,
+  redimensionar ou eliminar, e aplique a mesma ocultação a todas as páginas
+  quando o documento repete os mesmos campos.
+- 📐 **Ajustes de página** — rode, recorte e endireite cada página antes de
+  exportar, útil para fotografias de telemóvel e digitalizações ligeiramente
+  inclinadas.
 - 💧 **Marca de água opcional e configurável** — texto de uso/destinatário,
   padrões automáticos ou modo **Manual** arrastável, e ajuste de **opacidade**,
   **tamanho**, **cor**, ângulo e rodapé.

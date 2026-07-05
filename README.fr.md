@@ -34,6 +34,11 @@ totalement privée.
   (jamais de travers) sous n'importe quel angle, avec plusieurs épaisseurs, un
   zoom de précision et une annulation. Ce que vous masquez disparaît vraiment
   (les pages sont rasterisées à l'export, aucun texte caché ne subsiste dessous).
+- ✏️ **Modifier et réutiliser les masquages** — sélectionnez une barre pour la
+  déplacer, la redimensionner ou la supprimer, puis appliquez le même masquage à
+  toutes les pages lorsque le document répète les mêmes champs.
+- 📐 **Réglages de page** — pivotez, recadrez et redressez chaque page avant
+  l'export, utile pour les photos mobiles et les scans légèrement inclinés.
 - 💧 **Filigrane optionnel et configurable** — texte d'usage/destinataire,
   motifs automatiques ou mode **Manuel** déplaçable, plus réglages d'**opacité**,
   de **taille**, de **couleur**, d'angle et de pied de page.
