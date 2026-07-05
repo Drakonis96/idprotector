@@ -3,3 +3,6 @@
 node_modules/
 scratchpad/
 *.tmp
+
+# Local Claude Code / editor tooling — not part of the app
+.claude/
