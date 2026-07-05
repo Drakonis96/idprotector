@@ -192,11 +192,14 @@
                   <span class="toggle__label" data-i18n="legal.eu">Normativa Europea de Protección de Datos</span>
                 </label>
 
-                <label class="toggle toggle--sm">
-                  <input type="checkbox" id="legal-national" checked />
-                  <span class="toggle__track"><span class="toggle__thumb"></span></span>
-                  <span class="toggle__label" data-i18n="legal.national">Agencia Española de Protección de Datos</span>
-                </label>
+                <div class="legal-options__field">
+                  <label class="toggle toggle--sm">
+                    <input type="checkbox" id="legal-national" checked />
+                    <span class="toggle__track"><span class="toggle__thumb"></span></span>
+                    <span class="toggle__label" data-i18n="legal.national">Autoridad nacional de protección de datos</span>
+                  </label>
+                  <select id="legal-national-country" data-i18n-aria="legal.nationalSelect" aria-label="Selecciona la autoridad de protección de datos"></select>
+                </div>
 
                 <div class="legal-options__field">
                   <label class="toggle toggle--sm">
@@ -286,7 +289,7 @@
   </div>
 
   <footer class="site-foot">
-    <span>IDprotector · <span data-i18n="footer.selfHosted">autohospedado</span> · <span id="app-version">v0.1.4</span></span>
+    <span>IDprotector · <span data-i18n="footer.selfHosted">autohospedado</span> · <span id="app-version">v0.1.5</span></span>
     <span class="site-foot__priv" data-i18n="footer.privacy">Nada de lo que subes sale de este dispositivo.</span>
   </footer>
 
