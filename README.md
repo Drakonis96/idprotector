@@ -1,5 +1,9 @@
 # IDprotector
 
+[![Publish Docker image](https://github.com/Drakonis96/idprotector/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/Drakonis96/idprotector/actions/workflows/docker-publish.yml)
+[![Docker Hub](https://img.shields.io/docker/pulls/drakonis96/idprotector?logo=docker)](https://hub.docker.com/r/drakonis96/idprotector)
+[![License: MIT](https://img.shields.io/badge/License-MIT-informational.svg)](LICENSE)
+
 **Protege tu DNI y tus documentos antes de compartirlos.** Oculta los datos que no
 quieras mostrar y añade una marca de agua rastreable que desincentiva el uso
 indebido. Todo el procesamiento ocurre **dentro del navegador**: tus archivos nunca
@@ -36,11 +40,33 @@ saferlayer.com, pero como proyecto independiente y autoalojable.
 
 ## Puesta en marcha (Docker)
 
+### Opción A — desde Docker Hub (recomendada, sin descargar el código)
+
+Imagen publicada: [`drakonis96/idprotector`](https://hub.docker.com/r/drakonis96/idprotector)
+(multi-arquitectura: `amd64` y `arm64`).
+
+Con Docker Compose, usando el compose dedicado:
+
 ```bash
-docker compose up -d --build
+curl -O https://raw.githubusercontent.com/Drakonis96/idprotector/main/docker-compose.hub.yml
+docker compose -f docker-compose.hub.yml up -d
+```
+
+O directamente con `docker run`:
+
+```bash
+docker run -d --name idprotector -p 8683:8683 --restart unless-stopped drakonis96/idprotector:latest
 ```
 
 Abre **http://localhost:8683**.
+
+### Opción B — construyendo desde el código
+
+```bash
+git clone https://github.com/Drakonis96/idprotector.git
+cd idprotector
+docker compose up -d --build
+```
 
 Para pararlo:
 
@@ -48,12 +74,19 @@ Para pararlo:
 docker compose down
 ```
 
-### Sin compose
+## Publicación automática (CI/CD)
 
-```bash
-docker build -t idprotector .
-docker run --rm -p 8683:8683 idprotector
-```
+Cada push a `main` y cada release `vX.Y.Z` dispara el workflow
+[`.github/workflows/docker-publish.yml`](.github/workflows/docker-publish.yml),
+que construye la imagen multi-arquitectura y la publica en Docker Hub.
+
+Solo requiere **un secreto** en el repositorio
+(*Settings › Secrets and variables › Actions*):
+
+- `DOCKERHUB_TOKEN` — un *Access Token* de Docker Hub con permiso de escritura
+  (Docker Hub › *Account Settings › Security › New Access Token*).
+
+El usuario (`drakonis96`) va fijado en el propio workflow.
 
 ### Desarrollo local (sin Docker)
 
