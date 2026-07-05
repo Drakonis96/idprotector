@@ -1,80 +1,93 @@
-# IDprotector
+<p align="center">
+  <img src="public/assets/favicon.svg" alt="IDprotector logo" width="84" height="84" />
+</p>
 
-[![Publish Docker image](https://github.com/Drakonis96/idprotector/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/Drakonis96/idprotector/actions/workflows/docker-publish.yml)
-[![Docker Hub](https://img.shields.io/docker/pulls/drakonis96/idprotector?logo=docker)](https://hub.docker.com/r/drakonis96/idprotector)
-[![License: MIT](https://img.shields.io/badge/License-MIT-informational.svg)](LICENSE)
+<h1 align="center">IDprotector</h1>
 
-**Prepara tu DNI y tus documentos antes de enviarlos.** Cubre la información
-que prefieras no mostrar y añade una marca de agua con el uso autorizado. Todo el
-procesamiento ocurre **dentro del navegador**: tus archivos nunca se suben a ningún
-servidor.
+<p align="center">
+  <strong>English</strong> ·
+  <a href="README.es.md">Español</a> ·
+  <a href="README.fr.md">Français</a> ·
+  <a href="README.pt.md">Português</a> ·
+  <a href="README.de.md">Deutsch</a> ·
+  <a href="README.it.md">Italiano</a>
+</p>
 
-App **autohospedable** con Docker, pensada para proteger identificadores
-personales (DNI, pasaportes, permisos) de forma totalmente privada.
+<p align="center">
+  <a href="https://github.com/Drakonis96/idprotector/actions/workflows/docker-publish.yml"><img src="https://github.com/Drakonis96/idprotector/actions/workflows/docker-publish.yml/badge.svg" alt="Publish Docker image" /></a>
+  <a href="https://hub.docker.com/r/drakonis96/idprotector"><img src="https://img.shields.io/docker/pulls/drakonis96/idprotector?logo=docker" alt="Docker Hub" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-informational.svg" alt="License: MIT" /></a>
+</p>
 
-![flujo: subir → ocultar → marca de agua → compartir](public/assets/favicon.svg)
+**Prepare your ID and documents before sending them.** Cover the information you'd
+rather not show and add a watermark stating the authorized use. All processing
+happens **inside your browser**: your files are never uploaded to any server.
 
-## Características
+A **self-hostable** app with Docker, designed to protect personal identifiers
+(IDs, passports, permits) in a fully private way.
 
-- 🖌️ **Ocultar datos** — pincel que dibuja **barras rectas** (nunca torcidas) en
-  cualquier ángulo, con varios grosores, zoom para precisión y deshacer. Lo que
-  tapas desaparece de verdad (las páginas se rasterizan al exportar, no queda
-  texto oculto debajo).
-- 💧 **Marca de agua opcional y configurable** — texto de uso/destinatario,
-  patrones automáticos o modo **Manual** arrastrable, y ajuste de **opacidad**,
-  **tamaño**, **color**, ángulo y pie de página.
-- ⚖️ **Pie legal configurable** — añade al descargable una franja inferior con
-  el RGPD europeo, la autoridad nacional de protección de datos a elegir en un
-  desplegable (UE/EEE, Reino Unido y Suiza), un aviso legal editable y un email
-  y un teléfono de contacto opcionales.
-- 👀 **Vista previa multipágina** — flechas para revisar cómo queda la marca de
-  agua en cada página del PDF o en cada imagen subida antes de exportar.
-- 🌍 **Interfaz multilingüe** — español, inglés, francés, portugués, alemán e
-  italiano desde el selector de idioma.
-- 🌑 **Escala de grises opcional** — convierte el documento (imagen o PDF) a
-  blanco y negro con un interruptor.
-- 🖼️ **Imágenes y PDF** — PNG, JPG, WebP… y PDF de una o varias páginas.
-- 🗂️ **Varios archivos a la vez** — sube p. ej. anverso y reverso juntos; se
-  combinan en un mismo documento protegido.
-- 📤 **Descargar como PDF o imagen** — elige el formato al descargar (varias
-  páginas en imagen se entregan en un `.zip`). También compartir con la hoja del
-  sistema cuando está disponible.
-- 🔒 **100% local y privado** — sin subidas, sin base de datos, sin analítica.
-  Funciona **sin conexión** una vez cargada.
+## Features
 
-## Privacidad por diseño
+- 🖌️ **Redact data** — a brush that draws **straight bars** (never crooked) at
+  any angle, with several thicknesses, zoom for precision and undo. What you
+  cover is really gone (pages are rasterized on export, no hidden text remains
+  underneath).
+- 💧 **Optional, configurable watermark** — use/recipient text, automatic
+  patterns or a draggable **Manual** mode, plus **opacity**, **size**, **color**,
+  angle and footer adjustments.
+- ⚖️ **Configurable legal footer** — adds a bottom strip to the download with the
+  EU GDPR, the national data protection authority picked from a dropdown
+  (EU/EEA, United Kingdom and Switzerland), an editable legal notice and an
+  optional contact email and phone.
+- 👀 **Multi-page preview** — arrows to review how the watermark looks on each
+  PDF page or each uploaded image before exporting.
+- 🌍 **Multilingual interface** — Spanish, English, French, Portuguese, German
+  and Italian from the language selector.
+- 🌑 **Optional grayscale** — convert the document (image or PDF) to black and
+  white with a toggle.
+- 🖼️ **Images and PDF** — PNG, JPG, WebP… and single- or multi-page PDF.
+- 🗂️ **Several files at once** — upload e.g. front and back together; they are
+  combined into a single protected document.
+- 📤 **Download as PDF or image** — choose the format on download (a multi-page
+  image is delivered as a `.zip`). You can also share via the system sheet when
+  available.
+- 🔒 **100% local and private** — no uploads, no database, no analytics. Works
+  **offline** once loaded.
 
-- No hay backend: el contenedor es únicamente un servidor de archivos estáticos
-  (nginx). No existe endpoint capaz de recibir o guardar tus documentos.
-- Las librerías (`pdf.js`, `pdf-lib`) están **empaquetadas localmente** en
-  `public/vendor/`; la app no depende de ningún CDN ni hace peticiones externas.
-- El `Content-Security-Policy` bloquea cualquier conexión saliente
-  (`connect-src 'self'`), la incrustación en iframes y los recursos de terceros.
-- El contenedor arranca en modo `read_only`, sin volúmenes ni variables de entorno.
+## Privacy by design
 
-## Puesta en marcha (Docker)
+- No backend: the container is only a static file server (nginx). There is no
+  endpoint able to receive or store your documents.
+- The libraries (`pdf.js`, `pdf-lib`) are **bundled locally** in
+  `public/vendor/`; the app relies on no CDN and makes no external requests.
+- The `Content-Security-Policy` blocks any outbound connection
+  (`connect-src 'self'`), iframe embedding and third-party resources.
+- The container starts in `read_only` mode, with no volumes or environment
+  variables.
 
-### Opción A — desde Docker Hub (recomendada, sin descargar el código)
+## Getting started (Docker)
 
-Imagen publicada: [`drakonis96/idprotector`](https://hub.docker.com/r/drakonis96/idprotector)
-(multi-arquitectura: `amd64` y `arm64`).
+### Option A — from Docker Hub (recommended, no need to download the code)
 
-Con Docker Compose, usando el compose dedicado:
+Published image: [`drakonis96/idprotector`](https://hub.docker.com/r/drakonis96/idprotector)
+(multi-arch: `amd64` and `arm64`).
+
+With Docker Compose, using the dedicated compose file:
 
 ```bash
 curl -O https://raw.githubusercontent.com/Drakonis96/idprotector/main/docker-compose.hub.yml
 docker compose -f docker-compose.hub.yml up -d
 ```
 
-O directamente con `docker run`:
+Or directly with `docker run`:
 
 ```bash
 docker run -d --name idprotector -p 8683:8683 --restart unless-stopped drakonis96/idprotector:latest
 ```
 
-Abre **http://localhost:8683**.
+Open **http://localhost:8683**.
 
-### Opción B — construyendo desde el código
+### Option B — building from source
 
 ```bash
 git clone https://github.com/Drakonis96/idprotector.git
@@ -82,63 +95,62 @@ cd idprotector
 docker compose up -d --build
 ```
 
-Para pararlo:
+To stop it:
 
 ```bash
 docker compose down
 ```
 
-## Publicación automática (CI/CD)
+## Automatic publishing (CI/CD)
 
-Cada push a `main` y cada release `vX.Y.Z` dispara el workflow
-[`.github/workflows/docker-publish.yml`](.github/workflows/docker-publish.yml),
-que construye la imagen multi-arquitectura y la publica en Docker Hub.
+Every push to `main` and every `vX.Y.Z` release triggers the
+[`.github/workflows/docker-publish.yml`](.github/workflows/docker-publish.yml)
+workflow, which builds the multi-arch image and publishes it to Docker Hub.
 
-Solo requiere **un secreto** en el repositorio
+It only requires **one secret** in the repository
 (*Settings › Secrets and variables › Actions*):
 
-- `DOCKERHUB_TOKEN` — un *Access Token* de Docker Hub con permiso de escritura
+- `DOCKERHUB_TOKEN` — a Docker Hub *Access Token* with write permission
   (Docker Hub › *Account Settings › Security › New Access Token*).
 
-El usuario (`drakonis96`) va fijado en el propio workflow.
+The user (`drakonis96`) is hard-coded in the workflow itself.
 
-### Desarrollo local (sin Docker)
+### Local development (without Docker)
 
-Sirve la carpeta `public/` con cualquier servidor estático, por ejemplo:
+Serve the `public/` folder with any static server, for example:
 
 ```bash
 cd public && python3 -m http.server 8683
 ```
 
-> Nota: ábrelo vía `http://…`, no como `file://`, para que el worker de `pdf.js`
-> funcione.
+> Note: open it via `http://…`, not as `file://`, so the `pdf.js` worker works.
 
-## Cómo se usa
+## How to use
 
-1. **Sube** una imagen, varias imágenes o un PDF (arrastrar y soltar, o pulsar para elegir).
-2. **Oculta** los datos sensibles deslizando el pincel; ajusta el tamaño y usa el
-   zoom para precisión.
-3. **Marca de agua** (opcional): escribe el uso autorizado y ajusta patrón,
-   opacidad, tamaño y color. En modo Manual, arrastra la marca a la posición que
-   prefieras y revisa todas las páginas con las flechas de vista previa.
-4. **Descarga o comparte** el documento protegido.
+1. **Upload** an image, several images or a PDF (drag and drop, or click to choose).
+2. **Redact** the sensitive data by sliding the brush; adjust the size and use
+   zoom for precision.
+3. **Watermark** (optional): type the authorized use and adjust pattern, opacity,
+   size and color. In Manual mode, drag the mark to the position you prefer and
+   review every page with the preview arrows.
+4. **Download or share** the protected document.
 
-## Estructura
+## Structure
 
 ```
 public/
-  index.html          # UI (una sola página, por pasos)
+  index.html          # UI (single page, step by step)
   css/styles.css
   js/
-    watermark.js       # patrones de marca de agua
-    editor.js          # pincel de ocultación (canvas, zoom, deshacer)
-    app.js             # orquestación, carga de archivos, exportación
-  vendor/              # pdf.js + pdf-lib (empaquetados, sin CDN)
+    watermark.js       # watermark patterns
+    editor.js          # redaction brush (canvas, zoom, undo)
+    app.js             # orchestration, file loading, export
+  vendor/              # pdf.js + pdf-lib (bundled, no CDN)
 Dockerfile
-docker-compose.yml     # un único servicio, puerto 8683
-nginx.conf             # cabeceras de privacidad + CSP estricta
+docker-compose.yml     # single service, port 8683
+nginx.conf             # privacy headers + strict CSP
 ```
 
-## Licencia
+## License
 
-MIT — ver [LICENSE](LICENSE).
+MIT — see [LICENSE](LICENSE).
