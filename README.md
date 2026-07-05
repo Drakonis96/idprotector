@@ -25,7 +25,7 @@ personales (DNI, pasaportes, permisos) de forma totalmente privada.
   **tamaño**, **color**, ángulo y pie de página.
 - ⚖️ **Pie legal configurable** — añade al descargable una franja inferior con
   el RGPD europeo, el organismo nacional según idioma, un aviso legal editable
-  y emails opcionales.
+  y un email y un teléfono de contacto opcionales.
 - 👀 **Vista previa multipágina** — flechas para revisar cómo queda la marca de
   agua en cada página del PDF o en cada imagen subida antes de exportar.
 - 🌍 **Interfaz multilingüe** — español, inglés, francés, portugués, alemán e

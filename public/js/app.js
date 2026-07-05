@@ -68,13 +68,14 @@
       "legal.eu": "Normativa Europea de Protección de Datos",
       "legal.national": "Agencia Española de Protección de Datos",
       "legal.contactEmail": "Correo electrónico de contacto",
-      "legal.personalEmail": "Email personal",
+      "legal.phone": "Teléfono de contacto",
       "legal.message": "Mensaje legal",
       "legal.emailPlaceholder": "nombre@dominio.com",
+      "legal.phonePlaceholder": "+34 600 000 000",
       "legal.messagePlaceholder": "Mensaje que se integrará en el descargable",
       "legal.defaultMessage": "Válido únicamente a efectos de identificación en el trámite indicado. No constituye firma, autorización contractual ni consentimiento para usos distintos.",
       "legal.outputContactEmail": "Correo electrónico de contacto",
-      "legal.outputPersonalEmail": "Email personal",
+      "legal.outputPhone": "Teléfono de contacto",
       "wm.preview": "Vista previa en vivo",
       "wm.generate": "Generar documento protegido",
       "wm.continueNoWatermark": "Continuar sin marca de agua",
@@ -164,13 +165,14 @@
       "legal.eu": "European Data Protection Regulation",
       "legal.national": "Irish Data Protection Commission",
       "legal.contactEmail": "Contact email",
-      "legal.personalEmail": "Personal email",
+      "legal.phone": "Contact phone",
       "legal.message": "Legal notice",
       "legal.emailPlaceholder": "name@example.com",
+      "legal.phonePlaceholder": "+1 555 000 0000",
       "legal.messagePlaceholder": "Notice embedded in the download",
       "legal.defaultMessage": "Valid only for identity verification in the stated procedure. It does not constitute a signature, contractual authorization, or consent for other purposes.",
       "legal.outputContactEmail": "Contact email",
-      "legal.outputPersonalEmail": "Personal email",
+      "legal.outputPhone": "Contact phone",
       "wm.preview": "Live preview",
       "wm.generate": "Generate protected document",
       "wm.continueNoWatermark": "Continue without watermark",
@@ -260,13 +262,14 @@
       "legal.eu": "Règlement européen sur la protection des données",
       "legal.national": "Commission Nationale de l'Informatique et des Libertés",
       "legal.contactEmail": "E-mail de contact",
-      "legal.personalEmail": "E-mail personnel",
+      "legal.phone": "Téléphone de contact",
       "legal.message": "Mention légale",
       "legal.emailPlaceholder": "nom@domaine.com",
+      "legal.phonePlaceholder": "+33 6 00 00 00 00",
       "legal.messagePlaceholder": "Mention intégrée au téléchargement",
       "legal.defaultMessage": "Valable uniquement pour la vérification d'identité dans la démarche indiquée. Ne constitue ni signature, ni autorisation contractuelle, ni consentement à d'autres usages.",
       "legal.outputContactEmail": "E-mail de contact",
-      "legal.outputPersonalEmail": "E-mail personnel",
+      "legal.outputPhone": "Téléphone de contact",
       "wm.preview": "Aperçu en direct",
       "wm.generate": "Générer le document protégé",
       "wm.continueNoWatermark": "Continuer sans filigrane",
@@ -356,13 +359,14 @@
       "legal.eu": "Regulamento Europeu de Proteção de Dados",
       "legal.national": "Comissão Nacional de Proteção de Dados",
       "legal.contactEmail": "E-mail de contacto",
-      "legal.personalEmail": "E-mail pessoal",
+      "legal.phone": "Telefone de contacto",
       "legal.message": "Aviso legal",
       "legal.emailPlaceholder": "nome@dominio.com",
+      "legal.phonePlaceholder": "+351 900 000 000",
       "legal.messagePlaceholder": "Aviso integrado na transferência",
       "legal.defaultMessage": "Válido apenas para verificação de identidade no procedimento indicado. Não constitui assinatura, autorização contratual nem consentimento para outros fins.",
       "legal.outputContactEmail": "E-mail de contacto",
-      "legal.outputPersonalEmail": "E-mail pessoal",
+      "legal.outputPhone": "Telefone de contacto",
       "wm.preview": "Pré-visualização em direto",
       "wm.generate": "Gerar documento protegido",
       "wm.continueNoWatermark": "Continuar sem marca de água",
@@ -452,13 +456,14 @@
       "legal.eu": "Europäische Datenschutz-Grundverordnung",
       "legal.national": "Der Bundesbeauftragte für den Datenschutz und die Informationsfreiheit",
       "legal.contactEmail": "Kontakt-E-Mail",
-      "legal.personalEmail": "Private E-Mail",
+      "legal.phone": "Kontakttelefon",
       "legal.message": "Rechtlicher Hinweis",
       "legal.emailPlaceholder": "name@domain.de",
+      "legal.phonePlaceholder": "+49 151 00000000",
       "legal.messagePlaceholder": "Hinweis im Download",
       "legal.defaultMessage": "Nur zur Identitätsprüfung im angegebenen Vorgang gültig. Stellt weder eine Unterschrift noch eine vertragliche Genehmigung oder Einwilligung für andere Zwecke dar.",
       "legal.outputContactEmail": "Kontakt-E-Mail",
-      "legal.outputPersonalEmail": "Private E-Mail",
+      "legal.outputPhone": "Kontakttelefon",
       "wm.preview": "Live-Vorschau",
       "wm.generate": "Geschütztes Dokument erzeugen",
       "wm.continueNoWatermark": "Weiter ohne Wasserzeichen",
@@ -548,13 +553,14 @@
       "legal.eu": "Regolamento europeo sulla protezione dei dati",
       "legal.national": "Garante per la protezione dei dati personali",
       "legal.contactEmail": "E-mail di contatto",
-      "legal.personalEmail": "E-mail personale",
+      "legal.phone": "Telefono di contatto",
       "legal.message": "Avviso legale",
       "legal.emailPlaceholder": "nome@dominio.it",
+      "legal.phonePlaceholder": "+39 300 000 0000",
       "legal.messagePlaceholder": "Avviso integrato nel download",
       "legal.defaultMessage": "Valido esclusivamente per la verifica dell'identità nella procedura indicata. Non costituisce firma, autorizzazione contrattuale né consenso per usi diversi.",
       "legal.outputContactEmail": "E-mail di contatto",
-      "legal.outputPersonalEmail": "E-mail personale",
+      "legal.outputPhone": "Telefono di contatto",
       "wm.preview": "Anteprima live",
       "wm.generate": "Genera documento protetto",
       "wm.continueNoWatermark": "Continua senza filigrana",
@@ -627,8 +633,8 @@
       nationalLink: true,
       contactEmailEnabled: false,
       contactEmail: "",
-      personalEmailEnabled: false,
-      personalEmail: "",
+      phoneEnabled: false,
+      phone: "",
       messageEnabled: true,
       message: t("legal.defaultMessage"),
       messageCustom: false
@@ -1040,8 +1046,8 @@
     $("legal-national").checked = footer.nationalLink;
     $("legal-contact-enabled").checked = footer.contactEmailEnabled;
     $("legal-contact-email").value = footer.contactEmail;
-    $("legal-personal-enabled").checked = footer.personalEmailEnabled;
-    $("legal-personal-email").value = footer.personalEmail;
+    $("legal-phone-enabled").checked = footer.phoneEnabled;
+    $("legal-phone").value = footer.phone;
     $("legal-message-enabled").checked = footer.messageEnabled;
     $("legal-message").value = footer.message;
     updateExportFooterInputState();
@@ -1050,7 +1056,7 @@
 
   function updateExportFooterInputState() {
     $("legal-contact-email").disabled = !state.exportFooter.contactEmailEnabled;
-    $("legal-personal-email").disabled = !state.exportFooter.personalEmailEnabled;
+    $("legal-phone").disabled = !state.exportFooter.phoneEnabled;
     $("legal-message").disabled = !state.exportFooter.messageEnabled;
   }
 
@@ -1060,7 +1066,7 @@
       footer.euLink ||
       footer.nationalLink ||
       (footer.contactEmailEnabled && footer.contactEmail.trim()) ||
-      (footer.personalEmailEnabled && footer.personalEmail.trim()) ||
+      (footer.phoneEnabled && footer.phone.trim()) ||
       (footer.messageEnabled && footer.message.trim())
     );
   }
@@ -1160,7 +1166,7 @@
     var rows = [];
     var message = footer.message.trim();
     var contactEmail = footer.contactEmail.trim();
-    var personalEmail = footer.personalEmail.trim();
+    var phone = footer.phone.trim();
     if (footer.messageEnabled && message) {
       rows.push({ kind: "message", text: message });
     }
@@ -1179,8 +1185,8 @@
     if (footer.contactEmailEnabled && contactEmail) {
       rows.push({ kind: "contact", text: t("legal.outputContactEmail") + ": " + contactEmail });
     }
-    if (footer.personalEmailEnabled && personalEmail) {
-      rows.push({ kind: "contact", text: t("legal.outputPersonalEmail") + ": " + personalEmail });
+    if (footer.phoneEnabled && phone) {
+      rows.push({ kind: "contact", text: t("legal.outputPhone") + ": " + phone });
     }
     return rows.length ? rows : null;
   }
@@ -1601,12 +1607,12 @@
       state.exportFooter.contactEmail = e.target.value;
       exportFooterChanged();
     });
-    $("legal-personal-enabled").addEventListener("change", function (e) {
-      state.exportFooter.personalEmailEnabled = e.target.checked;
+    $("legal-phone-enabled").addEventListener("change", function (e) {
+      state.exportFooter.phoneEnabled = e.target.checked;
       exportFooterChanged();
     });
-    $("legal-personal-email").addEventListener("input", function (e) {
-      state.exportFooter.personalEmail = e.target.value;
+    $("legal-phone").addEventListener("input", function (e) {
+      state.exportFooter.phone = e.target.value;
       exportFooterChanged();
     });
     $("legal-message-enabled").addEventListener("change", function (e) {
