@@ -93,10 +93,9 @@
     <section id="screen-redact" class="screen">
       <div class="wrap">
         <button class="back" data-nav="upload" type="button" data-i18n="common.back">&larr; Atrás</button>
-        <div class="step">
+        <div class="step step--editor">
           <div class="step__head">
             <h2 class="title title--sm" data-i18n="redact.title">Cubre la información que prefieras mantener privada</h2>
-            <p class="lead lead--sm" data-i18n="redact.lead">Pasa el dedo o el cursor por las partes que quieras tapar y usa el zoom para ajustar el trazo con detalle.</p>
           </div>
 
           <div id="editor-stage" class="stage">
@@ -108,7 +107,7 @@
             </div>
           </div>
 
-          <div class="toolbar">
+          <div class="toolbar toolbar--editor">
             <button type="button" id="tool-undo" class="tool tool--icon" title="Deshacer" aria-label="Deshacer" data-i18n-title="tool.undo" data-i18n-aria="tool.undo">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-1"/></svg>
             </button>
@@ -139,9 +138,7 @@
             <button type="button" id="tool-zoom-reset" class="tool tool--icon" title="Ajustar" aria-label="Ajustar" data-i18n-title="tool.fit" data-i18n-aria="tool.fit">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V5a1 1 0 0 1 1-1h4M20 9V5a1 1 0 0 0-1-1h-4M4 15v4a1 1 0 0 0 1 1h4M20 15v4a1 1 0 0 1-1 1h-4"/></svg>
             </button>
-          </div>
-
-          <div class="page-tools" aria-label="Ajustes de página" data-i18n-aria="pageTools.group">
+            <span class="toolbar__sep"></span>
             <button type="button" id="page-rotate-left" class="tool tool--icon" title="Girar a la izquierda" aria-label="Girar a la izquierda" data-i18n-title="pageTools.rotateLeft" data-i18n-aria="pageTools.rotateLeft">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"/><path d="M21 17a8 8 0 0 1-13.7-5.6A8 8 0 0 1 20 5.4"/></svg>
             </button>
@@ -166,14 +163,15 @@
             </button>
           </div>
 
-          <label class="toggle toggle--row">
-            <input type="checkbox" id="gray-toggle" />
-            <span class="toggle__track"><span class="toggle__thumb"></span></span>
-            <span class="toggle__label" data-i18n="redact.grayscale">Convertir el documento a escala de grises</span>
-          </label>
+          <div class="redact-actions">
+            <label class="toggle toggle--row">
+              <input type="checkbox" id="gray-toggle" />
+              <span class="toggle__track"><span class="toggle__thumb"></span></span>
+              <span class="toggle__label" data-i18n="redact.grayscale">Convertir el documento a escala de grises</span>
+            </label>
 
-          <button type="button" class="btn btn--primary" data-nav="watermark" id="redact-continue">Continuar</button>
-          <p class="hint" id="redact-hint" data-i18n="redact.hint">Consejo: el pincel dibuja barras rectas; arrastra desde un extremo al otro. Usa el zoom para ocultar con precisión matrículas, direcciones o números de documento.</p>
+            <button type="button" class="btn btn--primary" data-nav="watermark" id="redact-continue">Continuar</button>
+          </div>
         </div>
       </div>
     </section>
@@ -242,8 +240,10 @@
                 </label>
               </div>
 
-              <div class="legal-options" id="legal-options">
-                <span class="field__label" data-i18n="legal.title">Información legal del descargable</span>
+              <details class="legal-options" id="legal-options">
+                <summary class="legal-options__summary">
+                  <span class="field__label" data-i18n="legal.title">Información legal del descargable</span>
+                </summary>
 
                 <label class="toggle toggle--sm">
                   <input type="checkbox" id="legal-eu" checked />
@@ -286,7 +286,7 @@
                   </label>
                   <textarea id="legal-message" maxlength="260" rows="3" placeholder="Mensaje que se integrará en el descargable" data-i18n-placeholder="legal.messagePlaceholder"></textarea>
                 </div>
-              </div>
+              </details>
             </div>
 
             <div class="wm-preview">
@@ -348,7 +348,7 @@
   </div>
 
   <footer class="site-foot">
-    <span>IDprotector · <span data-i18n="footer.selfHosted">autohospedado</span> · <span id="app-version">v0.2.1</span></span>
+    <span>IDprotector · <span data-i18n="footer.selfHosted">autohospedado</span> · <span id="app-version">v0.2.2</span></span>
     <span class="site-foot__priv" data-i18n="footer.privacy">Nada de lo que subes sale de este dispositivo.</span>
   </footer>
 

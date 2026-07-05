@@ -11,6 +11,13 @@
   var DEG = Math.PI / 180;
   var MIN_CROP = 24;
 
+  function whiteOut(ctx, w, h) {
+    ctx.save();
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, w, h);
+    ctx.restore();
+  }
+
   function cloneRect(r) {
     return { cx: r.cx, cy: r.cy, w: r.w, h: r.h, angle: r.angle };
   }
@@ -34,6 +41,7 @@
   // When grayscale is true the underlying document is desaturated (the black
   // redaction bars and any watermark added later keep their own colour).
   SL.paintPage = function (ctx, page, grayscale) {
+    whiteOut(ctx, page.base.width, page.base.height);
     if (grayscale) ctx.filter = "grayscale(1)";
     ctx.drawImage(page.base, 0, 0);
     if (grayscale) ctx.filter = "none";
@@ -113,9 +121,24 @@
     var c = document.createElement("canvas");
     c.width = Math.max(1, Math.round(w));
     c.height = Math.max(1, Math.round(h));
-    draw(c.getContext("2d"), source, c);
+    var ctx = c.getContext("2d");
+    whiteOut(ctx, c.width, c.height);
+    draw(ctx, source, c);
     return c;
   }
+
+  function rotatedSize(w, h, degrees) {
+    var rad = degrees * DEG;
+    var cos = Math.cos(rad), sin = Math.sin(rad);
+    return {
+      w: Math.ceil(Math.abs(w * cos) + Math.abs(h * sin)),
+      h: Math.ceil(Math.abs(w * sin) + Math.abs(h * cos)),
+      rad: rad,
+      cos: cos,
+      sin: sin
+    };
+  }
+  SL.rotatedSize = rotatedSize;
 
   function transformRect(r, fn, angleAdd) {
     var center = fn({ x: r.cx, y: r.cy });
@@ -235,6 +258,7 @@
     this.editing = null;
     this.cropRect = null;
     this.cropDraft = null;
+    this.straightenPreview = 0;
     this.pointers = new Map();
     this.pinch = null;
 
@@ -250,6 +274,7 @@
     this.editing = null;
     this.cropRect = null;
     this.cropDraft = null;
+    this.straightenPreview = 0;
     this.notifySelection();
     this.notifyCrop();
     this.relayout(true);
@@ -266,6 +291,14 @@
   Editor.prototype.setBrush = function (px) { this.brush = px; };
 
   Editor.prototype.setGrayscale = function (on) { this.grayscale = !!on; this.render(); };
+
+  Editor.prototype.pageSize = function () {
+    if (!this.page) return { w: 1, h: 1, rad: 0 };
+    if (Math.abs(this.straightenPreview) < 0.05) {
+      return { w: this.page.base.width, h: this.page.base.height, rad: 0 };
+    }
+    return rotatedSize(this.page.base.width, this.page.base.height, this.straightenPreview);
+  };
 
   Editor.prototype.notifySelection = function () {
     if (this.onSelectionChange) this.onSelectionChange(this.getSelectedRect());
@@ -290,8 +323,10 @@
   Editor.prototype.relayout = function (reset) {
     if (!this.page) return;
     var hostW = this.host.clientWidth || 600;
-    var maxH = Math.min(global.innerHeight * 0.62, 620);
-    var pageW = this.page.base.width, pageH = this.page.base.height;
+    var compact = hostW < 560;
+    var maxH = Math.min(global.innerHeight * (compact ? 0.46 : 0.50), compact ? 420 : 620);
+    var size = this.pageSize();
+    var pageW = size.w, pageH = size.h;
 
     var fitW = hostW / pageW;
     var fitH = maxH / pageH;
@@ -346,8 +381,9 @@
 
   Editor.prototype.clampPan = function () {
     var m = this.fit * this.scale * this.dpr;
-    var contentW = this.page.base.width * m;
-    var contentH = this.page.base.height * m;
+    var size = this.pageSize();
+    var contentW = size.w * m;
+    var contentH = size.h * m;
     var cw = this.canvas.width, ch = this.canvas.height;
     if (contentW <= cw) this.tx = (cw - contentW) / 2;
     else this.tx = Math.min(0, Math.max(cw - contentW, this.tx));
@@ -362,6 +398,14 @@
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     var m = this.viewMatrix();
     ctx.setTransform(m.s, 0, 0, m.s, m.tx, m.ty);
+    if (Math.abs(this.straightenPreview) >= 0.05) {
+      var size = this.pageSize();
+      ctx.translate(size.w / 2, size.h / 2);
+      ctx.rotate(size.rad);
+      ctx.translate(-this.page.base.width / 2, -this.page.base.height / 2);
+      SL.paintPage(ctx, this.page, this.grayscale);
+      return;
+    }
     SL.paintPage(ctx, this.page, this.grayscale);
     if (this.pending) fillRotatedRect(ctx, this.pending);
     this.drawSelection(ctx, m);
@@ -578,6 +622,7 @@
   Editor.prototype.applyCrop = function () {
     var crop = this.getCropRect();
     if (!crop || !this.page) return false;
+    this.straightenPreview = 0;
     var ok = SL.cropPage(this.page, crop);
     if (!ok) return false;
     this.selectedIndex = -1;
@@ -592,6 +637,7 @@
   };
 
   Editor.prototype.rotatePage = function (direction) {
+    this.straightenPreview = 0;
     if (!this.page || !SL.rotatePage(this.page, direction)) return false;
     this.selectedIndex = -1;
     this.cropRect = null;
@@ -605,6 +651,7 @@
   };
 
   Editor.prototype.straightenPage = function (degrees) {
+    this.straightenPreview = 0;
     if (!this.page || !SL.straightenPage(this.page, degrees)) return false;
     this.selectedIndex = -1;
     this.cropRect = null;
@@ -615,6 +662,23 @@
     if (this.onChange) this.onChange();
     if (this.onPageChange) this.onPageChange();
     return true;
+  };
+
+  Editor.prototype.setStraightenPreview = function (degrees) {
+    var next = Math.abs(degrees) < 0.05 ? 0 : degrees;
+    if (next === this.straightenPreview) return;
+    this.straightenPreview = next;
+    if (next) {
+      this.selectedIndex = -1;
+      this.cropRect = null;
+      this.cropDraft = null;
+      this.drawing = false;
+      this.pending = null;
+      this.editing = null;
+      this.notifySelection();
+      this.notifyCrop();
+    }
+    this.relayout(false);
   };
 
   Editor.prototype._bind = function () {
@@ -639,6 +703,7 @@
         self.panStart = { x: e.clientX, y: e.clientY, tx: self.tx, ty: self.ty };
         return;
       }
+      if (Math.abs(self.straightenPreview) >= 0.05) return;
       var p = self.toImage(e.clientX, e.clientY);
       if (self.tool === "crop") {
         self.beginCrop(p);

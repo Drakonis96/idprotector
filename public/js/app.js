@@ -1073,6 +1073,7 @@
     if ($("page-straighten")) $("page-straighten").value = rounded;
     if ($("page-straighten-val")) $("page-straighten-val").textContent = rounded + "°";
     if ($("page-straighten-apply")) $("page-straighten-apply").disabled = Math.abs(rounded) < 0.05;
+    if (editor) editor.setStraightenPreview(rounded);
   }
 
   function copySelectedRedactionToPages() {
