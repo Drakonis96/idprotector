@@ -14,12 +14,535 @@
   var MAX_IMG_DIM = 2600;   // cap raster size to keep memory sane
   var PDF_TARGET_W = 1600;  // render width for PDF pages
   var WM_REF_W = 1000;      // watermark size reference width
+  var currentLang = "es";
+
+  var I18N = {
+    es: {
+      "doc.title": "IDprotector · Protege tus documentos",
+      "doc.description": "Oculta datos sensibles y añade marcas de agua a tu DNI y documentos. 100% en tu navegador: nada se sube a ningún servidor.",
+      "language.label": "Idioma",
+      "common.back": "← Atrás",
+      "upload.title": "Prepara tus documentos<br />antes de enviarlos",
+      "upload.lead": "Cubre los datos que prefieras reservar y añade una marca de agua personalizada. Todo ocurre <strong>dentro de tu navegador</strong>: tus archivos nunca se suben a ningún servidor.",
+      "upload.dropTitle": "Arrastra tus documentos aquí",
+      "upload.dropText": "o pulsa para elegir imágenes o PDF. Puedes subir varios archivos.",
+      "privacy.local": "Procesamiento 100% local",
+      "privacy.noCloud": "Cero subidas a la nube",
+      "privacy.offline": "Funciona sin conexión",
+      "redact.title": "Oculta los datos que no quieras que vea el receptor",
+      "redact.lead": "Desliza el dedo (o el ratón) sobre las zonas que quieras ocultar y haz zoom para pintar con más precisión.",
+      "redact.grayscale": "Convertir el documento a escala de grises",
+      "redact.hint": "Consejo: el pincel dibuja barras rectas; arrastra desde un extremo al otro. Usa el zoom para ocultar con precisión matrículas, direcciones o números de documento.",
+      "redact.continue": "Continuar",
+      "redact.continueNoRedaction": "Continuar sin ocultar datos",
+      "tool.undo": "Deshacer",
+      "tool.pan": "Mover / desplazar",
+      "tool.move": "Mover",
+      "tool.zoomOut": "Alejar",
+      "tool.zoomIn": "Acercar",
+      "tool.fit": "Ajustar",
+      "brush.group": "Tamaño del pincel",
+      "brush.veryThin": "Muy fino",
+      "brush.thin": "Fino",
+      "brush.medium": "Medio",
+      "brush.thick": "Grueso",
+      "brush.veryThick": "Muy grueso",
+      "nav.prevPage": "Página anterior",
+      "nav.nextPage": "Página siguiente",
+      "wm.title": "Añade una marca de agua personalizada",
+      "wm.lead": "Indica el uso permitido y el destinatario autorizado. Ese texto se integra sobre el documento como marca de agua.",
+      "wm.authorized": "Uso y destinatario autorizados",
+      "wm.placeholder": "Ej.: Solo válido para la verificación de identidad de Banco XYZ, 05/07/2026",
+      "wm.charsRemaining": "caracteres restantes",
+      "wm.apply": "Aplicar marca de agua",
+      "wm.pattern": "Patrón",
+      "wm.patternAria": "Patrón de marca de agua",
+      "wm.opacity": "Opacidad",
+      "wm.size": "Tamaño",
+      "wm.angle": "Ángulo",
+      "wm.resetPosition": "Restablecer posición",
+      "wm.color": "Color",
+      "wm.custom": "Personalizado",
+      "wm.footer": "Añadir pie de página con firma de protección",
+      "wm.preview": "Vista previa en vivo",
+      "wm.generate": "Generar documento protegido",
+      "wm.continueNoWatermark": "Continuar sin marca de agua",
+      "result.title": "Tu documento está listo para compartir de forma segura",
+      "result.lead": "La marca de agua queda integrada en el archivo final junto al documento y los datos del destinatario.",
+      "result.format": "Formato de descarga",
+      "result.image": "Imagen",
+      "result.pdf": "PDF",
+      "result.share": "Compartir",
+      "result.download": "Descargar",
+      "result.more": "Proteger más documentos",
+      "format.multiImage": "Se descargará un .zip con una imagen por página.",
+      "format.pdf": "Un PDF con todas las páginas.",
+      "format.image": "Una imagen PNG.",
+      "busy.processing": "Procesando…",
+      "busy.preparingMany": "Preparando tus documentos…",
+      "busy.preparingOne": "Preparando tu documento…",
+      "busy.generating": "Generando archivo…",
+      "busy.sharing": "Preparando para compartir…",
+      "alert.unsupported": "Formato no compatible. Usa imágenes (PNG, JPG…) o PDF.",
+      "alert.imageRead": "No se pudo leer la imagen",
+      "alert.openFailed": "No se pudo abrir el documento: ",
+      "alert.generateFailed": "No se pudo generar el archivo: ",
+      "alert.shareFailed": "No se pudo compartir: ",
+      "share.title": "Documento protegido",
+      "footer.selfHosted": "autohospedado",
+      "footer.privacy": "Nada de lo que subes sale de este dispositivo.",
+      "pattern.dense": "Seguro",
+      "pattern.diagonal": "Diagonal",
+      "pattern.mesh": "Malla",
+      "pattern.grid": "Rejilla",
+      "pattern.single": "Central",
+      "pattern.manual": "Manual",
+      "watermark.unauthorized": "SIN AUTORIZAR",
+      "watermark.protectedWith": "Protegido con",
+      "file.protectedSuffix": "protegido",
+      "file.pagePrefix": "pagina"
+    },
+    en: {
+      "doc.title": "IDprotector · Protect your documents",
+      "doc.description": "Hide sensitive data and add watermarks to IDs and documents. 100% in your browser: nothing is uploaded to any server.",
+      "language.label": "Language",
+      "common.back": "← Back",
+      "upload.title": "Prepare your documents<br />before sending them",
+      "upload.lead": "Cover the details you want to keep private and add a custom watermark. Everything happens <strong>inside your browser</strong>: your files are never uploaded to any server.",
+      "upload.dropTitle": "Drop your documents here",
+      "upload.dropText": "or click to choose images or PDFs. You can upload several files.",
+      "privacy.local": "100% local processing",
+      "privacy.noCloud": "No cloud uploads",
+      "privacy.offline": "Works offline",
+      "redact.title": "Hide the data you do not want the recipient to see",
+      "redact.lead": "Drag your finger or mouse over the areas you want to hide, and zoom in for more precision.",
+      "redact.grayscale": "Convert the document to grayscale",
+      "redact.hint": "Tip: the brush draws straight bars; drag from one end to the other. Use zoom to hide ID numbers or document data precisely.",
+      "redact.continue": "Continue",
+      "redact.continueNoRedaction": "Continue without hiding data",
+      "tool.undo": "Undo",
+      "tool.pan": "Move / pan",
+      "tool.move": "Move",
+      "tool.zoomOut": "Zoom out",
+      "tool.zoomIn": "Zoom in",
+      "tool.fit": "Fit",
+      "brush.group": "Brush size",
+      "brush.veryThin": "Very thin",
+      "brush.thin": "Thin",
+      "brush.medium": "Medium",
+      "brush.thick": "Thick",
+      "brush.veryThick": "Very thick",
+      "nav.prevPage": "Previous page",
+      "nav.nextPage": "Next page",
+      "wm.title": "Add a custom watermark",
+      "wm.lead": "Enter the authorized use and recipient. That text will be embedded into the document as a watermark.",
+      "wm.authorized": "Authorized use and recipient",
+      "wm.placeholder": "Example: Only valid for Banco XYZ identity verification, 05/07/2026",
+      "wm.charsRemaining": "characters left",
+      "wm.apply": "Apply watermark",
+      "wm.pattern": "Pattern",
+      "wm.patternAria": "Watermark pattern",
+      "wm.opacity": "Opacity",
+      "wm.size": "Size",
+      "wm.angle": "Angle",
+      "wm.resetPosition": "Reset position",
+      "wm.color": "Color",
+      "wm.custom": "Custom",
+      "wm.footer": "Add protection signature footer",
+      "wm.preview": "Live preview",
+      "wm.generate": "Generate protected document",
+      "wm.continueNoWatermark": "Continue without watermark",
+      "result.title": "Your document is ready to share securely",
+      "result.lead": "The watermark is embedded in the final file together with the document and recipient details.",
+      "result.format": "Download format",
+      "result.image": "Image",
+      "result.pdf": "PDF",
+      "result.share": "Share",
+      "result.download": "Download",
+      "result.more": "Protect more documents",
+      "format.multiImage": "A .zip with one image per page will be downloaded.",
+      "format.pdf": "One PDF with all pages.",
+      "format.image": "One PNG image.",
+      "busy.processing": "Processing…",
+      "busy.preparingMany": "Preparing your documents…",
+      "busy.preparingOne": "Preparing your document…",
+      "busy.generating": "Generating file…",
+      "busy.sharing": "Preparing to share…",
+      "alert.unsupported": "Unsupported format. Use images (PNG, JPG…) or PDF.",
+      "alert.imageRead": "Could not read the image",
+      "alert.openFailed": "Could not open the document: ",
+      "alert.generateFailed": "Could not generate the file: ",
+      "alert.shareFailed": "Could not share: ",
+      "share.title": "Protected document",
+      "footer.selfHosted": "self-hosted",
+      "footer.privacy": "Nothing you upload leaves this device.",
+      "pattern.dense": "Secure",
+      "pattern.diagonal": "Diagonal",
+      "pattern.mesh": "Mesh",
+      "pattern.grid": "Grid",
+      "pattern.single": "Center",
+      "pattern.manual": "Manual",
+      "watermark.unauthorized": "UNAUTHORIZED",
+      "watermark.protectedWith": "Protected with",
+      "file.protectedSuffix": "protected",
+      "file.pagePrefix": "page"
+    },
+    fr: {
+      "doc.title": "IDprotector · Protégez vos documents",
+      "doc.description": "Masquez les données sensibles et ajoutez des filigranes à vos documents. 100 % dans votre navigateur : rien n'est envoyé à un serveur.",
+      "language.label": "Langue",
+      "common.back": "← Retour",
+      "upload.title": "Préparez vos documents<br />avant de les envoyer",
+      "upload.lead": "Masquez les informations à préserver et ajoutez un filigrane personnalisé. Tout se passe <strong>dans votre navigateur</strong> : vos fichiers ne sont jamais envoyés à un serveur.",
+      "upload.dropTitle": "Déposez vos documents ici",
+      "upload.dropText": "ou cliquez pour choisir des images ou des PDF. Vous pouvez importer plusieurs fichiers.",
+      "privacy.local": "Traitement 100 % local",
+      "privacy.noCloud": "Aucun envoi dans le cloud",
+      "privacy.offline": "Fonctionne hors ligne",
+      "redact.title": "Masquez les données que le destinataire ne doit pas voir",
+      "redact.lead": "Faites glisser le doigt ou la souris sur les zones à masquer, puis zoomez pour plus de précision.",
+      "redact.grayscale": "Convertir le document en niveaux de gris",
+      "redact.hint": "Astuce : le pinceau trace des barres droites ; faites glisser d'une extrémité à l'autre. Utilisez le zoom pour masquer précisément les données du document.",
+      "redact.continue": "Continuer",
+      "redact.continueNoRedaction": "Continuer sans masquer de données",
+      "tool.undo": "Annuler",
+      "tool.pan": "Déplacer / parcourir",
+      "tool.move": "Déplacer",
+      "tool.zoomOut": "Réduire",
+      "tool.zoomIn": "Agrandir",
+      "tool.fit": "Ajuster",
+      "brush.group": "Taille du pinceau",
+      "brush.veryThin": "Très fin",
+      "brush.thin": "Fin",
+      "brush.medium": "Moyen",
+      "brush.thick": "Épais",
+      "brush.veryThick": "Très épais",
+      "nav.prevPage": "Page précédente",
+      "nav.nextPage": "Page suivante",
+      "wm.title": "Ajoutez un filigrane personnalisé",
+      "wm.lead": "Indiquez l'usage autorisé et le destinataire. Ce texte sera intégré au document comme filigrane.",
+      "wm.authorized": "Usage et destinataire autorisés",
+      "wm.placeholder": "Ex. : Valable uniquement pour la vérification d'identité de Banque XYZ, 05/07/2026",
+      "wm.charsRemaining": "caractères restants",
+      "wm.apply": "Appliquer le filigrane",
+      "wm.pattern": "Motif",
+      "wm.patternAria": "Motif du filigrane",
+      "wm.opacity": "Opacité",
+      "wm.size": "Taille",
+      "wm.angle": "Angle",
+      "wm.resetPosition": "Réinitialiser la position",
+      "wm.color": "Couleur",
+      "wm.custom": "Personnalisé",
+      "wm.footer": "Ajouter un pied de page avec signature de protection",
+      "wm.preview": "Aperçu en direct",
+      "wm.generate": "Générer le document protégé",
+      "wm.continueNoWatermark": "Continuer sans filigrane",
+      "result.title": "Votre document est prêt à être partagé en sécurité",
+      "result.lead": "Le filigrane est intégré au fichier final avec le document et les informations du destinataire.",
+      "result.format": "Format de téléchargement",
+      "result.image": "Image",
+      "result.pdf": "PDF",
+      "result.share": "Partager",
+      "result.download": "Télécharger",
+      "result.more": "Protéger d'autres documents",
+      "format.multiImage": "Un .zip avec une image par page sera téléchargé.",
+      "format.pdf": "Un PDF avec toutes les pages.",
+      "format.image": "Une image PNG.",
+      "busy.processing": "Traitement…",
+      "busy.preparingMany": "Préparation de vos documents…",
+      "busy.preparingOne": "Préparation de votre document…",
+      "busy.generating": "Génération du fichier…",
+      "busy.sharing": "Préparation du partage…",
+      "alert.unsupported": "Format non compatible. Utilisez des images (PNG, JPG…) ou un PDF.",
+      "alert.imageRead": "Impossible de lire l'image",
+      "alert.openFailed": "Impossible d'ouvrir le document : ",
+      "alert.generateFailed": "Impossible de générer le fichier : ",
+      "alert.shareFailed": "Impossible de partager : ",
+      "share.title": "Document protégé",
+      "footer.selfHosted": "auto-hébergé",
+      "footer.privacy": "Rien de ce que vous importez ne quitte cet appareil.",
+      "pattern.dense": "Sécurisé",
+      "pattern.diagonal": "Diagonal",
+      "pattern.mesh": "Maillage",
+      "pattern.grid": "Grille",
+      "pattern.single": "Central",
+      "pattern.manual": "Manuel",
+      "watermark.unauthorized": "NON AUTORISÉ",
+      "watermark.protectedWith": "Protégé avec",
+      "file.protectedSuffix": "protege",
+      "file.pagePrefix": "page"
+    },
+    pt: {
+      "doc.title": "IDprotector · Proteja os seus documentos",
+      "doc.description": "Oculte dados sensíveis e adicione marcas de água aos seus documentos. 100% no navegador: nada é enviado para servidores.",
+      "language.label": "Idioma",
+      "common.back": "← Voltar",
+      "upload.title": "Prepare os seus documentos<br />antes de enviá-los",
+      "upload.lead": "Cubra os dados que pretende reservar e adicione uma marca de água personalizada. Tudo acontece <strong>no seu navegador</strong>: os ficheiros nunca são enviados para servidores.",
+      "upload.dropTitle": "Arraste os documentos para aqui",
+      "upload.dropText": "ou clique para escolher imagens ou PDF. Pode carregar vários ficheiros.",
+      "privacy.local": "Processamento 100% local",
+      "privacy.noCloud": "Sem envios para a cloud",
+      "privacy.offline": "Funciona offline",
+      "redact.title": "Oculte os dados que o destinatário não deve ver",
+      "redact.lead": "Deslize o dedo ou o rato sobre as zonas a ocultar e use o zoom para mais precisão.",
+      "redact.grayscale": "Converter o documento para escala de cinzentos",
+      "redact.hint": "Dica: o pincel desenha barras retas; arraste de uma extremidade à outra. Use o zoom para ocultar dados do documento com precisão.",
+      "redact.continue": "Continuar",
+      "redact.continueNoRedaction": "Continuar sem ocultar dados",
+      "tool.undo": "Anular",
+      "tool.pan": "Mover / deslocar",
+      "tool.move": "Mover",
+      "tool.zoomOut": "Afastar",
+      "tool.zoomIn": "Aproximar",
+      "tool.fit": "Ajustar",
+      "brush.group": "Tamanho do pincel",
+      "brush.veryThin": "Muito fino",
+      "brush.thin": "Fino",
+      "brush.medium": "Médio",
+      "brush.thick": "Grosso",
+      "brush.veryThick": "Muito grosso",
+      "nav.prevPage": "Página anterior",
+      "nav.nextPage": "Página seguinte",
+      "wm.title": "Adicione uma marca de água personalizada",
+      "wm.lead": "Indique o uso permitido e o destinatário autorizado. Esse texto será integrado no documento como marca de água.",
+      "wm.authorized": "Uso e destinatário autorizados",
+      "wm.placeholder": "Ex.: Válido apenas para verificação de identidade do Banco XYZ, 05/07/2026",
+      "wm.charsRemaining": "caracteres restantes",
+      "wm.apply": "Aplicar marca de água",
+      "wm.pattern": "Padrão",
+      "wm.patternAria": "Padrão da marca de água",
+      "wm.opacity": "Opacidade",
+      "wm.size": "Tamanho",
+      "wm.angle": "Ângulo",
+      "wm.resetPosition": "Repor posição",
+      "wm.color": "Cor",
+      "wm.custom": "Personalizado",
+      "wm.footer": "Adicionar rodapé com assinatura de proteção",
+      "wm.preview": "Pré-visualização em direto",
+      "wm.generate": "Gerar documento protegido",
+      "wm.continueNoWatermark": "Continuar sem marca de água",
+      "result.title": "O documento está pronto para partilhar com segurança",
+      "result.lead": "A marca de água fica integrada no ficheiro final juntamente com o documento e os dados do destinatário.",
+      "result.format": "Formato de transferência",
+      "result.image": "Imagem",
+      "result.pdf": "PDF",
+      "result.share": "Partilhar",
+      "result.download": "Transferir",
+      "result.more": "Proteger mais documentos",
+      "format.multiImage": "Será transferido um .zip com uma imagem por página.",
+      "format.pdf": "Um PDF com todas as páginas.",
+      "format.image": "Uma imagem PNG.",
+      "busy.processing": "A processar…",
+      "busy.preparingMany": "A preparar os documentos…",
+      "busy.preparingOne": "A preparar o documento…",
+      "busy.generating": "A gerar ficheiro…",
+      "busy.sharing": "A preparar para partilhar…",
+      "alert.unsupported": "Formato não compatível. Use imagens (PNG, JPG…) ou PDF.",
+      "alert.imageRead": "Não foi possível ler a imagem",
+      "alert.openFailed": "Não foi possível abrir o documento: ",
+      "alert.generateFailed": "Não foi possível gerar o ficheiro: ",
+      "alert.shareFailed": "Não foi possível partilhar: ",
+      "share.title": "Documento protegido",
+      "footer.selfHosted": "autoalojado",
+      "footer.privacy": "Nada do que carrega sai deste dispositivo.",
+      "pattern.dense": "Seguro",
+      "pattern.diagonal": "Diagonal",
+      "pattern.mesh": "Malha",
+      "pattern.grid": "Grelha",
+      "pattern.single": "Central",
+      "pattern.manual": "Manual",
+      "watermark.unauthorized": "NÃO AUTORIZADO",
+      "watermark.protectedWith": "Protegido com",
+      "file.protectedSuffix": "protegido",
+      "file.pagePrefix": "pagina"
+    },
+    de: {
+      "doc.title": "IDprotector · Dokumente schützen",
+      "doc.description": "Blenden Sie sensible Daten aus und fügen Sie Wasserzeichen hinzu. 100 % im Browser: nichts wird auf einen Server geladen.",
+      "language.label": "Sprache",
+      "common.back": "← Zurück",
+      "upload.title": "Dokumente vorbereiten<br />bevor Sie sie senden",
+      "upload.lead": "Decken Sie vertrauliche Angaben ab und fügen Sie ein eigenes Wasserzeichen hinzu. Alles geschieht <strong>in Ihrem Browser</strong>: Ihre Dateien werden nie auf einen Server hochgeladen.",
+      "upload.dropTitle": "Dokumente hier ablegen",
+      "upload.dropText": "oder klicken, um Bilder oder PDFs auszuwählen. Mehrere Dateien sind möglich.",
+      "privacy.local": "100 % lokale Verarbeitung",
+      "privacy.noCloud": "Keine Cloud-Uploads",
+      "privacy.offline": "Funktioniert offline",
+      "redact.title": "Verbergen Sie Daten, die der Empfänger nicht sehen soll",
+      "redact.lead": "Ziehen Sie mit Finger oder Maus über die Bereiche, die Sie verbergen möchten, und zoomen Sie für mehr Präzision.",
+      "redact.grayscale": "Dokument in Graustufen umwandeln",
+      "redact.hint": "Tipp: Der Pinsel zeichnet gerade Balken; ziehen Sie von einem Ende zum anderen. Nutzen Sie den Zoom für präzises Abdecken.",
+      "redact.continue": "Weiter",
+      "redact.continueNoRedaction": "Weiter ohne Daten zu verbergen",
+      "tool.undo": "Rückgängig",
+      "tool.pan": "Verschieben / bewegen",
+      "tool.move": "Verschieben",
+      "tool.zoomOut": "Verkleinern",
+      "tool.zoomIn": "Vergrößern",
+      "tool.fit": "Einpassen",
+      "brush.group": "Pinselgröße",
+      "brush.veryThin": "Sehr dünn",
+      "brush.thin": "Dünn",
+      "brush.medium": "Mittel",
+      "brush.thick": "Dick",
+      "brush.veryThick": "Sehr dick",
+      "nav.prevPage": "Vorherige Seite",
+      "nav.nextPage": "Nächste Seite",
+      "wm.title": "Eigenes Wasserzeichen hinzufügen",
+      "wm.lead": "Geben Sie erlaubte Nutzung und Empfänger an. Dieser Text wird als Wasserzeichen in das Dokument eingebettet.",
+      "wm.authorized": "Erlaubte Nutzung und Empfänger",
+      "wm.placeholder": "Bsp.: Nur gültig für Identitätsprüfung bei Bank XYZ, 05.07.2026",
+      "wm.charsRemaining": "Zeichen übrig",
+      "wm.apply": "Wasserzeichen anwenden",
+      "wm.pattern": "Muster",
+      "wm.patternAria": "Wasserzeichenmuster",
+      "wm.opacity": "Deckkraft",
+      "wm.size": "Größe",
+      "wm.angle": "Winkel",
+      "wm.resetPosition": "Position zurücksetzen",
+      "wm.color": "Farbe",
+      "wm.custom": "Benutzerdefiniert",
+      "wm.footer": "Fußzeile mit Schutzsignatur hinzufügen",
+      "wm.preview": "Live-Vorschau",
+      "wm.generate": "Geschütztes Dokument erzeugen",
+      "wm.continueNoWatermark": "Weiter ohne Wasserzeichen",
+      "result.title": "Ihr Dokument ist bereit zum sicheren Teilen",
+      "result.lead": "Das Wasserzeichen wird zusammen mit Dokument und Empfängerdaten in die finale Datei eingebettet.",
+      "result.format": "Downloadformat",
+      "result.image": "Bild",
+      "result.pdf": "PDF",
+      "result.share": "Teilen",
+      "result.download": "Herunterladen",
+      "result.more": "Weitere Dokumente schützen",
+      "format.multiImage": "Es wird eine .zip-Datei mit einem Bild pro Seite heruntergeladen.",
+      "format.pdf": "Ein PDF mit allen Seiten.",
+      "format.image": "Ein PNG-Bild.",
+      "busy.processing": "Wird verarbeitet…",
+      "busy.preparingMany": "Dokumente werden vorbereitet…",
+      "busy.preparingOne": "Dokument wird vorbereitet…",
+      "busy.generating": "Datei wird erzeugt…",
+      "busy.sharing": "Teilen wird vorbereitet…",
+      "alert.unsupported": "Nicht unterstütztes Format. Verwenden Sie Bilder (PNG, JPG…) oder PDF.",
+      "alert.imageRead": "Das Bild konnte nicht gelesen werden",
+      "alert.openFailed": "Das Dokument konnte nicht geöffnet werden: ",
+      "alert.generateFailed": "Die Datei konnte nicht erzeugt werden: ",
+      "alert.shareFailed": "Teilen war nicht möglich: ",
+      "share.title": "Geschütztes Dokument",
+      "footer.selfHosted": "selbst gehostet",
+      "footer.privacy": "Nichts, was Sie hochladen, verlässt dieses Gerät.",
+      "pattern.dense": "Sicher",
+      "pattern.diagonal": "Diagonal",
+      "pattern.mesh": "Netz",
+      "pattern.grid": "Raster",
+      "pattern.single": "Zentral",
+      "pattern.manual": "Manuell",
+      "watermark.unauthorized": "NICHT AUTORISIERT",
+      "watermark.protectedWith": "Geschützt mit",
+      "file.protectedSuffix": "geschuetzt",
+      "file.pagePrefix": "seite"
+    },
+    it: {
+      "doc.title": "IDprotector · Proteggi i tuoi documenti",
+      "doc.description": "Nascondi dati sensibili e aggiungi filigrane ai documenti. 100% nel browser: nulla viene caricato su server.",
+      "language.label": "Lingua",
+      "common.back": "← Indietro",
+      "upload.title": "Prepara i tuoi documenti<br />prima di inviarli",
+      "upload.lead": "Copri i dati che vuoi mantenere riservati e aggiungi una filigrana personalizzata. Tutto avviene <strong>nel tuo browser</strong>: i file non vengono mai caricati su server.",
+      "upload.dropTitle": "Trascina qui i documenti",
+      "upload.dropText": "oppure clicca per scegliere immagini o PDF. Puoi caricare più file.",
+      "privacy.local": "Elaborazione 100% locale",
+      "privacy.noCloud": "Nessun upload nel cloud",
+      "privacy.offline": "Funziona offline",
+      "redact.title": "Nascondi i dati che il destinatario non deve vedere",
+      "redact.lead": "Trascina il dito o il mouse sulle zone da nascondere e usa lo zoom per maggiore precisione.",
+      "redact.grayscale": "Converti il documento in scala di grigi",
+      "redact.hint": "Suggerimento: il pennello disegna barre dritte; trascina da un'estremità all'altra. Usa lo zoom per nascondere con precisione i dati del documento.",
+      "redact.continue": "Continua",
+      "redact.continueNoRedaction": "Continua senza nascondere dati",
+      "tool.undo": "Annulla",
+      "tool.pan": "Sposta / scorri",
+      "tool.move": "Sposta",
+      "tool.zoomOut": "Riduci",
+      "tool.zoomIn": "Ingrandisci",
+      "tool.fit": "Adatta",
+      "brush.group": "Dimensione pennello",
+      "brush.veryThin": "Molto sottile",
+      "brush.thin": "Sottile",
+      "brush.medium": "Medio",
+      "brush.thick": "Spesso",
+      "brush.veryThick": "Molto spesso",
+      "nav.prevPage": "Pagina precedente",
+      "nav.nextPage": "Pagina successiva",
+      "wm.title": "Aggiungi una filigrana personalizzata",
+      "wm.lead": "Indica l'uso consentito e il destinatario autorizzato. Il testo verrà integrato nel documento come filigrana.",
+      "wm.authorized": "Uso e destinatario autorizzati",
+      "wm.placeholder": "Es.: Valido solo per verifica identità di Banca XYZ, 05/07/2026",
+      "wm.charsRemaining": "caratteri rimanenti",
+      "wm.apply": "Applica filigrana",
+      "wm.pattern": "Motivo",
+      "wm.patternAria": "Motivo della filigrana",
+      "wm.opacity": "Opacità",
+      "wm.size": "Dimensione",
+      "wm.angle": "Angolo",
+      "wm.resetPosition": "Ripristina posizione",
+      "wm.color": "Colore",
+      "wm.custom": "Personalizzato",
+      "wm.footer": "Aggiungi piè di pagina con firma di protezione",
+      "wm.preview": "Anteprima live",
+      "wm.generate": "Genera documento protetto",
+      "wm.continueNoWatermark": "Continua senza filigrana",
+      "result.title": "Il documento è pronto per essere condiviso in sicurezza",
+      "result.lead": "La filigrana viene integrata nel file finale insieme al documento e ai dati del destinatario.",
+      "result.format": "Formato di download",
+      "result.image": "Immagine",
+      "result.pdf": "PDF",
+      "result.share": "Condividi",
+      "result.download": "Scarica",
+      "result.more": "Proteggi altri documenti",
+      "format.multiImage": "Verrà scaricato un .zip con un'immagine per pagina.",
+      "format.pdf": "Un PDF con tutte le pagine.",
+      "format.image": "Un'immagine PNG.",
+      "busy.processing": "Elaborazione…",
+      "busy.preparingMany": "Preparazione dei documenti…",
+      "busy.preparingOne": "Preparazione del documento…",
+      "busy.generating": "Generazione file…",
+      "busy.sharing": "Preparazione alla condivisione…",
+      "alert.unsupported": "Formato non supportato. Usa immagini (PNG, JPG…) o PDF.",
+      "alert.imageRead": "Impossibile leggere l'immagine",
+      "alert.openFailed": "Impossibile aprire il documento: ",
+      "alert.generateFailed": "Impossibile generare il file: ",
+      "alert.shareFailed": "Impossibile condividere: ",
+      "share.title": "Documento protetto",
+      "footer.selfHosted": "self-hosted",
+      "footer.privacy": "Nulla di ciò che carichi lascia questo dispositivo.",
+      "pattern.dense": "Sicuro",
+      "pattern.diagonal": "Diagonale",
+      "pattern.mesh": "Maglia",
+      "pattern.grid": "Griglia",
+      "pattern.single": "Centrale",
+      "pattern.manual": "Manuale",
+      "watermark.unauthorized": "NON AUTORIZZATO",
+      "watermark.protectedWith": "Protetto con",
+      "file.protectedSuffix": "protetto",
+      "file.pagePrefix": "pagina"
+    }
+  };
+
+  function t(key, fallback) {
+    var dict = I18N[currentLang] || I18N.es;
+    return Object.prototype.hasOwnProperty.call(dict, key)
+      ? dict[key]
+      : (Object.prototype.hasOwnProperty.call(I18N.es, key) ? I18N.es[key] : (fallback || key));
+  }
+  SL.t = t;
 
   var state = {
     hasPdf: false,          // was any source a PDF (drives the default download format)
     fileName: "documento",
     pages: [],
     current: 0,
+    wmPreviewPage: 0,
     resultPage: 0,
     grayscale: false,       // optional: desaturate the whole document
     format: "image",        // chosen download format: "image" | "pdf"
@@ -28,8 +551,53 @@
 
   var editor = null;
   var els = {};
+  var wmDragging = false;
 
   function $(id) { return document.getElementById(id); }
+
+  function setLanguage(lang) {
+    currentLang = I18N[lang] ? lang : "es";
+    applyTranslations();
+  }
+
+  function applyTranslations() {
+    document.documentElement.lang = currentLang;
+    document.title = t("doc.title");
+    var desc = document.querySelector("meta[name='description']");
+    if (desc) desc.setAttribute("content", t("doc.description"));
+    if ($("lang-select")) $("lang-select").value = currentLang;
+
+    document.querySelectorAll("[data-i18n]").forEach(function (el) {
+      el.textContent = t(el.dataset.i18n, el.textContent);
+    });
+    document.querySelectorAll("[data-i18n-html]").forEach(function (el) {
+      el.innerHTML = t(el.dataset.i18nHtml, el.innerHTML);
+    });
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(function (el) {
+      el.setAttribute("placeholder", t(el.dataset.i18nPlaceholder, el.getAttribute("placeholder") || ""));
+    });
+    document.querySelectorAll("[data-i18n-title]").forEach(function (el) {
+      el.setAttribute("title", t(el.dataset.i18nTitle, el.getAttribute("title") || ""));
+    });
+    document.querySelectorAll("[data-i18n-aria]").forEach(function (el) {
+      el.setAttribute("aria-label", t(el.dataset.i18nAria, el.getAttribute("aria-label") || ""));
+    });
+
+    updatePatternLabels();
+    updateRedactContinueSafe();
+    updateWatermarkControlsSafe();
+    if ($("screen-watermark") && $("screen-watermark").classList.contains("is-active")) schedulePreview();
+    if ($("screen-result") && $("screen-result").classList.contains("is-active")) renderResult();
+  }
+
+  function updateRedactContinueSafe() {
+    if ($("redact-continue")) updateRedactContinue();
+  }
+
+  function updateWatermarkControlsSafe() {
+    if ($("wm-continue")) updateWmContinue();
+    if ($("format-note")) syncFormatButtons();
+  }
 
   function busy(on, text) {
     $("busy").hidden = !on;
@@ -54,6 +622,7 @@
     state.pages = [];
     state.hasPdf = false;
     state.current = 0;
+    state.wmPreviewPage = 0;
     state.resultPage = 0;
     state.grayscale = false;
     state.format = "image";
@@ -80,7 +649,7 @@
       var url = URL.createObjectURL(file);
       var img = new Image();
       img.onload = function () { URL.revokeObjectURL(url); resolve(img); };
-      img.onerror = function () { URL.revokeObjectURL(url); reject(new Error("No se pudo leer la imagen")); };
+      img.onerror = function () { URL.revokeObjectURL(url); reject(new Error(t("alert.imageRead"))); };
       img.src = url;
     });
   }
@@ -158,7 +727,7 @@
       if (kind) { accepted.push(f); if (kind === "pdf") hasPdf = true; }
     });
     if (!accepted.length) {
-      alert("Formato no compatible. Usa imágenes (PNG, JPG…) o PDF.");
+      alert(t("alert.unsupported"));
       return;
     }
 
@@ -168,7 +737,7 @@
       ? (accepted[0].name.replace(/\.[^.]+$/, "") || "documento")
       : "documentos";
 
-    busy(true, accepted.length > 1 ? "Preparando tus documentos…" : "Preparando tu documento…");
+    busy(true, accepted.length > 1 ? t("busy.preparingMany") : t("busy.preparingOne"));
 
     // Process sequentially so page order is deterministic.
     var pages = [];
@@ -188,7 +757,7 @@
     }).catch(function (err) {
       busy(false);
       console.error(err);
-      alert("No se pudo abrir el documento: " + (err && err.message ? err.message : err));
+      alert(t("alert.openFailed") + (err && err.message ? err.message : err));
     });
   }
 
@@ -217,7 +786,7 @@
 
   function updateRedactContinue() {
     var any = state.pages.some(function (p) { return p.rects.length > 0; });
-    $("redact-continue").textContent = any ? "Continuar" : "Continuar sin ocultar datos";
+    $("redact-continue").textContent = any ? t("redact.continue") : t("redact.continueNoRedaction");
   }
 
   function gotoPage(delta) {
@@ -231,6 +800,42 @@
   /* ------------------------------------------------------------------ *
    * Watermark screen
    * ------------------------------------------------------------------ */
+  function ensureManualWatermark(wm) {
+    if (!wm.manual) wm.manual = { x: 0.5, y: 0.82, angle: 0 };
+    if (typeof wm.manual.x !== "number") wm.manual.x = 0.5;
+    if (typeof wm.manual.y !== "number") wm.manual.y = 0.82;
+    if (typeof wm.manual.angle !== "number") wm.manual.angle = 0;
+    return wm.manual;
+  }
+
+  function patternLabel(pattern) {
+    return t("pattern." + pattern.id, pattern.label);
+  }
+
+  function updatePatternLabels() {
+    var host = $("wm-patterns");
+    if (!host) return;
+    host.querySelectorAll(".pattern").forEach(function (btn) {
+      var span = btn.querySelector("span");
+      if (span) span.textContent = t("pattern." + btn.dataset.pattern, span.textContent);
+    });
+  }
+
+  function syncManualControls() {
+    var manual = ensureManualWatermark(state.wm);
+    if ($("wm-angle")) $("wm-angle").value = Math.round(manual.angle);
+    if ($("wm-angle-val")) $("wm-angle-val").textContent = Math.round(manual.angle) + "°";
+    updateManualControls();
+  }
+
+  function updateManualControls() {
+    var active = state.wm.enabled && state.wm.pattern === "manual";
+    var controls = $("wm-manual-controls");
+    var host = $("wm-preview-host");
+    if (controls) controls.hidden = !active;
+    if (host) host.classList.toggle("is-manual", active);
+  }
+
   function buildPatternPicker() {
     var host = $("wm-patterns");
     host.innerHTML = "";
@@ -242,7 +847,7 @@
       var cv = document.createElement("canvas");
       cv.width = 168; cv.height = 104;
       var span = document.createElement("span");
-      span.textContent = p.label;
+      span.textContent = patternLabel(p);
       btn.appendChild(cv); btn.appendChild(span);
       host.appendChild(btn);
       SL.renderThumb(cv, p.id, state.wm.color);
@@ -251,6 +856,7 @@
         host.querySelectorAll(".pattern").forEach(function (b) {
           b.classList.toggle("is-active", b.dataset.pattern === p.id);
         });
+        syncManualControls();
         schedulePreview();
       });
     });
@@ -296,19 +902,62 @@
     $("wm-color").value = wm.color;
     $("wm-footer").checked = wm.footer;
     $("wm-options").classList.toggle("is-off", !wm.enabled);
+    $("wm-patterns").querySelectorAll(".pattern").forEach(function (b) {
+      b.classList.toggle("is-active", b.dataset.pattern === wm.pattern);
+    });
+    syncManualControls();
     updateWmContinue();
   }
 
   function updateWmContinue() {
     $("wm-continue").textContent = state.wm.enabled
-      ? "Generar documento protegido"
-      : "Continuar sin marca de agua";
+      ? t("wm.generate")
+      : t("wm.continueNoWatermark");
   }
 
   function enterWatermark() {
     buildPatternPicker();
     buildSwatches();
+    state.wmPreviewPage = Math.min(state.current, state.pages.length - 1);
     syncWatermarkControls();
+    updateWmPreviewNav();
+    schedulePreview();
+  }
+
+  function updateWmPreviewNav() {
+    var multi = state.pages.length > 1;
+    $("wm-preview-nav").hidden = !multi;
+    if (!multi) return;
+    $("wm-preview-page-label").textContent = (state.wmPreviewPage + 1) + " / " + state.pages.length;
+    document.querySelectorAll("[data-wmpage]").forEach(function (b) {
+      b.disabled = b.dataset.wmpage === "prev"
+        ? state.wmPreviewPage <= 0
+        : state.wmPreviewPage >= state.pages.length - 1;
+    });
+  }
+
+  function gotoWmPreviewPage(delta) {
+    var n = state.wmPreviewPage + delta;
+    if (n < 0 || n >= state.pages.length) return;
+    state.wmPreviewPage = n;
+    updateWmPreviewNav();
+    schedulePreview();
+  }
+
+  function canDragManualWatermark() {
+    return state.wm.enabled && state.wm.pattern === "manual" &&
+      $("screen-watermark").classList.contains("is-active");
+  }
+
+  function setManualPositionFromEvent(e) {
+    var host = $("wm-preview-host");
+    var cv = host ? host.querySelector("canvas") : null;
+    if (!cv) return;
+    var rect = cv.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+    var manual = ensureManualWatermark(state.wm);
+    manual.x = Math.min(0.97, Math.max(0.03, (e.clientX - rect.left) / rect.width));
+    manual.y = Math.min(0.97, Math.max(0.03, (e.clientY - rect.top) / rect.height));
     schedulePreview();
   }
 
@@ -322,7 +971,7 @@
   }
   function renderWmPreview() {
     var host = $("wm-preview-host");
-    var page = state.pages[state.current] || state.pages[0];
+    var page = state.pages[state.wmPreviewPage] || state.pages[state.current] || state.pages[0];
     if (!page) return;
     // Compose at a capped resolution so the dense pattern stays snappy while
     // dragging sliders; the exported file always uses full resolution.
@@ -395,8 +1044,8 @@
     });
     var multiImg = state.format === "image" && state.pages.length > 1;
     $("format-note").textContent = multiImg
-      ? "Se descargará un .zip con una imagen por página."
-      : (state.format === "pdf" ? "Un PDF con todas las páginas." : "Una imagen PNG.");
+      ? t("format.multiImage")
+      : (state.format === "pdf" ? t("format.pdf") : t("format.image"));
   }
   function renderResult() {
     if (state.pages.length > 1) {
@@ -428,10 +1077,11 @@
   }
 
   function buildImage() {
+    var suffix = t("file.protectedSuffix");
     if (state.pages.length === 1) {
       var c = compose(state.pages[0], state.wm);
       return canvasToBlob(c, "image/png").then(function (blob) {
-        return { blob: blob, name: state.fileName + "-protegido.png", type: "image/png" };
+        return { blob: blob, name: state.fileName + "-" + suffix + ".png", type: "image/png" };
       });
     }
     // Several pages -> a .zip with one PNG per page.
@@ -443,14 +1093,14 @@
         return canvasToBlob(c, "image/png").then(function (blob) {
           return blob.arrayBuffer();
         }).then(function (buf) {
-          files.push({ name: "pagina-" + (i + 1) + ".png", data: new Uint8Array(buf) });
+          files.push({ name: t("file.pagePrefix") + "-" + (i + 1) + ".png", data: new Uint8Array(buf) });
         });
       });
     });
     return chain.then(function () {
       return {
         blob: makeZip(files),
-        name: state.fileName + "-protegido.zip",
+        name: state.fileName + "-" + suffix + ".zip",
         type: "application/zip"
       };
     });
@@ -477,7 +1127,7 @@
       return chain.then(function () { return doc.save(); }).then(function (bytes) {
         return {
           blob: new Blob([bytes], { type: "application/pdf" }),
-          name: state.fileName + "-protegido.pdf",
+          name: state.fileName + "-" + t("file.protectedSuffix") + ".pdf",
           type: "application/pdf"
         };
       });
@@ -527,7 +1177,7 @@
   }
 
   function download() {
-    busy(true, "Generando archivo…");
+    busy(true, t("busy.generating"));
     buildOutput().then(function (out) {
       var url = URL.createObjectURL(out.blob);
       var a = document.createElement("a");
@@ -537,24 +1187,24 @@
       busy(false);
     }).catch(function (err) {
       busy(false); console.error(err);
-      alert("No se pudo generar el archivo: " + (err && err.message ? err.message : err));
+      alert(t("alert.generateFailed") + (err && err.message ? err.message : err));
     });
   }
 
   function share() {
-    busy(true, "Preparando para compartir…");
+    busy(true, t("busy.sharing"));
     buildOutput().then(function (out) {
       var file = new File([out.blob], out.name, { type: out.type });
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
         busy(false);
-        return navigator.share({ files: [file], title: "Documento protegido" })
+        return navigator.share({ files: [file], title: t("share.title") })
           .catch(function () { /* user cancelled */ });
       }
       busy(false);
       download();
     }).catch(function (err) {
       busy(false); console.error(err);
-      alert("No se pudo compartir: " + (err && err.message ? err.message : err));
+      alert(t("alert.shareFailed") + (err && err.message ? err.message : err));
     });
   }
 
@@ -564,6 +1214,9 @@
   function wire() {
     els.fileInput = $("file-input");
     $("app-version").textContent = SL.VERSION;
+    $("lang-select").addEventListener("change", function (e) {
+      setLanguage(e.target.value);
+    });
 
     // upload
     var dz = $("dropzone");
@@ -637,11 +1290,48 @@
       $("wm-size-val").textContent = e.target.value + " px";
       schedulePreview();
     });
+    $("wm-angle").addEventListener("input", function (e) {
+      ensureManualWatermark(state.wm).angle = parseInt(e.target.value, 10);
+      $("wm-angle-val").textContent = e.target.value + "°";
+      schedulePreview();
+    });
+    $("wm-manual-reset").addEventListener("click", function () {
+      state.wm.manual = { x: 0.5, y: 0.82, angle: 0 };
+      syncManualControls();
+      schedulePreview();
+    });
     $("wm-color").addEventListener("input", function (e) { setColor(e.target.value); });
     $("wm-footer").addEventListener("change", function (e) {
       state.wm.footer = e.target.checked;
       schedulePreview();
     });
+    document.querySelectorAll("[data-wmpage]").forEach(function (b) {
+      b.addEventListener("click", function () { gotoWmPreviewPage(b.dataset.wmpage === "next" ? 1 : -1); });
+    });
+    var wmHost = $("wm-preview-host");
+    wmHost.addEventListener("pointerdown", function (e) {
+      if (!canDragManualWatermark()) return;
+      e.preventDefault();
+      wmDragging = true;
+      wmHost.classList.add("is-dragging");
+      try { wmHost.setPointerCapture(e.pointerId); } catch (err) {}
+      setManualPositionFromEvent(e);
+    });
+    wmHost.addEventListener("pointermove", function (e) {
+      if (!wmDragging) return;
+      e.preventDefault();
+      setManualPositionFromEvent(e);
+    });
+    function endManualDrag(e) {
+      if (!wmDragging) return;
+      wmDragging = false;
+      wmHost.classList.remove("is-dragging");
+      try {
+        if (wmHost.hasPointerCapture && wmHost.hasPointerCapture(e.pointerId)) wmHost.releasePointerCapture(e.pointerId);
+      } catch (err) {}
+    }
+    wmHost.addEventListener("pointerup", endManualDrag);
+    wmHost.addEventListener("pointercancel", endManualDrag);
 
     // result actions
     $("btn-download").addEventListener("click", download);
@@ -657,6 +1347,7 @@
       if ($("screen-watermark").classList.contains("is-active")) schedulePreview();
       if ($("screen-result").classList.contains("is-active")) renderResult();
     });
+    applyTranslations();
   }
 
   if (document.readyState === "loading") {

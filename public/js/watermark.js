@@ -7,7 +7,7 @@
   var SL = global.SL || (global.SL = {});
 
   SL.BRAND = "IDprotector";
-  SL.VERSION = "v0.1.1";
+  SL.VERSION = "v0.1.2";
 
   // Available patterns (id + human label). Order defines UI order.
   SL.PATTERNS = [
@@ -15,7 +15,8 @@
     { id: "diagonal", label: "Diagonal" },
     { id: "mesh",     label: "Malla" },
     { id: "grid",     label: "Rejilla" },
-    { id: "single",   label: "Central" }
+    { id: "single",   label: "Central" },
+    { id: "manual",   label: "Manual" }
   ];
 
   SL.SWATCHES = ["#111111", "#e0362a", "#1d6fd6", "#178a4c", "#7a3ff2", "#8a8a8a"];
@@ -28,15 +29,13 @@
       opacity: 0.18,   // 0..1
       size: 22,        // font px, relative to a 1000px-wide reference
       color: "#111111",
-      footer: true
+      footer: true,
+      manual: { x: 0.5, y: 0.82, angle: 0 }
     };
   };
 
-  function hexToRgb(hex) {
-    var h = hex.replace("#", "");
-    if (h.length === 3) h = h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
-    var n = parseInt(h, 16);
-    return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+  function tr(key, fallback) {
+    return typeof SL.t === "function" ? SL.t(key, fallback) : fallback;
   }
 
   // Draw rows of repeated text at a given angle across the whole canvas.
@@ -120,6 +119,31 @@
     ctx.restore();
   }
 
+  function manual(ctx, w, h, wm, opts) {
+    var pos = wm.manual || {};
+    var x = Math.min(0.97, Math.max(0.03, typeof pos.x === "number" ? pos.x : 0.5));
+    var y = Math.min(0.97, Math.max(0.03, typeof pos.y === "number" ? pos.y : 0.82));
+    var angle = Math.min(60, Math.max(-60, typeof pos.angle === "number" ? pos.angle : 0)) * Math.PI / 180;
+    var fs = opts.fontPx * 1.55;
+    var maxW = w * 0.84;
+
+    ctx.save();
+    ctx.globalAlpha = opts.alpha;
+    ctx.fillStyle = opts.color;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.translate(x * w, y * h);
+    ctx.rotate(angle);
+    ctx.font = "700 " + fs + "px Georgia, serif";
+    var guard = 0;
+    while (ctx.measureText(opts.text).width > maxW && fs > 8 && guard++ < 200) {
+      fs -= 1;
+      ctx.font = "700 " + fs + "px Georgia, serif";
+    }
+    ctx.fillText(opts.text, 0, 0);
+    ctx.restore();
+  }
+
   /**
    * Render the watermark onto ctx covering (w x h) pixels.
    * wm: watermark state object. `scale` maps the reference size to actual px
@@ -127,7 +151,7 @@
    */
   SL.renderWatermark = function (ctx, w, h, wm, scale) {
     if (!wm || !wm.enabled) return;
-    var text = (wm.text && wm.text.trim()) ? wm.text.trim() : "SIN AUTORIZAR";
+    var text = (wm.text && wm.text.trim()) ? wm.text.trim() : tr("watermark.unauthorized", "SIN AUTORIZAR");
     scale = scale || 1;
     var fontPx = Math.max(6, wm.size * scale);
     var color = wm.color || "#111111";
@@ -138,6 +162,9 @@
     switch (wm.pattern) {
       case "single":
         single(ctx, w, h, { text: text, color: color, alpha: a, fontPx: fontPx });
+        break;
+      case "manual":
+        manual(ctx, w, h, wm, { text: text, color: color, alpha: a, fontPx: fontPx });
         break;
       case "grid":
         tile(ctx, w, h, Object.assign({}, base, { angle: 0, alpha: a, diamonds: false, lineFactor: 2.6 }));
@@ -170,7 +197,7 @@
     ctx.textBaseline = "alphabetic";
     ctx.font = "italic " + fs + "px Georgia, serif";
     ctx.textAlign = "left";
-    ctx.fillText("Protegido con " + SL.BRAND, pad, h - pad);
+    ctx.fillText(tr("watermark.protectedWith", "Protegido con") + " " + SL.BRAND, pad, h - pad);
     ctx.textAlign = "right";
     ctx.globalAlpha = 0.65;
     ctx.font = fs + "px Georgia, serif";
@@ -187,7 +214,8 @@
     ctx.fillRect(0, 0, w, hgt);
     SL.renderWatermark(ctx, w, hgt, {
       enabled: true, text: "ID", pattern: patternId,
-      opacity: 0.55, size: 7, color: color || "#111111", footer: false
+      opacity: 0.55, size: 7, color: color || "#111111", footer: false,
+      manual: { x: 0.5, y: 0.68, angle: 0 }
     }, 1);
   };
 

@@ -20,9 +20,13 @@ personales (DNI, pasaportes, permisos) de forma totalmente privada.
   cualquier ángulo, con varios grosores, zoom para precisión y deshacer. Lo que
   tapas desaparece de verdad (las páginas se rasterizan al exportar, no queda
   texto oculto debajo).
-- 💧 **Marca de agua opcional y configurable** — texto de uso/destinatario, y
-  ajuste de **patrón** (Seguro, Diagonal, Malla, Rejilla, Central), **opacidad**,
-  **tamaño**, **color** y pie de página.
+- 💧 **Marca de agua opcional y configurable** — texto de uso/destinatario,
+  patrones automáticos o modo **Manual** arrastrable, y ajuste de **opacidad**,
+  **tamaño**, **color**, ángulo y pie de página.
+- 👀 **Vista previa multipágina** — flechas para revisar cómo queda la marca de
+  agua en cada página del PDF o en cada imagen subida antes de exportar.
+- 🌍 **Interfaz multilingüe** — español, inglés, francés, portugués, alemán e
+  italiano desde el selector de idioma.
 - 🌑 **Escala de grises opcional** — convierte el documento (imagen o PDF) a
   blanco y negro con un interruptor.
 - 🖼️ **Imágenes y PDF** — PNG, JPG, WebP… y PDF de una o varias páginas.
@@ -111,7 +115,8 @@ cd public && python3 -m http.server 8683
 2. **Oculta** los datos sensibles deslizando el pincel; ajusta el tamaño y usa el
    zoom para precisión.
 3. **Marca de agua** (opcional): escribe el uso autorizado y ajusta patrón,
-   opacidad, tamaño y color.
+   opacidad, tamaño y color. En modo Manual, arrastra la marca a la posición que
+   prefieras y revisa todas las páginas con las flechas de vista previa.
 4. **Descarga o comparte** el documento protegido.
 
 ## Estructura

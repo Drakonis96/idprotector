@@ -9,6 +9,18 @@
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
+  <div class="lang-switch">
+    <label for="lang-select" data-i18n="language.label">Idioma</label>
+    <select id="lang-select" aria-label="Idioma" data-i18n-aria="language.label">
+      <option value="es">Español</option>
+      <option value="en">English</option>
+      <option value="fr">Français</option>
+      <option value="pt">Português</option>
+      <option value="de">Deutsch</option>
+      <option value="it">Italiano</option>
+    </select>
+  </div>
+
   <main id="app">
 
     <!-- ======================= UPLOAD ======================= -->
@@ -18,8 +30,8 @@
           <span class="brand__dot"></span>
           <span class="brand__name">IDprotector</span>
         </div>
-        <h1 class="title">Prepara tus documentos<br />antes de enviarlos</h1>
-        <p class="lead">
+        <h1 class="title" data-i18n-html="upload.title">Prepara tus documentos<br />antes de enviarlos</h1>
+        <p class="lead" data-i18n-html="upload.lead">
           Cubre los datos que prefieras reservar y añade una marca de agua personalizada.
           Todo ocurre <strong>dentro de tu navegador</strong>: tus archivos nunca se suben a
           ningún servidor.
@@ -35,16 +47,16 @@
               </svg>
             </div>
             <div class="dropzone__text">
-              <strong>Arrastra tus documentos aquí</strong>
-              <span>o pulsa para elegir imágenes o PDF. Puedes subir varios archivos.</span>
+              <strong data-i18n="upload.dropTitle">Arrastra tus documentos aquí</strong>
+              <span data-i18n="upload.dropText">o pulsa para elegir imágenes o PDF. Puedes subir varios archivos.</span>
             </div>
           </div>
         </label>
 
         <ul class="privacy">
-          <li><span class="privacy__ico">🔒</span> Procesamiento 100% local</li>
-          <li><span class="privacy__ico">🚫</span> Cero subidas a la nube</li>
-          <li><span class="privacy__ico">📴</span> Funciona sin conexión</li>
+          <li><span class="privacy__ico">🔒</span> <span data-i18n="privacy.local">Procesamiento 100% local</span></li>
+          <li><span class="privacy__ico">🚫</span> <span data-i18n="privacy.noCloud">Cero subidas a la nube</span></li>
+          <li><span class="privacy__ico">📴</span> <span data-i18n="privacy.offline">Funciona sin conexión</span></li>
         </ul>
       </div>
     </section>
@@ -52,45 +64,45 @@
     <!-- ======================= REDACT ======================= -->
     <section id="screen-redact" class="screen">
       <div class="wrap">
-        <button class="back" data-nav="upload" type="button">&larr; Atrás</button>
+        <button class="back" data-nav="upload" type="button" data-i18n="common.back">&larr; Atrás</button>
         <div class="step">
           <div class="step__head">
-            <h2 class="title title--sm">Oculta los datos que no quieras que vea el receptor</h2>
-            <p class="lead lead--sm">Desliza el dedo (o el ratón) sobre las zonas que quieras ocultar y haz zoom para pintar con más precisión.</p>
+            <h2 class="title title--sm" data-i18n="redact.title">Oculta los datos que no quieras que vea el receptor</h2>
+            <p class="lead lead--sm" data-i18n="redact.lead">Desliza el dedo (o el ratón) sobre las zonas que quieras ocultar y haz zoom para pintar con más precisión.</p>
           </div>
 
           <div id="editor-stage" class="stage">
             <div id="editor-canvas-host" class="stage__host"></div>
             <div id="page-nav" class="pagenav" hidden>
-              <button type="button" data-page="prev" class="pagenav__btn">‹</button>
+              <button type="button" data-page="prev" class="pagenav__btn" aria-label="Página anterior" data-i18n-aria="nav.prevPage">‹</button>
               <span id="page-label" class="pagenav__label">1 / 1</span>
-              <button type="button" data-page="next" class="pagenav__btn">›</button>
+              <button type="button" data-page="next" class="pagenav__btn" aria-label="Página siguiente" data-i18n-aria="nav.nextPage">›</button>
             </div>
           </div>
 
           <div class="toolbar">
-            <button type="button" id="tool-undo" class="tool tool--icon" title="Deshacer" aria-label="Deshacer">
+            <button type="button" id="tool-undo" class="tool tool--icon" title="Deshacer" aria-label="Deshacer" data-i18n-title="tool.undo" data-i18n-aria="tool.undo">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-1"/></svg>
             </button>
             <span class="toolbar__sep"></span>
-            <div class="brushes" role="radiogroup" aria-label="Tamaño del pincel">
-              <button type="button" class="brush" data-size="10" style="--d:8px"  aria-label="Muy fino"></button>
-              <button type="button" class="brush" data-size="20" style="--d:12px" aria-label="Fino"></button>
-              <button type="button" class="brush is-active" data-size="34" style="--d:18px" aria-label="Medio"></button>
-              <button type="button" class="brush" data-size="52" style="--d:24px" aria-label="Grueso"></button>
-              <button type="button" class="brush" data-size="74" style="--d:30px" aria-label="Muy grueso"></button>
+            <div class="brushes" role="radiogroup" aria-label="Tamaño del pincel" data-i18n-aria="brush.group">
+              <button type="button" class="brush" data-size="10" style="--d:8px"  aria-label="Muy fino" data-i18n-aria="brush.veryThin"></button>
+              <button type="button" class="brush" data-size="20" style="--d:12px" aria-label="Fino" data-i18n-aria="brush.thin"></button>
+              <button type="button" class="brush is-active" data-size="34" style="--d:18px" aria-label="Medio" data-i18n-aria="brush.medium"></button>
+              <button type="button" class="brush" data-size="52" style="--d:24px" aria-label="Grueso" data-i18n-aria="brush.thick"></button>
+              <button type="button" class="brush" data-size="74" style="--d:30px" aria-label="Muy grueso" data-i18n-aria="brush.veryThick"></button>
             </div>
             <span class="toolbar__sep"></span>
-            <button type="button" id="tool-pan" class="tool tool--icon" title="Mover / desplazar" aria-label="Mover">
+            <button type="button" id="tool-pan" class="tool tool--icon" title="Mover / desplazar" aria-label="Mover" data-i18n-title="tool.pan" data-i18n-aria="tool.move">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20M12 2l-3 3M12 2l3 3M12 22l-3-3M12 22l3-3M2 12l3-3M2 12l3 3M22 12l-3-3M22 12l-3 3"/></svg>
             </button>
-            <button type="button" id="tool-zoom-out" class="tool tool--icon" title="Alejar" aria-label="Alejar">
+            <button type="button" id="tool-zoom-out" class="tool tool--icon" title="Alejar" aria-label="Alejar" data-i18n-title="tool.zoomOut" data-i18n-aria="tool.zoomOut">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M8 11h6M21 21l-4.3-4.3"/></svg>
             </button>
-            <button type="button" id="tool-zoom-in" class="tool tool--icon" title="Acercar" aria-label="Acercar">
+            <button type="button" id="tool-zoom-in" class="tool tool--icon" title="Acercar" aria-label="Acercar" data-i18n-title="tool.zoomIn" data-i18n-aria="tool.zoomIn">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M11 8v6M8 11h6M21 21l-4.3-4.3"/></svg>
             </button>
-            <button type="button" id="tool-zoom-reset" class="tool tool--icon" title="Ajustar" aria-label="Ajustar">
+            <button type="button" id="tool-zoom-reset" class="tool tool--icon" title="Ajustar" aria-label="Ajustar" data-i18n-title="tool.fit" data-i18n-aria="tool.fit">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V5a1 1 0 0 1 1-1h4M20 9V5a1 1 0 0 0-1-1h-4M4 15v4a1 1 0 0 0 1 1h4M20 15v4a1 1 0 0 1-1 1h-4"/></svg>
             </button>
           </div>
@@ -98,11 +110,11 @@
           <label class="toggle toggle--row">
             <input type="checkbox" id="gray-toggle" />
             <span class="toggle__track"><span class="toggle__thumb"></span></span>
-            <span class="toggle__label">Convertir el documento a escala de grises</span>
+            <span class="toggle__label" data-i18n="redact.grayscale">Convertir el documento a escala de grises</span>
           </label>
 
           <button type="button" class="btn btn--primary" data-nav="watermark" id="redact-continue">Continuar</button>
-          <p class="hint" id="redact-hint">Consejo: el pincel dibuja barras rectas; arrastra desde un extremo al otro. Usa el zoom para ocultar con precisión matrículas, direcciones o números de documento.</p>
+          <p class="hint" id="redact-hint" data-i18n="redact.hint">Consejo: el pincel dibuja barras rectas; arrastra desde un extremo al otro. Usa el zoom para ocultar con precisión matrículas, direcciones o números de documento.</p>
         </div>
       </div>
     </section>
@@ -110,63 +122,76 @@
     <!-- ======================= WATERMARK ======================= -->
     <section id="screen-watermark" class="screen">
       <div class="wrap">
-        <button class="back" data-nav="redact" type="button">&larr; Atrás</button>
+        <button class="back" data-nav="redact" type="button" data-i18n="common.back">&larr; Atrás</button>
         <div class="step step--wide">
           <div class="step__head">
-            <h2 class="title title--sm">Añade una marca de agua personalizada</h2>
-            <p class="lead lead--sm">Indica el uso permitido y el destinatario autorizado. Ese texto se integra sobre el documento como marca de agua.</p>
+            <h2 class="title title--sm" data-i18n="wm.title">Añade una marca de agua personalizada</h2>
+            <p class="lead lead--sm" data-i18n="wm.lead">Indica el uso permitido y el destinatario autorizado. Ese texto se integra sobre el documento como marca de agua.</p>
           </div>
 
           <div class="wm-layout">
             <div class="wm-controls">
               <label class="field">
-                <span class="field__label">Uso y destinatario autorizados</span>
-                <textarea id="wm-text" maxlength="100" rows="3" placeholder="Ej.: Solo válido para la verificación de identidad de Banco XYZ, 05/07/2026"></textarea>
-                <span class="field__counter"><span id="wm-count">100</span> caracteres restantes</span>
+                <span class="field__label" data-i18n="wm.authorized">Uso y destinatario autorizados</span>
+                <textarea id="wm-text" maxlength="100" rows="3" placeholder="Ej.: Solo válido para la verificación de identidad de Banco XYZ, 05/07/2026" data-i18n-placeholder="wm.placeholder"></textarea>
+                <span class="field__counter"><span id="wm-count">100</span> <span data-i18n="wm.charsRemaining">caracteres restantes</span></span>
               </label>
 
               <label class="toggle">
                 <input type="checkbox" id="wm-enabled" checked />
                 <span class="toggle__track"><span class="toggle__thumb"></span></span>
-                <span class="toggle__label">Aplicar marca de agua</span>
+                <span class="toggle__label" data-i18n="wm.apply">Aplicar marca de agua</span>
               </label>
 
               <div id="wm-options" class="wm-options">
                 <div class="field">
-                  <span class="field__label">Patrón</span>
-                  <div id="wm-patterns" class="patterns" role="radiogroup" aria-label="Patrón de marca de agua"></div>
+                  <span class="field__label" data-i18n="wm.pattern">Patrón</span>
+                  <div id="wm-patterns" class="patterns" role="radiogroup" aria-label="Patrón de marca de agua" data-i18n-aria="wm.patternAria"></div>
                 </div>
 
                 <label class="field field--range">
-                  <span class="field__label">Opacidad <span class="field__val" id="wm-opacity-val">18%</span></span>
+                  <span class="field__label"><span data-i18n="wm.opacity">Opacidad</span> <span class="field__val" id="wm-opacity-val">18%</span></span>
                   <input type="range" id="wm-opacity" min="4" max="80" value="18" />
                 </label>
 
                 <label class="field field--range">
-                  <span class="field__label">Tamaño <span class="field__val" id="wm-size-val">22 px</span></span>
+                  <span class="field__label"><span data-i18n="wm.size">Tamaño</span> <span class="field__val" id="wm-size-val">22 px</span></span>
                   <input type="range" id="wm-size" min="10" max="60" value="22" />
                 </label>
 
+                <div id="wm-manual-controls" class="wm-manual-controls" hidden>
+                  <label class="field field--range">
+                    <span class="field__label"><span data-i18n="wm.angle">Ángulo</span> <span class="field__val" id="wm-angle-val">0°</span></span>
+                    <input type="range" id="wm-angle" min="-45" max="45" value="0" />
+                  </label>
+                  <button type="button" id="wm-manual-reset" class="mini-btn" data-i18n="wm.resetPosition">Restablecer posición</button>
+                </div>
+
                 <div class="field field--color">
-                  <span class="field__label">Color</span>
+                  <span class="field__label" data-i18n="wm.color">Color</span>
                   <div class="swatches" id="wm-swatches"></div>
                   <label class="colorpick">
                     <input type="color" id="wm-color" value="#111111" />
-                    <span>Personalizado</span>
+                    <span data-i18n="wm.custom">Personalizado</span>
                   </label>
                 </div>
 
                 <label class="toggle toggle--sm">
                   <input type="checkbox" id="wm-footer" checked />
                   <span class="toggle__track"><span class="toggle__thumb"></span></span>
-                  <span class="toggle__label">Añadir pie de página con firma de protección</span>
+                  <span class="toggle__label" data-i18n="wm.footer">Añadir pie de página con firma de protección</span>
                 </label>
               </div>
             </div>
 
             <div class="wm-preview">
               <div id="wm-preview-host" class="wm-preview__host"></div>
-              <p class="wm-preview__caption">Vista previa en vivo</p>
+              <div id="wm-preview-nav" class="pagenav pagenav--center wm-preview__nav" hidden>
+                <button type="button" data-wmpage="prev" class="pagenav__btn" aria-label="Página anterior" data-i18n-aria="nav.prevPage">‹</button>
+                <span id="wm-preview-page-label" class="pagenav__label">1 / 1</span>
+                <button type="button" data-wmpage="next" class="pagenav__btn" aria-label="Página siguiente" data-i18n-aria="nav.nextPage">›</button>
+              </div>
+              <p class="wm-preview__caption" data-i18n="wm.preview">Vista previa en vivo</p>
             </div>
           </div>
 
@@ -178,34 +203,34 @@
     <!-- ======================= RESULT ======================= -->
     <section id="screen-result" class="screen">
       <div class="wrap">
-        <button class="back" data-nav="watermark" type="button">&larr; Atrás</button>
+        <button class="back" data-nav="watermark" type="button" data-i18n="common.back">&larr; Atrás</button>
         <div class="step">
           <div class="step__head">
-            <h2 class="title title--sm">Tu documento está listo para compartir de forma segura</h2>
-            <p class="lead lead--sm">La marca de agua queda integrada en el archivo final junto al documento y los datos del destinatario.</p>
+            <h2 class="title title--sm" data-i18n="result.title">Tu documento está listo para compartir de forma segura</h2>
+            <p class="lead lead--sm" data-i18n="result.lead">La marca de agua queda integrada en el archivo final junto al documento y los datos del destinatario.</p>
           </div>
 
           <div id="result-host" class="stage stage--result"></div>
           <div id="result-nav" class="pagenav pagenav--center" hidden>
-            <button type="button" data-rpage="prev" class="pagenav__btn">‹</button>
+            <button type="button" data-rpage="prev" class="pagenav__btn" aria-label="Página anterior" data-i18n-aria="nav.prevPage">‹</button>
             <span id="result-page-label" class="pagenav__label">1 / 1</span>
-            <button type="button" data-rpage="next" class="pagenav__btn">›</button>
+            <button type="button" data-rpage="next" class="pagenav__btn" aria-label="Página siguiente" data-i18n-aria="nav.nextPage">›</button>
           </div>
 
           <div class="format">
-            <span class="format__label">Formato de descarga</span>
-            <div class="format__seg" role="radiogroup" aria-label="Formato de descarga">
-              <button type="button" class="format__btn" data-fmt="image">Imagen</button>
-              <button type="button" class="format__btn" data-fmt="pdf">PDF</button>
+            <span class="format__label" data-i18n="result.format">Formato de descarga</span>
+            <div class="format__seg" role="radiogroup" aria-label="Formato de descarga" data-i18n-aria="result.format">
+              <button type="button" class="format__btn" data-fmt="image" data-i18n="result.image">Imagen</button>
+              <button type="button" class="format__btn" data-fmt="pdf" data-i18n="result.pdf">PDF</button>
             </div>
             <span class="format__note" id="format-note"></span>
           </div>
 
           <div class="result-actions">
-            <button type="button" id="btn-share" class="btn btn--primary">Compartir</button>
-            <button type="button" id="btn-download" class="btn btn--outline">Descargar</button>
+            <button type="button" id="btn-share" class="btn btn--primary" data-i18n="result.share">Compartir</button>
+            <button type="button" id="btn-download" class="btn btn--outline" data-i18n="result.download">Descargar</button>
           </div>
-          <button type="button" class="linkbtn" data-nav="reset">Proteger más documentos</button>
+          <button type="button" class="linkbtn" data-nav="reset" data-i18n="result.more">Proteger más documentos</button>
         </div>
       </div>
     </section>
@@ -214,12 +239,12 @@
 
   <div id="busy" class="busy" hidden>
     <div class="busy__spinner"></div>
-    <p id="busy-text">Procesando…</p>
+    <p id="busy-text" data-i18n="busy.processing">Procesando…</p>
   </div>
 
   <footer class="site-foot">
-    <span>IDprotector · autohospedado · <span id="app-version">v0.1.1</span></span>
-    <span class="site-foot__priv">Nada de lo que subes sale de este dispositivo.</span>
+    <span>IDprotector · <span data-i18n="footer.selfHosted">autohospedado</span> · <span id="app-version">v0.1.2</span></span>
+    <span class="site-foot__priv" data-i18n="footer.privacy">Nada de lo que subes sale de este dispositivo.</span>
   </footer>
 
   <script src="vendor/pdf.min.js"></script>
