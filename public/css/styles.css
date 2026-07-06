@@ -298,6 +298,67 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
   text-align: right;
 }
 
+/* ---------- contextual tool options (brush / blur / select) ---------- */
+.tool-options {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto 14px;
+  min-height: 44px;
+}
+.tool-options__panel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 7px 16px;
+  max-width: 100%;
+  box-shadow: 0 6px 18px rgba(40,30,20,.06);
+}
+.tool-options__label {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--ink-soft);
+}
+.tool-options__hint {
+  font-size: 13px;
+  color: var(--ink-soft);
+  font-weight: 600;
+  text-align: center;
+  max-width: 420px;
+}
+.blur-slider {
+  display: grid;
+  grid-template-columns: auto minmax(110px, 150px) 46px;
+  align-items: center;
+  gap: 9px;
+}
+.blur-slider__label { font-size: 13px; font-weight: 800; color: var(--ink-soft); }
+.blur-slider input[type="range"] { width: 100%; accent-color: var(--coral); }
+.blur-slider__val { font: 700 12px var(--font-mono); color: var(--ink-soft); text-align: right; }
+
+/* ---------- manual watermark list ---------- */
+.wm-manual-list { display: flex; flex-wrap: wrap; gap: 6px; }
+.wm-manual-chip {
+  border: 1.5px solid var(--line);
+  background: var(--white);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 6px 13px;
+  cursor: pointer;
+  font-family: var(--font-round);
+  font-size: 12.5px;
+  font-weight: 800;
+}
+.wm-manual-chip:hover { background: var(--bg-soft); }
+.wm-manual-chip.is-active { border-color: var(--coral); box-shadow: inset 0 0 0 1px var(--coral); color: var(--coral-dark); }
+.wm-manual-chip--add { color: var(--ink-soft); font-size: 16px; line-height: 1; padding: 5px 12px; }
+.wm-manual-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.wm-manual-hint { font-size: 12.5px; color: var(--ink-soft); margin: 0; }
+
 /* ---------- buttons ---------- */
 .btn {
   display: block; width: 100%;
@@ -555,6 +616,8 @@ input:disabled, textarea:disabled {
 
 /* cursors on canvas */
 .stage__host.is-brush { cursor: crosshair; }
+.stage__host.is-blur { cursor: crosshair; }
+.stage__host.is-select { cursor: default; }
 .stage__host.is-pan { cursor: grab; }
 .stage__host.is-pan:active { cursor: grabbing; }
 .stage__host.is-crop { cursor: crosshair; }

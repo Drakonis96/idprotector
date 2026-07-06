@@ -19,7 +19,10 @@
   }
 
   function cloneRect(r) {
-    return { cx: r.cx, cy: r.cy, w: r.w, h: r.h, angle: r.angle };
+    var c = { cx: r.cx, cy: r.cy, w: r.w, h: r.h, angle: r.angle };
+    if (r.type) c.type = r.type;
+    if (typeof r.blur === "number") c.blur = r.blur;
+    return c;
   }
 
   function ensureUndo(page) {
@@ -37,7 +40,35 @@
   }
   SL.fillRotatedRect = fillRotatedRect;
 
-  // Draw base image + all redaction rectangles for a page onto ctx (image space).
+  // Blur the underlying document inside a rotated rectangle. The blur radius is
+  // expressed in base-image pixels, so it scales with whatever transform the
+  // page is drawn under (preview and full-res export stay visually identical).
+  function blurRotatedRect(ctx, page, r, grayscale) {
+    var radius = Math.max(0.5, typeof r.blur === "number" ? r.blur : 6);
+    ctx.save();
+    ctx.translate(r.cx, r.cy);
+    ctx.rotate(r.angle);
+    ctx.beginPath();
+    ctx.rect(-r.w / 2, -r.h / 2, r.w, r.h);
+    ctx.clip();
+    // Undo the rect-local transform so the base image is drawn in page space;
+    // the clip region (rasterised above) keeps only the rotated rectangle.
+    ctx.rotate(-r.angle);
+    ctx.translate(-r.cx, -r.cy);
+    ctx.filter = (grayscale ? "grayscale(1) " : "") + "blur(" + radius + "px)";
+    ctx.drawImage(page.base, 0, 0);
+    ctx.filter = "none";
+    ctx.restore();
+  }
+  SL.blurRotatedRect = blurRotatedRect;
+
+  function paintItem(ctx, page, item, grayscale) {
+    if (item.type === "blur") blurRotatedRect(ctx, page, item, grayscale);
+    else fillRotatedRect(ctx, item);
+  }
+  SL.paintItem = paintItem;
+
+  // Draw base image + all redaction/blur items for a page onto ctx (image space).
   // When grayscale is true the underlying document is desaturated (the black
   // redaction bars and any watermark added later keep their own colour).
   SL.paintPage = function (ctx, page, grayscale) {
@@ -45,7 +76,7 @@
     if (grayscale) ctx.filter = "grayscale(1)";
     ctx.drawImage(page.base, 0, 0);
     if (grayscale) ctx.filter = "none";
-    for (var i = 0; i < page.rects.length; i++) fillRotatedRect(ctx, page.rects[i]);
+    for (var i = 0; i < page.rects.length; i++) paintItem(ctx, page, page.rects[i], grayscale);
   };
 
   // Build one straight rectangle spanning a -> b (image space).
@@ -228,12 +259,16 @@
   SL.cloneRedactionForPage = function (rect, fromPage, toPage) {
     var sx = toPage.base.width / fromPage.base.width;
     var sy = toPage.base.height / fromPage.base.height;
+    var avg = (sx + sy) / 2;
     var ends = rectEndpoints(rect);
-    return rectFromTo(
+    var clone = rectFromTo(
       { x: ends.a.x * sx, y: ends.a.y * sy },
       { x: ends.b.x * sx, y: ends.b.y * sy },
-      rect.h * ((sx + sy) / 2)
+      rect.h * avg
     );
+    if (rect.type) clone.type = rect.type;
+    if (typeof rect.blur === "number") clone.blur = rect.blur * avg;
+    return clone;
   };
 
   function Editor(host) {
@@ -243,8 +278,10 @@
     host.appendChild(this.canvas);
 
     this.page = null;
-    this.tool = "brush";        // "brush" | "pan" | "crop"
-    this.brush = 34;            // rectangle thickness in image px
+    this.tool = "brush";        // "brush" | "blur" | "select" | "pan" | "crop"
+    this.brush = 34;            // redaction rectangle thickness in image px
+    this.blurThickness = 52;    // blur rectangle thickness ("blur area") in image px
+    this.blurIntensity = 8;     // blur radius in image px
     this.scale = 1;             // view scale (image px -> css px = scale * fit)
     this.fit = 1;               // base fit scale (image -> canvas backing px)
     this.tx = 0; this.ty = 0;   // pan offset in canvas backing px
@@ -258,7 +295,6 @@
     this.editing = null;
     this.cropRect = null;
     this.cropDraft = null;
-    this.straightenPreview = 0;
     this.pointers = new Map();
     this.pinch = null;
 
@@ -269,35 +305,66 @@
   }
 
   Editor.prototype.setPage = function (page) {
+    if (page && typeof page.straighten !== "number") page.straighten = 0;
     this.page = page;
     this.selectedIndex = -1;
     this.editing = null;
     this.cropRect = null;
     this.cropDraft = null;
-    this.straightenPreview = 0;
     this.notifySelection();
     this.notifyCrop();
     this.relayout(true);
   };
 
   Editor.prototype.setTool = function (tool) {
+    // Cropping and 90° rotation work on an upright page, so bake any pending
+    // (non-destructive) straighten into the base before entering crop mode.
+    if (tool === "crop") this.bakeStraighten();
     this.tool = tool;
     this.host.classList.toggle("is-brush", tool === "brush");
+    this.host.classList.toggle("is-blur", tool === "blur");
+    this.host.classList.toggle("is-select", tool === "select");
     this.host.classList.toggle("is-pan", tool === "pan");
     this.host.classList.toggle("is-crop", tool === "crop");
+    if (tool !== "select") {
+      this.selectedIndex = -1;
+      this.notifySelection();
+    }
     this.render();
   };
 
   Editor.prototype.setBrush = function (px) { this.brush = px; };
+  Editor.prototype.setBlurThickness = function (px) { this.blurThickness = px; };
+  Editor.prototype.setBlurIntensity = function (px) { this.blurIntensity = px; };
 
   Editor.prototype.setGrayscale = function (on) { this.grayscale = !!on; this.render(); };
 
+  Editor.prototype.curStraighten = function () {
+    return this.page && Math.abs(this.page.straighten || 0) >= 0.05 ? this.page.straighten : 0;
+  };
+
   Editor.prototype.pageSize = function () {
     if (!this.page) return { w: 1, h: 1, rad: 0 };
-    if (Math.abs(this.straightenPreview) < 0.05) {
+    var deg = this.curStraighten();
+    if (!deg) {
       return { w: this.page.base.width, h: this.page.base.height, rad: 0 };
     }
-    return rotatedSize(this.page.base.width, this.page.base.height, this.straightenPreview);
+    return rotatedSize(this.page.base.width, this.page.base.height, deg);
+  };
+
+  // Map a point from display space (the straightened/expanded view) back to
+  // base-image coordinates, where all redaction/blur items are stored.
+  Editor.prototype.displayToBase = function (X, Y) {
+    var deg = this.curStraighten();
+    if (!deg) return { x: X, y: Y };
+    var size = this.pageSize();
+    var cos = Math.cos(size.rad), sin = Math.sin(size.rad);
+    var baseW = this.page.base.width, baseH = this.page.base.height;
+    var ddx = X - size.w / 2, ddy = Y - size.h / 2;
+    return {
+      x: baseW / 2 + ddx * cos + ddy * sin,
+      y: baseH / 2 - ddx * sin + ddy * cos
+    };
   };
 
   Editor.prototype.notifySelection = function () {
@@ -355,7 +422,8 @@
     var bx = (clientX - rect.left) * (this.canvas.width / rect.width);
     var by = (clientY - rect.top) * (this.canvas.height / rect.height);
     var m = this.viewMatrix();
-    return { x: (bx - m.tx) / m.s, y: (by - m.ty) / m.s };
+    // (bx,by) -> display space, then un-rotate into base-image space.
+    return this.displayToBase((bx - m.tx) / m.s, (by - m.ty) / m.s);
   };
 
   Editor.prototype.hitTolerance = function () {
@@ -398,21 +466,23 @@
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     var m = this.viewMatrix();
     ctx.setTransform(m.s, 0, 0, m.s, m.tx, m.ty);
-    if (Math.abs(this.straightenPreview) >= 0.05) {
+    ctx.save();
+    var deg = this.curStraighten();
+    if (deg) {
       var size = this.pageSize();
       ctx.translate(size.w / 2, size.h / 2);
       ctx.rotate(size.rad);
       ctx.translate(-this.page.base.width / 2, -this.page.base.height / 2);
-      SL.paintPage(ctx, this.page, this.grayscale);
-      return;
     }
     SL.paintPage(ctx, this.page, this.grayscale);
-    if (this.pending) fillRotatedRect(ctx, this.pending);
+    if (this.pending) paintItem(ctx, this.page, this.pending, this.grayscale);
     this.drawSelection(ctx, m);
     this.drawCrop(ctx, m);
+    ctx.restore();
   };
 
   Editor.prototype.drawSelection = function (ctx, matrix) {
+    if (this.tool !== "select") return;
     var r = this.getSelectedRect();
     if (!r) return;
     var line = Math.max(1, 2 / matrix.s);
@@ -481,18 +551,30 @@
     this.scale = 1; this.tx = 0; this.ty = 0; this.clampPan(); this.render();
   };
 
+  // Build a stroke item (redaction bar or blur patch) spanning a -> b, using
+  // the settings of whichever drawing tool is active.
+  Editor.prototype.makeStroke = function (a, b) {
+    if (this.tool === "blur") {
+      var item = rectFromTo(a, b, this.blurThickness);
+      item.type = "blur";
+      item.blur = this.blurIntensity;
+      return item;
+    }
+    return rectFromTo(a, b, this.brush);
+  };
+
   // Begin a straight stroke at image point a.
   Editor.prototype.beginStroke = function (a) {
     this.drawing = true;
     this.anchor = a;
-    this.pending = rectFromTo(a, a, this.brush);
+    this.pending = this.makeStroke(a, a);
     this.render();
   };
 
   // Update the live straight rectangle as the pointer moves.
   Editor.prototype.updateStroke = function (b) {
     if (!this.drawing) return;
-    this.pending = rectFromTo(this.anchor, b, this.brush);
+    this.pending = this.makeStroke(this.anchor, b);
     this.render();
   };
 
@@ -622,7 +704,6 @@
   Editor.prototype.applyCrop = function () {
     var crop = this.getCropRect();
     if (!crop || !this.page) return false;
-    this.straightenPreview = 0;
     var ok = SL.cropPage(this.page, crop);
     if (!ok) return false;
     this.selectedIndex = -1;
@@ -637,8 +718,9 @@
   };
 
   Editor.prototype.rotatePage = function (direction) {
-    this.straightenPreview = 0;
-    if (!this.page || !SL.rotatePage(this.page, direction)) return false;
+    if (!this.page) return false;
+    this.bakeStraighten();
+    if (!SL.rotatePage(this.page, direction)) return false;
     this.selectedIndex = -1;
     this.cropRect = null;
     this.cropDraft = null;
@@ -650,35 +732,43 @@
     return true;
   };
 
-  Editor.prototype.straightenPage = function (degrees) {
-    this.straightenPreview = 0;
-    if (!this.page || !SL.straightenPage(this.page, degrees)) return false;
+  // Permanently rasterise the current (non-destructive) straighten angle into
+  // the page base, then reset the angle. Used before crop / 90° rotation and on
+  // export paths that need an upright base. No-op when the page is already flat.
+  Editor.prototype.bakeStraighten = function () {
+    if (!this.page) return false;
+    var deg = this.page.straighten || 0;
+    if (Math.abs(deg) < 0.05) { this.page.straighten = 0; return false; }
+    SL.straightenPage(this.page, deg);
+    this.page.straighten = 0;
     this.selectedIndex = -1;
-    this.cropRect = null;
-    this.cropDraft = null;
     this.notifySelection();
-    this.notifyCrop();
-    this.relayout(true);
+    this.relayout(false);
+    if (this.onStraightenApplied) this.onStraightenApplied();
     if (this.onChange) this.onChange();
     if (this.onPageChange) this.onPageChange();
     return true;
   };
 
+  // Live, non-destructive straighten: stored on the page so it persists across
+  // navigation and stays re-editable from the original (the base is never
+  // rotated until baked). Bound directly to the slider.
   Editor.prototype.setStraightenPreview = function (degrees) {
+    if (!this.page) return;
     var next = Math.abs(degrees) < 0.05 ? 0 : degrees;
-    if (next === this.straightenPreview) return;
-    this.straightenPreview = next;
+    if (next === (this.page.straighten || 0)) return;
+    this.page.straighten = next;
     if (next) {
-      this.selectedIndex = -1;
+      // Cropping on a tilted page is confusing; leave crop mode alone here.
       this.cropRect = null;
       this.cropDraft = null;
       this.drawing = false;
       this.pending = null;
       this.editing = null;
-      this.notifySelection();
       this.notifyCrop();
     }
     this.relayout(false);
+    if (this.onChange) this.onChange();
   };
 
   Editor.prototype._bind = function () {
@@ -703,21 +793,23 @@
         self.panStart = { x: e.clientX, y: e.clientY, tx: self.tx, ty: self.ty };
         return;
       }
-      // A straighten preview is only a preview: bake it into the page before the
-      // brush or crop touches the canvas, otherwise drawing on the rotated
-      // preview would silently do nothing until the user applied it by hand.
-      if (Math.abs(self.straightenPreview) >= 0.05) {
-        self.straightenPage(self.straightenPreview);
-        if (self.onStraightenApplied) self.onStraightenApplied();
-      }
       var p = self.toImage(e.clientX, e.clientY);
       if (self.tool === "crop") {
         self.beginCrop(p);
         return;
       }
-      var hit = self.hitTestRedaction(p);
-      if (hit) {
-        self.beginEdit(hit, p);
+      // The select tool is the only one that grabs existing items to move /
+      // resize them; the drawing tools always lay down a fresh stroke so a click
+      // on top of an item doesn't silently pick it up.
+      if (self.tool === "select") {
+        var hit = self.hitTestRedaction(p);
+        if (hit) {
+          self.beginEdit(hit, p);
+        } else {
+          self.selectedIndex = -1;
+          self.notifySelection();
+          self.render();
+        }
         return;
       }
       self.selectedIndex = -1;

@@ -6,7 +6,7 @@
   <title>IDprotector · Protege tus documentos</title>
   <meta name="description" content="Oculta datos sensibles y añade marcas de agua a tu DNI y documentos. 100% en tu navegador: nada se sube a ningún servidor." />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/styles.css?v=0.3.0" />
 </head>
 <body>
   <div class="lang-switch">
@@ -108,23 +108,25 @@
           </div>
 
           <div class="toolbar toolbar--editor">
+            <button type="button" id="tool-brush" class="tool tool--icon is-active" title="Pincel (barra negra)" aria-label="Pincel (barra negra)" data-i18n-title="tool.brush" data-i18n-aria="tool.brush">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="10" width="18" height="4" rx="1.4" fill="currentColor" stroke="none"/></svg>
+            </button>
+            <button type="button" id="tool-blur" class="tool tool--icon" title="Desenfocar" aria-label="Desenfocar" data-i18n-title="tool.blur" data-i18n-aria="tool.blur">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s6 6.4 6 10.4A6 6 0 0 1 6 13.4C6 9.4 12 3 12 3z"/><path d="M9.5 14.5h.01M12 16.5h.01M14.5 13.5h.01"/></svg>
+            </button>
+            <button type="button" id="tool-select" class="tool tool--icon" title="Seleccionar / mover" aria-label="Seleccionar / mover" data-i18n-title="tool.select" data-i18n-aria="tool.select">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l6 16 2.2-6.8L20 10z"/></svg>
+            </button>
+            <span class="toolbar__sep"></span>
             <button type="button" id="tool-undo" class="tool tool--icon" title="Deshacer" aria-label="Deshacer" data-i18n-title="tool.undo" data-i18n-aria="tool.undo">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-1"/></svg>
             </button>
-            <button type="button" id="tool-delete-redaction" class="tool tool--icon" title="Eliminar barra seleccionada" aria-label="Eliminar barra seleccionada" data-i18n-title="tool.deleteRedaction" data-i18n-aria="tool.deleteRedaction" disabled>
+            <button type="button" id="tool-delete-redaction" class="tool tool--icon" title="Eliminar selección" aria-label="Eliminar selección" data-i18n-title="tool.deleteRedaction" data-i18n-aria="tool.deleteRedaction" disabled>
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 15h10l1-15"/><path d="M10 11v6M14 11v6"/></svg>
             </button>
-            <button type="button" id="tool-copy-redaction" class="tool tool--icon" title="Aplicar barra a todas las páginas" aria-label="Aplicar barra a todas las páginas" data-i18n-title="tool.copyRedaction" data-i18n-aria="tool.copyRedaction" disabled>
+            <button type="button" id="tool-copy-redaction" class="tool tool--icon" title="Aplicar selección a todas las páginas" aria-label="Aplicar selección a todas las páginas" data-i18n-title="tool.copyRedaction" data-i18n-aria="tool.copyRedaction" disabled>
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M5 16H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/><path d="M12 13h3M13.5 11.5v3"/></svg>
             </button>
-            <span class="toolbar__sep"></span>
-            <div class="brushes" role="radiogroup" aria-label="Tamaño del pincel" data-i18n-aria="brush.group">
-              <button type="button" class="brush" data-size="10" style="--d:8px"  aria-label="Muy fino" data-i18n-aria="brush.veryThin"></button>
-              <button type="button" class="brush" data-size="20" style="--d:12px" aria-label="Fino" data-i18n-aria="brush.thin"></button>
-              <button type="button" class="brush is-active" data-size="34" style="--d:18px" aria-label="Medio" data-i18n-aria="brush.medium"></button>
-              <button type="button" class="brush" data-size="52" style="--d:22px" aria-label="Grueso" data-i18n-aria="brush.thick"></button>
-              <button type="button" class="brush" data-size="74" style="--d:26px" aria-label="Muy grueso" data-i18n-aria="brush.veryThick"></button>
-            </div>
             <span class="toolbar__sep"></span>
             <button type="button" id="tool-pan" class="tool tool--icon" title="Mover / desplazar" aria-label="Mover" data-i18n-title="tool.pan" data-i18n-aria="tool.move">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20M12 2l-3 3M12 2l3 3M12 22l-3-3M12 22l3-3M2 12l3-3M2 12l3 3M22 12l-3-3M22 12l-3 3"/></svg>
@@ -158,9 +160,34 @@
               <input type="range" id="page-straighten" min="-10" max="10" step="0.5" value="0" aria-label="Enderezar" data-i18n-aria="pageTools.straighten" />
               <span class="straighten__val" id="page-straighten-val">0°</span>
             </label>
-            <button type="button" id="page-straighten-apply" class="tool tool--icon" title="Aplicar enderezado" aria-label="Aplicar enderezado" data-i18n-title="pageTools.applyStraighten" data-i18n-aria="pageTools.applyStraighten" disabled>
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-            </button>
+          </div>
+
+          <div class="tool-options">
+            <div id="brush-options" class="tool-options__panel">
+              <span class="tool-options__label" data-i18n="brush.group">Tamaño del pincel</span>
+              <div class="brushes" role="radiogroup" aria-label="Tamaño del pincel" data-i18n-aria="brush.group">
+                <button type="button" class="brush" data-size="10" style="--d:8px"  aria-label="Muy fino" data-i18n-aria="brush.veryThin"></button>
+                <button type="button" class="brush" data-size="20" style="--d:12px" aria-label="Fino" data-i18n-aria="brush.thin"></button>
+                <button type="button" class="brush is-active" data-size="34" style="--d:18px" aria-label="Medio" data-i18n-aria="brush.medium"></button>
+                <button type="button" class="brush" data-size="52" style="--d:22px" aria-label="Grueso" data-i18n-aria="brush.thick"></button>
+                <button type="button" class="brush" data-size="74" style="--d:26px" aria-label="Muy grueso" data-i18n-aria="brush.veryThick"></button>
+              </div>
+            </div>
+            <div id="blur-options" class="tool-options__panel" hidden>
+              <label class="blur-slider">
+                <span class="blur-slider__label" data-i18n="blur.intensity">Intensidad</span>
+                <input type="range" id="blur-intensity" min="2" max="30" value="8" aria-label="Intensidad del desenfoque" data-i18n-aria="blur.intensity" />
+                <span class="blur-slider__val" id="blur-intensity-val">8 px</span>
+              </label>
+              <label class="blur-slider">
+                <span class="blur-slider__label" data-i18n="blur.area">Área</span>
+                <input type="range" id="blur-area" min="16" max="160" value="52" aria-label="Área del desenfoque" data-i18n-aria="blur.area" />
+                <span class="blur-slider__val" id="blur-area-val">52 px</span>
+              </label>
+            </div>
+            <div id="select-options" class="tool-options__panel" hidden>
+              <span class="tool-options__hint" data-i18n="select.hint">Selecciona una barra o desenfoque para moverlo o cambiar su tamaño.</span>
+            </div>
           </div>
 
           <div class="redact-actions">
@@ -217,11 +244,25 @@
                 </label>
 
                 <div id="wm-manual-controls" class="wm-manual-controls" hidden>
+                  <div class="wm-manual-list" id="wm-manual-list" role="tablist" aria-label="Marcas de agua manuales"></div>
+                  <label class="field">
+                    <span class="field__label" data-i18n="wm.manualText">Texto de esta marca (opcional)</span>
+                    <input type="text" id="wm-manual-text" maxlength="100" placeholder="Usa el texto principal si lo dejas vacío" data-i18n-placeholder="wm.manualTextPlaceholder" />
+                  </label>
                   <label class="field field--range">
                     <span class="field__label"><span data-i18n="wm.angle">Ángulo</span> <span class="field__val" id="wm-angle-val">0°</span></span>
                     <input type="range" id="wm-angle" min="-45" max="45" value="0" />
                   </label>
-                  <button type="button" id="wm-manual-reset" class="mini-btn" data-i18n="wm.resetPosition">Restablecer posición</button>
+                  <div class="wm-manual-actions">
+                    <button type="button" id="wm-manual-reset" class="mini-btn" data-i18n="wm.resetPosition">Restablecer posición</button>
+                    <button type="button" id="wm-manual-remove" class="mini-btn" data-i18n="wm.manualRemove">Eliminar</button>
+                  </div>
+                  <label class="toggle toggle--sm" id="wm-manual-random-row" hidden>
+                    <input type="checkbox" id="wm-manual-random" />
+                    <span class="toggle__track"><span class="toggle__thumb"></span></span>
+                    <span class="toggle__label" data-i18n="wm.manualRandom">Distinta posición en cada página</span>
+                  </label>
+                  <p class="wm-manual-hint" data-i18n="wm.manualHint">Arrastra sobre la vista previa para colocar la marca seleccionada.</p>
                 </div>
 
                 <div class="field field--color">
@@ -350,14 +391,14 @@
   </div>
 
   <footer class="site-foot">
-    <span>IDprotector · <span data-i18n="footer.selfHosted">autohospedado</span> · <span id="app-version">v0.2.3</span></span>
+    <span>IDprotector · <span data-i18n="footer.selfHosted">autohospedado</span> · <span id="app-version">v0.3.0</span></span>
     <span class="site-foot__priv" data-i18n="footer.privacy">Nada de lo que subes sale de este dispositivo.</span>
   </footer>
 
   <script src="vendor/pdf.min.js"></script>
   <script src="vendor/pdf-lib.min.js"></script>
-  <script src="js/watermark.js"></script>
-  <script src="js/editor.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/watermark.js?v=0.3.0"></script>
+  <script src="js/editor.js?v=0.3.0"></script>
+  <script src="js/app.js?v=0.3.0"></script>
 </body>
 </html>

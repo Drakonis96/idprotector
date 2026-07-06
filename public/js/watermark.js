@@ -7,7 +7,7 @@
   var SL = global.SL || (global.SL = {});
 
   SL.BRAND = "IDprotector";
-  SL.VERSION = "v0.2.3";
+  SL.VERSION = "v0.3.0";
 
   // Available patterns (id + human label). Order defines UI order.
   SL.PATTERNS = [
@@ -31,8 +31,33 @@
       size: 22,        // font px, relative to a 1000px-wide reference
       color: "#111111",
       footer: true,
-      manual: { x: 0.5, y: 0.82, angle: 0 }
+      // Manual mode holds one or more independent, draggable stamps. Each item
+      // has its own text (empty = falls back to the shared text), position and
+      // angle. randomizePerPage scatters them so multi-page/-image documents
+      // don't carry the stamp in the exact same spot on every page.
+      manual: {
+        items: [{ text: "", x: 0.5, y: 0.82, angle: 0 }],
+        randomizePerPage: false
+      }
     };
+  };
+
+  function clamp(v, lo, hi) { return Math.min(hi, Math.max(lo, v)); }
+  function frac(v) { return v - Math.floor(v); }
+
+  // Deterministic per-page/-item position jitter (normalised units). Page 0
+  // keeps the placed position (offset 0) so the drag on the first page lands
+  // exactly where expected; later pages get a stable pseudo-random shift so the
+  // watermark isn't stuck in the same spot across a whole document. Shared with
+  // the app so the live preview and the exported file always agree.
+  SL.manualPageOffset = function (pageIndex, itemIndex) {
+    var p = pageIndex || 0;
+    var i = (itemIndex || 0) + 1;
+    if (!p) return { x: 0, y: 0 };
+    var AMP = 0.17;
+    var rx = frac(Math.sin(p * 73.13 + i * 19.19) * 43758.5453) * 2 - 1;
+    var ry = frac(Math.sin(p * 11.71 + i * 97.37) * 15731.743) * 2 - 1;
+    return { x: rx * AMP, y: ry * AMP };
   };
 
   function tr(key, fallback) {
@@ -191,14 +216,24 @@
     ctx.restore();
   }
 
-  function manual(ctx, w, h, wm, opts) {
-    var pos = wm.manual || {};
-    var x = Math.min(0.97, Math.max(0.03, typeof pos.x === "number" ? pos.x : 0.5));
-    var y = Math.min(0.97, Math.max(0.03, typeof pos.y === "number" ? pos.y : 0.82));
-    var angle = Math.min(60, Math.max(-60, typeof pos.angle === "number" ? pos.angle : 0)) * Math.PI / 180;
+  function manualItems(wm) {
+    var m = wm.manual || {};
+    var items = Array.isArray(m.items) ? m.items : null;
+    if (!items || !items.length) {
+      // Tolerate the legacy single-stamp shape / missing data.
+      items = [{
+        text: "",
+        x: typeof m.x === "number" ? m.x : 0.5,
+        y: typeof m.y === "number" ? m.y : 0.82,
+        angle: typeof m.angle === "number" ? m.angle : 0
+      }];
+    }
+    return items;
+  }
+
+  function drawManualStamp(ctx, w, h, x, y, angle, text, opts) {
     var fs = opts.fontPx * 1.55;
     var maxW = w * 0.84;
-
     ctx.save();
     ctx.globalAlpha = opts.alpha;
     ctx.fillStyle = opts.color;
@@ -208,12 +243,29 @@
     ctx.rotate(angle);
     ctx.font = "700 " + fs + "px Georgia, serif";
     var guard = 0;
-    while (ctx.measureText(opts.text).width > maxW && fs > 8 && guard++ < 200) {
+    while (ctx.measureText(text).width > maxW && fs > 8 && guard++ < 200) {
       fs -= 1;
       ctx.font = "700 " + fs + "px Georgia, serif";
     }
-    ctx.fillText(opts.text, 0, 0);
+    ctx.fillText(text, 0, 0);
     ctx.restore();
+  }
+
+  function manual(ctx, w, h, wm, opts, pageIndex) {
+    var items = manualItems(wm);
+    var randomize = !!(wm.manual && wm.manual.randomizePerPage);
+    items.forEach(function (item, idx) {
+      var x = clamp(typeof item.x === "number" ? item.x : 0.5, 0.03, 0.97);
+      var y = clamp(typeof item.y === "number" ? item.y : 0.82, 0.03, 0.97);
+      if (randomize) {
+        var off = SL.manualPageOffset(pageIndex, idx);
+        x = clamp(x + off.x, 0.03, 0.97);
+        y = clamp(y + off.y, 0.03, 0.97);
+      }
+      var angle = clamp(typeof item.angle === "number" ? item.angle : 0, -60, 60) * Math.PI / 180;
+      var text = (item.text && item.text.trim()) ? item.text.trim() : opts.text;
+      drawManualStamp(ctx, w, h, x, y, angle, text, opts);
+    });
   }
 
   /**
@@ -221,7 +273,7 @@
    * wm: watermark state object. `scale` maps the reference size to actual px
    * so a preview and a full-res export look identical.
    */
-  SL.renderWatermark = function (ctx, w, h, wm, scale) {
+  SL.renderWatermark = function (ctx, w, h, wm, scale, pageIndex) {
     if (!wm || !wm.enabled) return;
     var text = (wm.text && wm.text.trim()) ? wm.text.trim() : tr("watermark.unauthorized", "SIN AUTORIZAR");
     scale = scale || 1;
@@ -236,7 +288,7 @@
         single(ctx, w, h, { text: text, color: color, alpha: a, fontPx: fontPx });
         break;
       case "manual":
-        manual(ctx, w, h, wm, { text: text, color: color, alpha: a, fontPx: fontPx });
+        manual(ctx, w, h, wm, { text: text, color: color, alpha: a, fontPx: fontPx }, pageIndex);
         break;
       case "topographic":
         topographic(ctx, w, h, { text: text, color: color, alpha: a, fontPx: fontPx });

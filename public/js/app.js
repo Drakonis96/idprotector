@@ -41,8 +41,14 @@
       "tool.zoomOut": "Alejar",
       "tool.zoomIn": "Acercar",
       "tool.fit": "Ajustar",
-      "tool.deleteRedaction": "Eliminar barra seleccionada",
-      "tool.copyRedaction": "Aplicar barra a todas las páginas",
+      "tool.brush": "Pincel (barra negra)",
+      "tool.blur": "Desenfocar",
+      "tool.select": "Seleccionar / mover",
+      "tool.deleteRedaction": "Eliminar selección",
+      "tool.copyRedaction": "Aplicar selección a todas las páginas",
+      "blur.intensity": "Intensidad",
+      "blur.area": "Área",
+      "select.hint": "Selecciona una barra o un desenfoque para moverlo o cambiar su tamaño.",
       "pageTools.group": "Ajustes de página",
       "pageTools.rotateLeft": "Girar a la izquierda",
       "pageTools.rotateRight": "Girar a la derecha",
@@ -70,6 +76,13 @@
       "wm.size": "Tamaño",
       "wm.angle": "Ángulo",
       "wm.resetPosition": "Restablecer posición",
+      "wm.manualItem": "Marca",
+      "wm.manualAdd": "Añadir marca de agua",
+      "wm.manualText": "Texto de esta marca (opcional)",
+      "wm.manualTextPlaceholder": "Usa el texto principal si lo dejas vacío",
+      "wm.manualRemove": "Eliminar",
+      "wm.manualRandom": "Distinta posición en cada página",
+      "wm.manualHint": "Arrastra sobre la vista previa para colocar la marca seleccionada.",
       "wm.color": "Color",
       "wm.custom": "Personalizado",
       "wm.footer": "Añadir pie de página con firma de protección",
@@ -149,8 +162,14 @@
       "tool.zoomOut": "Zoom out",
       "tool.zoomIn": "Zoom in",
       "tool.fit": "Fit",
-      "tool.deleteRedaction": "Delete selected bar",
-      "tool.copyRedaction": "Apply bar to every page",
+      "tool.brush": "Brush (black bar)",
+      "tool.blur": "Blur",
+      "tool.select": "Select / move",
+      "tool.deleteRedaction": "Delete selection",
+      "tool.copyRedaction": "Apply selection to every page",
+      "blur.intensity": "Intensity",
+      "blur.area": "Area",
+      "select.hint": "Select a bar or blur patch to move it or resize it.",
       "pageTools.group": "Page adjustments",
       "pageTools.rotateLeft": "Rotate left",
       "pageTools.rotateRight": "Rotate right",
@@ -178,6 +197,13 @@
       "wm.size": "Size",
       "wm.angle": "Angle",
       "wm.resetPosition": "Reset position",
+      "wm.manualItem": "Mark",
+      "wm.manualAdd": "Add watermark",
+      "wm.manualText": "Text for this mark (optional)",
+      "wm.manualTextPlaceholder": "Leave empty to use the main text",
+      "wm.manualRemove": "Remove",
+      "wm.manualRandom": "Different position on each page",
+      "wm.manualHint": "Drag on the preview to place the selected mark.",
       "wm.color": "Color",
       "wm.custom": "Custom",
       "wm.footer": "Add protection signature footer",
@@ -257,8 +283,14 @@
       "tool.zoomOut": "Réduire",
       "tool.zoomIn": "Agrandir",
       "tool.fit": "Ajuster",
-      "tool.deleteRedaction": "Supprimer la barre sélectionnée",
-      "tool.copyRedaction": "Appliquer la barre à toutes les pages",
+      "tool.brush": "Pinceau (barre noire)",
+      "tool.blur": "Flouter",
+      "tool.select": "Sélectionner / déplacer",
+      "tool.deleteRedaction": "Supprimer la sélection",
+      "tool.copyRedaction": "Appliquer la sélection à toutes les pages",
+      "blur.intensity": "Intensité",
+      "blur.area": "Zone",
+      "select.hint": "Sélectionnez une barre ou un flou pour le déplacer ou le redimensionner.",
       "pageTools.group": "Réglages de page",
       "pageTools.rotateLeft": "Pivoter à gauche",
       "pageTools.rotateRight": "Pivoter à droite",
@@ -286,6 +318,13 @@
       "wm.size": "Taille",
       "wm.angle": "Angle",
       "wm.resetPosition": "Réinitialiser la position",
+      "wm.manualItem": "Marque",
+      "wm.manualAdd": "Ajouter un filigrane",
+      "wm.manualText": "Texte de cette marque (facultatif)",
+      "wm.manualTextPlaceholder": "Laissez vide pour utiliser le texte principal",
+      "wm.manualRemove": "Supprimer",
+      "wm.manualRandom": "Position différente sur chaque page",
+      "wm.manualHint": "Faites glisser sur l'aperçu pour placer la marque sélectionnée.",
       "wm.color": "Couleur",
       "wm.custom": "Personnalisé",
       "wm.footer": "Ajouter un pied de page avec signature de protection",
@@ -365,8 +404,14 @@
       "tool.zoomOut": "Afastar",
       "tool.zoomIn": "Aproximar",
       "tool.fit": "Ajustar",
-      "tool.deleteRedaction": "Eliminar barra selecionada",
-      "tool.copyRedaction": "Aplicar barra a todas as páginas",
+      "tool.brush": "Pincel (barra preta)",
+      "tool.blur": "Desfocar",
+      "tool.select": "Selecionar / mover",
+      "tool.deleteRedaction": "Eliminar seleção",
+      "tool.copyRedaction": "Aplicar seleção a todas as páginas",
+      "blur.intensity": "Intensidade",
+      "blur.area": "Área",
+      "select.hint": "Selecione uma barra ou um desfoque para o mover ou redimensionar.",
       "pageTools.group": "Ajustes da página",
       "pageTools.rotateLeft": "Rodar para a esquerda",
       "pageTools.rotateRight": "Rodar para a direita",
@@ -394,6 +439,13 @@
       "wm.size": "Tamanho",
       "wm.angle": "Ângulo",
       "wm.resetPosition": "Repor posição",
+      "wm.manualItem": "Marca",
+      "wm.manualAdd": "Adicionar marca de água",
+      "wm.manualText": "Texto desta marca (opcional)",
+      "wm.manualTextPlaceholder": "Deixe vazio para usar o texto principal",
+      "wm.manualRemove": "Eliminar",
+      "wm.manualRandom": "Posição diferente em cada página",
+      "wm.manualHint": "Arraste sobre a pré-visualização para colocar a marca selecionada.",
       "wm.color": "Cor",
       "wm.custom": "Personalizado",
       "wm.footer": "Adicionar rodapé com assinatura de proteção",
@@ -473,8 +525,14 @@
       "tool.zoomOut": "Verkleinern",
       "tool.zoomIn": "Vergrößern",
       "tool.fit": "Einpassen",
-      "tool.deleteRedaction": "Ausgewählten Balken löschen",
-      "tool.copyRedaction": "Balken auf alle Seiten anwenden",
+      "tool.brush": "Pinsel (schwarzer Balken)",
+      "tool.blur": "Weichzeichnen",
+      "tool.select": "Auswählen / verschieben",
+      "tool.deleteRedaction": "Auswahl löschen",
+      "tool.copyRedaction": "Auswahl auf alle Seiten anwenden",
+      "blur.intensity": "Intensität",
+      "blur.area": "Bereich",
+      "select.hint": "Wählen Sie einen Balken oder Weichzeichner, um ihn zu verschieben oder zu skalieren.",
       "pageTools.group": "Seiteneinstellungen",
       "pageTools.rotateLeft": "Nach links drehen",
       "pageTools.rotateRight": "Nach rechts drehen",
@@ -502,6 +560,13 @@
       "wm.size": "Größe",
       "wm.angle": "Winkel",
       "wm.resetPosition": "Position zurücksetzen",
+      "wm.manualItem": "Marke",
+      "wm.manualAdd": "Wasserzeichen hinzufügen",
+      "wm.manualText": "Text dieser Marke (optional)",
+      "wm.manualTextPlaceholder": "Leer lassen, um den Haupttext zu verwenden",
+      "wm.manualRemove": "Entfernen",
+      "wm.manualRandom": "Andere Position auf jeder Seite",
+      "wm.manualHint": "Ziehen Sie in der Vorschau, um die ausgewählte Marke zu platzieren.",
       "wm.color": "Farbe",
       "wm.custom": "Benutzerdefiniert",
       "wm.footer": "Fußzeile mit Schutzsignatur hinzufügen",
@@ -581,8 +646,14 @@
       "tool.zoomOut": "Riduci",
       "tool.zoomIn": "Ingrandisci",
       "tool.fit": "Adatta",
-      "tool.deleteRedaction": "Elimina barra selezionata",
-      "tool.copyRedaction": "Applica barra a tutte le pagine",
+      "tool.brush": "Pennello (barra nera)",
+      "tool.blur": "Sfoca",
+      "tool.select": "Seleziona / sposta",
+      "tool.deleteRedaction": "Elimina selezione",
+      "tool.copyRedaction": "Applica selezione a tutte le pagine",
+      "blur.intensity": "Intensità",
+      "blur.area": "Area",
+      "select.hint": "Seleziona una barra o una sfocatura per spostarla o ridimensionarla.",
       "pageTools.group": "Regolazioni pagina",
       "pageTools.rotateLeft": "Ruota a sinistra",
       "pageTools.rotateRight": "Ruota a destra",
@@ -610,6 +681,13 @@
       "wm.size": "Dimensione",
       "wm.angle": "Angolo",
       "wm.resetPosition": "Ripristina posizione",
+      "wm.manualItem": "Marca",
+      "wm.manualAdd": "Aggiungi filigrana",
+      "wm.manualText": "Testo di questa marca (facoltativo)",
+      "wm.manualTextPlaceholder": "Lascia vuoto per usare il testo principale",
+      "wm.manualRemove": "Rimuovi",
+      "wm.manualRandom": "Posizione diversa su ogni pagina",
+      "wm.manualHint": "Trascina sull'anteprima per posizionare la marca selezionata.",
       "wm.color": "Colore",
       "wm.custom": "Personalizzato",
       "wm.footer": "Aggiungi piè di pagina con firma di protezione",
@@ -768,6 +846,7 @@
     grayscale: false,       // optional: desaturate the whole document
     format: "image",        // chosen download format: "image" | "pdf"
     wm: SL.defaultWatermark(),
+    wmManualSelected: 0,    // index of the manual watermark being edited
     exportFooter: defaultExportFooter()
   };
 
@@ -837,6 +916,7 @@
   function updateWatermarkControlsSafe() {
     if ($("wm-continue")) updateWmContinue();
     if ($("format-note")) syncFormatButtons();
+    if ($("wm-manual-list")) syncManualControls();
   }
 
   function syncExportFooterControlsSafe() {
@@ -871,6 +951,7 @@
     state.grayscale = false;
     state.format = "image";
     state.wm = SL.defaultWatermark();
+    state.wmManualSelected = 0;
     state.exportFooter = defaultExportFooter();
     if (els.fileInput) els.fileInput.value = "";
     if (editor) editor.setGrayscale(false);
@@ -908,7 +989,7 @@
     c.height = Math.round(h * scale);
     c.getContext("2d").drawImage(bmp, 0, 0, c.width, c.height);
     if (bmp.close) bmp.close();
-    return { base: c, rects: [], undo: [] };
+    return { base: c, rects: [], undo: [], straighten: 0 };
   }
 
   function readFileAsArrayBuffer(file) {
@@ -937,7 +1018,7 @@
               c.height = Math.round(vp.height);
               return page.render({ canvasContext: c.getContext("2d"), viewport: vp })
                 .promise.then(function () {
-                  pages.push({ base: c, rects: [], undo: [] });
+                  pages.push({ base: c, rects: [], undo: [], straighten: 0 });
                 });
             });
           });
@@ -1023,7 +1104,7 @@
     editor.setGrayscale(state.grayscale);
     editor.setPage(state.pages[state.current]);
     updatePageNav();
-    setStraightenValue(0);
+    setStraightenValue(currentPageStraighten());
     syncEditorToolButtons();
     updateRedactState();
   }
@@ -1059,8 +1140,16 @@
 
   function syncEditorToolButtons() {
     if (!editor) return;
-    $("tool-pan").classList.toggle("is-active", editor.tool === "pan");
-    $("page-crop-mode").classList.toggle("is-active", editor.tool === "crop");
+    var tool = editor.tool;
+    if ($("tool-brush")) $("tool-brush").classList.toggle("is-active", tool === "brush");
+    if ($("tool-blur")) $("tool-blur").classList.toggle("is-active", tool === "blur");
+    if ($("tool-select")) $("tool-select").classList.toggle("is-active", tool === "select");
+    $("tool-pan").classList.toggle("is-active", tool === "pan");
+    $("page-crop-mode").classList.toggle("is-active", tool === "crop");
+    // Swap the contextual options row to match the active drawing tool.
+    if ($("brush-options")) $("brush-options").hidden = tool !== "brush";
+    if ($("blur-options")) $("blur-options").hidden = tool !== "blur";
+    if ($("select-options")) $("select-options").hidden = tool !== "select";
   }
 
   function setEditorTool(tool) {
@@ -1073,8 +1162,12 @@
     var rounded = Math.round(parseFloat(value || 0) * 10) / 10;
     if ($("page-straighten")) $("page-straighten").value = rounded;
     if ($("page-straighten-val")) $("page-straighten-val").textContent = rounded + "°";
-    if ($("page-straighten-apply")) $("page-straighten-apply").disabled = Math.abs(rounded) < 0.05;
     if (editor) editor.setStraightenPreview(rounded);
+  }
+
+  function currentPageStraighten() {
+    var page = state.pages[state.current];
+    return page && typeof page.straighten === "number" ? page.straighten : 0;
   }
 
   function copySelectedRedactionToPages() {
@@ -1098,7 +1191,7 @@
     state.current = n;
     editor.setPage(state.pages[n]);
     updatePageNav();
-    setStraightenValue(0);
+    setStraightenValue(currentPageStraighten());
     syncEditorToolButtons();
   }
 
@@ -1106,11 +1199,33 @@
    * Watermark screen
    * ------------------------------------------------------------------ */
   function ensureManualWatermark(wm) {
-    if (!wm.manual) wm.manual = { x: 0.5, y: 0.82, angle: 0 };
-    if (typeof wm.manual.x !== "number") wm.manual.x = 0.5;
-    if (typeof wm.manual.y !== "number") wm.manual.y = 0.82;
-    if (typeof wm.manual.angle !== "number") wm.manual.angle = 0;
-    return wm.manual;
+    var m = wm.manual;
+    if (!m || typeof m !== "object") m = {};
+    if (!Array.isArray(m.items)) {
+      // Migrate the legacy single-stamp shape { x, y, angle } into a list.
+      var items = [];
+      if (typeof m.x === "number") {
+        items.push({ text: "", x: m.x, y: m.y, angle: m.angle || 0 });
+      }
+      m = { items: items, randomizePerPage: !!m.randomizePerPage };
+    }
+    if (!m.items.length) m.items.push({ text: "", x: 0.5, y: 0.82, angle: 0 });
+    m.items.forEach(function (it) {
+      if (typeof it.text !== "string") it.text = "";
+      if (typeof it.x !== "number") it.x = 0.5;
+      if (typeof it.y !== "number") it.y = 0.82;
+      if (typeof it.angle !== "number") it.angle = 0;
+    });
+    if (typeof m.randomizePerPage !== "boolean") m.randomizePerPage = false;
+    wm.manual = m;
+    if (state.wmManualSelected >= m.items.length) state.wmManualSelected = m.items.length - 1;
+    if (state.wmManualSelected < 0) state.wmManualSelected = 0;
+    return m;
+  }
+
+  function selectedManualItem() {
+    var m = ensureManualWatermark(state.wm);
+    return m.items[state.wmManualSelected];
   }
 
   function patternLabel(pattern) {
@@ -1126,10 +1241,67 @@
     });
   }
 
+  function buildManualList() {
+    var host = $("wm-manual-list");
+    if (!host) return;
+    var manual = ensureManualWatermark(state.wm);
+    host.innerHTML = "";
+    manual.items.forEach(function (item, i) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "wm-manual-chip" + (i === state.wmManualSelected ? " is-active" : "");
+      btn.textContent = t("wm.manualItem", "Marca") + " " + (i + 1);
+      btn.addEventListener("click", function () {
+        state.wmManualSelected = i;
+        syncManualControls();
+        schedulePreview();
+      });
+      host.appendChild(btn);
+    });
+    var add = document.createElement("button");
+    add.type = "button";
+    add.className = "wm-manual-chip wm-manual-chip--add";
+    add.setAttribute("aria-label", t("wm.manualAdd", "Añadir marca"));
+    add.title = t("wm.manualAdd", "Añadir marca");
+    add.textContent = "+";
+    add.addEventListener("click", addManualWatermark);
+    host.appendChild(add);
+  }
+
+  function addManualWatermark() {
+    var manual = ensureManualWatermark(state.wm);
+    // Offset each new stamp slightly so they don't stack invisibly.
+    var n = manual.items.length;
+    manual.items.push({
+      text: "",
+      x: Math.min(0.9, 0.4 + n * 0.08),
+      y: Math.min(0.9, 0.5 + n * 0.08),
+      angle: 0
+    });
+    state.wmManualSelected = manual.items.length - 1;
+    syncManualControls();
+    schedulePreview();
+  }
+
+  function removeManualWatermark() {
+    var manual = ensureManualWatermark(state.wm);
+    if (manual.items.length <= 1) return;
+    manual.items.splice(state.wmManualSelected, 1);
+    if (state.wmManualSelected >= manual.items.length) state.wmManualSelected = manual.items.length - 1;
+    syncManualControls();
+    schedulePreview();
+  }
+
   function syncManualControls() {
     var manual = ensureManualWatermark(state.wm);
-    if ($("wm-angle")) $("wm-angle").value = Math.round(manual.angle);
-    if ($("wm-angle-val")) $("wm-angle-val").textContent = Math.round(manual.angle) + "°";
+    var item = manual.items[state.wmManualSelected];
+    buildManualList();
+    if ($("wm-manual-text")) $("wm-manual-text").value = item.text || "";
+    if ($("wm-angle")) $("wm-angle").value = Math.round(item.angle);
+    if ($("wm-angle-val")) $("wm-angle-val").textContent = Math.round(item.angle) + "°";
+    if ($("wm-manual-remove")) $("wm-manual-remove").disabled = manual.items.length <= 1;
+    if ($("wm-manual-random")) $("wm-manual-random").checked = manual.randomizePerPage;
+    if ($("wm-manual-random-row")) $("wm-manual-random-row").hidden = state.pages.length < 2;
     updateManualControls();
   }
 
@@ -1313,8 +1485,18 @@
     var rect = cv.getBoundingClientRect();
     if (!rect.width || !rect.height) return;
     var manual = ensureManualWatermark(state.wm);
-    manual.x = Math.min(0.97, Math.max(0.03, (e.clientX - rect.left) / rect.width));
-    manual.y = Math.min(0.97, Math.max(0.03, (e.clientY - rect.top) / rect.height));
+    var item = manual.items[state.wmManualSelected];
+    var nx = (e.clientX - rect.left) / rect.width;
+    var ny = (e.clientY - rect.top) / rect.height;
+    // When positions are scattered per page, subtract the current page's offset
+    // so the stamp lands under the cursor on the page being edited.
+    if (manual.randomizePerPage) {
+      var off = SL.manualPageOffset(state.wmPreviewPage, state.wmManualSelected);
+      nx -= off.x;
+      ny -= off.y;
+    }
+    item.x = Math.min(0.97, Math.max(0.03, nx));
+    item.y = Math.min(0.97, Math.max(0.03, ny));
     schedulePreview();
   }
 
@@ -1332,7 +1514,7 @@
     if (!page) return;
     // Compose at a capped resolution so the dense pattern stays snappy while
     // dragging sliders; the exported file always uses full resolution.
-    var composite = composeAt(page, state.wm, previewWidthFor(host));
+    var composite = composeAt(page, state.wm, previewWidthFor(host), state.wmPreviewPage);
     drawScaledInto(host, composite);
   }
 
@@ -1345,8 +1527,10 @@
    * Compose + result
    * ------------------------------------------------------------------ */
   // Full-resolution composite (used for export).
-  function compose(page, wm) {
-    return composeAt(page, wm, page.base.width);
+  function compose(page, wm, pageIndex) {
+    var deg = page.straighten || 0;
+    var targetW = deg ? SL.rotatedSize(page.base.width, page.base.height, deg).w : page.base.width;
+    return composeAt(page, wm, targetW, pageIndex || 0);
   }
 
   function buildExportFooterContent() {
@@ -1458,10 +1642,14 @@
   // redaction bars + watermark + optional legal export footer. Watermark size
   // stays visually identical at any resolution because it scales with the
   // canvas width.
-  function composeAt(page, wm, targetW) {
-    var scale = Math.min(1, targetW / page.base.width);
-    var w = Math.max(1, Math.round(page.base.width * scale));
-    var docH = Math.max(1, Math.round(page.base.height * scale));
+  function composeAt(page, wm, targetW, pageIndex) {
+    var deg = page.straighten || 0;
+    var disp = deg
+      ? SL.rotatedSize(page.base.width, page.base.height, deg)
+      : { w: page.base.width, h: page.base.height, rad: 0 };
+    var scale = Math.min(1, targetW / disp.w);
+    var w = Math.max(1, Math.round(disp.w * scale));
+    var docH = Math.max(1, Math.round(disp.h * scale));
     var exportFooterRows = buildExportFooterContent();
     var exportFooterScale = w / WM_REF_W;
     var exportFooterH = exportFooterRows ? measureExportFooterHeight(w, exportFooterRows, exportFooterScale) : 0;
@@ -1471,13 +1659,20 @@
     var ctx = c.getContext("2d");
     ctx.save();
     ctx.scale(scale, scale);
+    if (deg) {
+      // Apply the non-destructive straighten as a render-time rotation so the
+      // original base is preserved and re-editable.
+      ctx.translate(disp.w / 2, disp.h / 2);
+      ctx.rotate(disp.rad);
+      ctx.translate(-page.base.width / 2, -page.base.height / 2);
+    }
     SL.paintPage(ctx, page, state.grayscale);
     ctx.restore();
     ctx.save();
     ctx.beginPath();
     ctx.rect(0, 0, c.width, docH);
     ctx.clip();
-    SL.renderWatermark(ctx, c.width, docH, wm, c.width / WM_REF_W);
+    SL.renderWatermark(ctx, c.width, docH, wm, c.width / WM_REF_W, pageIndex || 0);
     ctx.restore();
     if (exportFooterRows) drawExportFooter(ctx, docH, c.width, exportFooterRows, exportFooterScale);
     return c;
@@ -1526,7 +1721,7 @@
       $("result-page-label").textContent = (state.resultPage + 1) + " / " + state.pages.length;
     }
     var host = $("result-host");
-    var composite = composeAt(state.pages[state.resultPage], state.wm, previewWidthFor(host));
+    var composite = composeAt(state.pages[state.resultPage], state.wm, previewWidthFor(host), state.resultPage);
     drawScaledInto(host, composite);
   }
   function gotoResultPage(delta) {
@@ -1553,7 +1748,7 @@
   function buildImage() {
     var suffix = t("file.protectedSuffix");
     if (state.pages.length === 1) {
-      var c = compose(state.pages[0], state.wm);
+      var c = compose(state.pages[0], state.wm, 0);
       return canvasToBlob(c, "image/png").then(function (blob) {
         return { blob: blob, name: state.fileName + "-" + suffix + ".png", type: "image/png" };
       });
@@ -1563,7 +1758,7 @@
     var chain = Promise.resolve();
     state.pages.forEach(function (page, i) {
       chain = chain.then(function () {
-        var c = compose(page, state.wm);
+        var c = compose(page, state.wm, i);
         return canvasToBlob(c, "image/png").then(function (blob) {
           return blob.arrayBuffer();
         }).then(function (buf) {
@@ -1585,9 +1780,9 @@
     var PDFLib = global.PDFLib;
     return PDFLib.PDFDocument.create().then(function (doc) {
       var chain = Promise.resolve();
-      state.pages.forEach(function (page) {
+      state.pages.forEach(function (page, i) {
         chain = chain.then(function () {
-          var c = compose(page, state.wm);
+          var c = compose(page, state.wm, i);
           return canvasToBlob(c, "image/jpeg", 0.92).then(function (blob) {
             return blob.arrayBuffer();
           }).then(function (buf) {
@@ -1726,6 +1921,10 @@
     panBtn.addEventListener("click", function () {
       setEditorTool(editor.tool === "pan" ? "brush" : "pan");
     });
+    // drawing / editing modes
+    $("tool-brush").addEventListener("click", function () { setEditorTool("brush"); });
+    $("tool-blur").addEventListener("click", function () { setEditorTool("blur"); });
+    $("tool-select").addEventListener("click", function () { setEditorTool("select"); });
     document.querySelectorAll(".brush").forEach(function (b) {
       b.addEventListener("click", function () {
         document.querySelectorAll(".brush").forEach(function (x) { x.classList.remove("is-active"); });
@@ -1734,24 +1933,29 @@
         setEditorTool("brush");
       });
     });
+    $("blur-intensity").addEventListener("input", function (e) {
+      var v = parseInt(e.target.value, 10);
+      editor.setBlurIntensity(v);
+      $("blur-intensity-val").textContent = v + " px";
+    });
+    $("blur-area").addEventListener("input", function (e) {
+      var v = parseInt(e.target.value, 10);
+      editor.setBlurThickness(v);
+      $("blur-area-val").textContent = v + " px";
+    });
     $("page-rotate-left").addEventListener("click", function () { editor.rotatePage(-1); updateRedactState(); });
     $("page-rotate-right").addEventListener("click", function () { editor.rotatePage(1); updateRedactState(); });
     $("page-crop-mode").addEventListener("click", function () {
       setEditorTool(editor.tool === "crop" ? "brush" : "crop");
+      // Entering crop mode bakes any pending straighten, so resync the slider.
+      setStraightenValue(currentPageStraighten());
+      updateRedactState();
     });
     $("page-crop-apply").addEventListener("click", function () {
       if (editor.applyCrop()) setEditorTool("brush");
       updateRedactState();
     });
     $("page-straighten").addEventListener("input", function (e) { setStraightenValue(e.target.value); });
-    $("page-straighten-apply").addEventListener("click", function () {
-      var degrees = parseFloat($("page-straighten").value || "0");
-      if (editor.straightenPage(degrees)) {
-        setStraightenValue(0);
-        setEditorTool("brush");
-      }
-      updateRedactState();
-    });
     document.querySelectorAll("[data-page]").forEach(function (b) {
       b.addEventListener("click", function () { gotoPage(b.dataset.page === "next" ? 1 : -1); });
     });
@@ -1782,14 +1986,24 @@
       $("wm-size-val").textContent = e.target.value + " px";
       schedulePreview();
     });
+    $("wm-manual-text").addEventListener("input", function (e) {
+      selectedManualItem().text = e.target.value;
+      schedulePreview();
+    });
     $("wm-angle").addEventListener("input", function (e) {
-      ensureManualWatermark(state.wm).angle = parseInt(e.target.value, 10);
+      selectedManualItem().angle = parseInt(e.target.value, 10);
       $("wm-angle-val").textContent = e.target.value + "°";
       schedulePreview();
     });
     $("wm-manual-reset").addEventListener("click", function () {
-      state.wm.manual = { x: 0.5, y: 0.82, angle: 0 };
-      syncManualControls();
+      var item = selectedManualItem();
+      item.x = 0.5;
+      item.y = 0.82;
+      schedulePreview();
+    });
+    $("wm-manual-remove").addEventListener("click", removeManualWatermark);
+    $("wm-manual-random").addEventListener("change", function (e) {
+      ensureManualWatermark(state.wm).randomizePerPage = e.target.checked;
       schedulePreview();
     });
     $("wm-color").addEventListener("input", function (e) { setColor(e.target.value); });
