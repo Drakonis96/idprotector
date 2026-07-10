@@ -696,3 +696,64 @@ input:disabled, textarea:disabled {
   .format__seg { display: flex; width: 100%; }
   .format__btn { flex: 1; padding: 10px 12px; }
 }
+
+/* ------------------------------------------------------------------ *
+ * Traceable copy panel (result screen)
+ * ------------------------------------------------------------------ */
+.trace { margin-top: 14px; text-align: left; }
+.trace__note {
+  color: var(--ink-soft); font-size: 13px; line-height: 1.45;
+  margin: 8px 0 0;
+}
+.trace__note--warn { color: var(--coral-dark); }
+.trace__issued {
+  margin-top: 14px; padding: 12px 14px;
+  background: var(--bg-soft); border-radius: 12px;
+}
+.trace__id { margin: 6px 0; word-break: break-all; }
+.trace__id code,
+.verify-row code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13.5px; background: var(--white);
+  border: 1px solid var(--line); border-radius: 6px; padding: 2px 6px;
+}
+.trace__issued .btn { margin-top: 8px; }
+
+/* ------------------------------------------------------------------ *
+ * Verify screen
+ * ------------------------------------------------------------------ */
+.linkbtn--verify { margin-top: 18px; }
+.verify-pass { margin-top: 16px; text-align: left; }
+.verify-pass__row { display: flex; gap: 10px; margin-top: 6px; }
+.verify-pass__row input {
+  flex: 1; min-width: 0;
+  border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px;
+  font: inherit; color: var(--ink); background: var(--white);
+}
+.verify-pass__row .btn {
+  width: auto; flex: none;
+  padding: 10px 18px; font-size: 14.5px; border-radius: 10px;
+}
+#verify-results { margin-top: 18px; text-align: left; }
+.verify-card {
+  background: var(--white); border: 1px solid var(--line);
+  border-radius: 14px; padding: 16px 18px; margin-bottom: 12px;
+}
+.verify-card__head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; flex-wrap: wrap; margin-bottom: 8px;
+}
+.verify-card__title { margin: 0; font-size: 15.5px; }
+.verify-badge {
+  display: inline-block; padding: 4px 10px; border-radius: 999px;
+  font-size: 12.5px; font-weight: 700; white-space: nowrap;
+}
+.verify-badge--ok   { background: #e2f3e8; color: #14713d; }
+.verify-badge--warn { background: #fdeed8; color: #94570a; }
+.verify-badge--none { background: var(--bg-soft); color: var(--ink-soft); }
+.verify-row {
+  display: flex; gap: 10px; align-items: baseline;
+  margin: 6px 0; flex-wrap: wrap;
+}
+.verify-row__label { color: var(--ink-soft); font-size: 13.5px; min-width: 130px; }
+.verify-muted { color: var(--ink-soft); font-size: 13.5px; line-height: 1.5; margin: 6px 0 0; }

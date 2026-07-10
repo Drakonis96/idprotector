@@ -136,7 +136,45 @@
       "watermark.unauthorized": "SIN AUTORIZAR",
       "watermark.protectedWith": "Protegido con",
       "file.protectedSuffix": "protegido",
-      "file.pagePrefix": "pagina"
+      "file.pagePrefix": "pagina",
+      "upload.verifyLink": "¿Recibiste una copia trazable? Verifícala aquí",
+      "trace.title": "Copia trazable (marca invisible)",
+      "trace.enable": "Incrustar un identificador invisible en esta copia",
+      "trace.labelLabel": "Destinatario o propósito",
+      "trace.labelPlaceholder": "p. ej. Inmobiliaria García — alquiler",
+      "trace.passLabel": "Frase secreta (opcional)",
+      "trace.passPlaceholder": "Sin frase, cualquiera con IDprotector podrá leer la marca",
+      "trace.passHint": "Con frase, solo quien la conozca podrá verificar la marca. Si la olvidas, no se puede recuperar.",
+      "trace.note": "La marca solo sobrevive en archivos sin pérdida: la imagen se exporta en PNG y el PDF incrusta PNG (archivo más grande). Capturas de pantalla y recompresión la destruyen.",
+      "trace.unavailable": "No disponible: esta función necesita un contexto seguro (HTTPS o localhost).",
+      "trace.issuedTitle": "Última copia emitida",
+      "trace.issuedCount": "{n} copia(s) emitida(s) en esta sesión. El registro se borra al recargar la página.",
+      "trace.registryDownload": "Descargar registro (CSV)",
+      "verify.title": "Verificar una copia",
+      "verify.lead": "Comprueba, sin salir de tu navegador, si un archivo lleva una marca invisible de IDprotector y qué metadatos declara.",
+      "verify.dropTitle": "Arrastra el archivo a comprobar",
+      "verify.dropText": "o pulsa para elegir una imagen o PDF.",
+      "verify.passLabel": "Frase secreta (solo si la copia se creó con una)",
+      "verify.passPlaceholder": "Déjalo vacío para marcas abiertas",
+      "verify.retry": "Reintentar",
+      "verify.metaTitle": "Metadatos declarados",
+      "verify.metaNone": "El archivo no declara metadatos de IDprotector. Es normal: los metadatos se pueden eliminar fácilmente.",
+      "verify.pixelTitle": "Marca invisible en los píxeles",
+      "verify.statusVerified": "Marca verificada",
+      "verify.statusFoundUnverified": "Marca encontrada, sin verificar",
+      "verify.statusNone": "No se detectó marca",
+      "verify.noneExplain": "No se encontró ninguna marca. Ojo: esto no significa que el documento no estuviera protegido — capturas de pantalla, recompresión (JPEG, WhatsApp) o redimensionado destruyen la marca.",
+      "verify.copyId": "Identificador de copia",
+      "verify.created": "Creada",
+      "verify.keyLabel": "Tipo de clave",
+      "verify.keyOpen": "Marca abierta (sin frase secreta)",
+      "verify.keyPassphrase": "Verificada con tu frase secreta",
+      "verify.agreement": "Consistencia",
+      "verify.registryMatch": "Coincide con el registro",
+      "verify.pageLabel": "Página",
+      "verify.pdfExtractFallback": "Los píxeles del PDF se leyeron por la vía de reserva; si no aparece marca, puede deberse a la extracción y no al archivo.",
+      "busy.verifying": "Analizando archivo…",
+      "alert.verifyFailed": "No se pudo analizar el archivo: "
     },
     en: {
       "doc.title": "IDprotector · Protect your documents",
@@ -257,7 +295,45 @@
       "watermark.unauthorized": "UNAUTHORIZED",
       "watermark.protectedWith": "Protected with",
       "file.protectedSuffix": "protected",
-      "file.pagePrefix": "page"
+      "file.pagePrefix": "page",
+      "upload.verifyLink": "Received a traceable copy? Verify it here",
+      "trace.title": "Traceable copy (invisible mark)",
+      "trace.enable": "Embed an invisible identifier in this copy",
+      "trace.labelLabel": "Recipient or purpose",
+      "trace.labelPlaceholder": "e.g. García Realty — rental",
+      "trace.passLabel": "Passphrase (optional)",
+      "trace.passPlaceholder": "Without one, anyone with IDprotector can read the mark",
+      "trace.passHint": "With a passphrase, only someone who knows it can verify the mark. If you forget it, it cannot be recovered.",
+      "trace.note": "The mark only survives lossless files: images export as PNG and PDFs embed PNG (larger file). Screenshots and recompression destroy it.",
+      "trace.unavailable": "Unavailable: this feature needs a secure context (HTTPS or localhost).",
+      "trace.issuedTitle": "Last issued copy",
+      "trace.issuedCount": "{n} copy(ies) issued this session. The registry is wiped when the page reloads.",
+      "trace.registryDownload": "Download registry (CSV)",
+      "verify.title": "Verify a copy",
+      "verify.lead": "Check — without leaving your browser — whether a file carries an invisible IDprotector mark and what metadata it declares.",
+      "verify.dropTitle": "Drop the file to check",
+      "verify.dropText": "or click to pick an image or PDF.",
+      "verify.passLabel": "Passphrase (only if the copy was created with one)",
+      "verify.passPlaceholder": "Leave empty for open marks",
+      "verify.retry": "Retry",
+      "verify.metaTitle": "Declared metadata",
+      "verify.metaNone": "The file declares no IDprotector metadata. That's normal: metadata is easy to strip.",
+      "verify.pixelTitle": "Invisible mark in the pixels",
+      "verify.statusVerified": "Mark verified",
+      "verify.statusFoundUnverified": "Mark found, not verified",
+      "verify.statusNone": "No mark detected",
+      "verify.noneExplain": "No mark was found. Note this does not mean the document wasn't protected — screenshots, recompression (JPEG, WhatsApp) or resizing destroy the mark.",
+      "verify.copyId": "Copy identifier",
+      "verify.created": "Created",
+      "verify.keyLabel": "Key type",
+      "verify.keyOpen": "Open mark (no passphrase)",
+      "verify.keyPassphrase": "Verified with your passphrase",
+      "verify.agreement": "Consistency",
+      "verify.registryMatch": "Matches this session's registry",
+      "verify.pageLabel": "Page",
+      "verify.pdfExtractFallback": "The PDF pixels were read via the fallback path; if no mark shows up, it may be the extraction, not the file.",
+      "busy.verifying": "Analysing file…",
+      "alert.verifyFailed": "Could not analyse the file: "
     },
     fr: {
       "doc.title": "IDprotector · Protégez vos documents",
@@ -378,7 +454,45 @@
       "watermark.unauthorized": "NON AUTORISÉ",
       "watermark.protectedWith": "Protégé avec",
       "file.protectedSuffix": "protege",
-      "file.pagePrefix": "page"
+      "file.pagePrefix": "page",
+      "upload.verifyLink": "Vous avez reçu une copie traçable ? Vérifiez-la ici",
+      "trace.title": "Copie traçable (marque invisible)",
+      "trace.enable": "Intégrer un identifiant invisible dans cette copie",
+      "trace.labelLabel": "Destinataire ou finalité",
+      "trace.labelPlaceholder": "p. ex. Agence García — location",
+      "trace.passLabel": "Phrase secrète (facultative)",
+      "trace.passPlaceholder": "Sans phrase, quiconque avec IDprotector peut lire la marque",
+      "trace.passHint": "Avec une phrase, seul celui qui la connaît peut vérifier la marque. En cas d'oubli, elle est irrécupérable.",
+      "trace.note": "La marque ne survit que dans des fichiers sans perte : l'image est exportée en PNG et le PDF intègre du PNG (fichier plus lourd). Captures d'écran et recompression la détruisent.",
+      "trace.unavailable": "Indisponible : cette fonction requiert un contexte sécurisé (HTTPS ou localhost).",
+      "trace.issuedTitle": "Dernière copie émise",
+      "trace.issuedCount": "{n} copie(s) émise(s) dans cette session. Le registre s'efface au rechargement de la page.",
+      "trace.registryDownload": "Télécharger le registre (CSV)",
+      "verify.title": "Vérifier une copie",
+      "verify.lead": "Vérifiez, sans quitter votre navigateur, si un fichier porte une marque invisible IDprotector et quelles métadonnées il déclare.",
+      "verify.dropTitle": "Déposez le fichier à vérifier",
+      "verify.dropText": "ou cliquez pour choisir une image ou un PDF.",
+      "verify.passLabel": "Phrase secrète (seulement si la copie en a une)",
+      "verify.passPlaceholder": "Laissez vide pour les marques ouvertes",
+      "verify.retry": "Réessayer",
+      "verify.metaTitle": "Métadonnées déclarées",
+      "verify.metaNone": "Le fichier ne déclare aucune métadonnée IDprotector. C'est normal : les métadonnées s'effacent facilement.",
+      "verify.pixelTitle": "Marque invisible dans les pixels",
+      "verify.statusVerified": "Marque vérifiée",
+      "verify.statusFoundUnverified": "Marque trouvée, non vérifiée",
+      "verify.statusNone": "Aucune marque détectée",
+      "verify.noneExplain": "Aucune marque trouvée. Attention : cela ne signifie pas que le document n'était pas protégé — captures d'écran, recompression (JPEG, WhatsApp) ou redimensionnement détruisent la marque.",
+      "verify.copyId": "Identifiant de copie",
+      "verify.created": "Créée",
+      "verify.keyLabel": "Type de clé",
+      "verify.keyOpen": "Marque ouverte (sans phrase secrète)",
+      "verify.keyPassphrase": "Vérifiée avec votre phrase secrète",
+      "verify.agreement": "Cohérence",
+      "verify.registryMatch": "Correspond au registre de cette session",
+      "verify.pageLabel": "Page",
+      "verify.pdfExtractFallback": "Les pixels du PDF ont été lus par la voie de secours ; si aucune marque n'apparaît, la cause peut être l'extraction et non le fichier.",
+      "busy.verifying": "Analyse du fichier…",
+      "alert.verifyFailed": "Impossible d'analyser le fichier : "
     },
     pt: {
       "doc.title": "IDprotector · Proteja os seus documentos",
@@ -499,7 +613,45 @@
       "watermark.unauthorized": "NÃO AUTORIZADO",
       "watermark.protectedWith": "Protegido com",
       "file.protectedSuffix": "protegido",
-      "file.pagePrefix": "pagina"
+      "file.pagePrefix": "pagina",
+      "upload.verifyLink": "Recebeu uma cópia rastreável? Verifique-a aqui",
+      "trace.title": "Cópia rastreável (marca invisível)",
+      "trace.enable": "Incorporar um identificador invisível nesta cópia",
+      "trace.labelLabel": "Destinatário ou finalidade",
+      "trace.labelPlaceholder": "p. ex. Imobiliária García — arrendamento",
+      "trace.passLabel": "Frase secreta (opcional)",
+      "trace.passPlaceholder": "Sem frase, qualquer pessoa com o IDprotector pode ler a marca",
+      "trace.passHint": "Com frase, só quem a conhecer pode verificar a marca. Se a esquecer, não é recuperável.",
+      "trace.note": "A marca só sobrevive em ficheiros sem perdas: a imagem é exportada em PNG e o PDF incorpora PNG (ficheiro maior). Capturas de ecrã e recompressão destroem-na.",
+      "trace.unavailable": "Indisponível: esta função precisa de um contexto seguro (HTTPS ou localhost).",
+      "trace.issuedTitle": "Última cópia emitida",
+      "trace.issuedCount": "{n} cópia(s) emitida(s) nesta sessão. O registo apaga-se ao recarregar a página.",
+      "trace.registryDownload": "Transferir registo (CSV)",
+      "verify.title": "Verificar uma cópia",
+      "verify.lead": "Confirme, sem sair do navegador, se um ficheiro tem uma marca invisível do IDprotector e que metadados declara.",
+      "verify.dropTitle": "Arraste o ficheiro a verificar",
+      "verify.dropText": "ou toque para escolher uma imagem ou PDF.",
+      "verify.passLabel": "Frase secreta (apenas se a cópia foi criada com uma)",
+      "verify.passPlaceholder": "Deixe vazio para marcas abertas",
+      "verify.retry": "Tentar novamente",
+      "verify.metaTitle": "Metadados declarados",
+      "verify.metaNone": "O ficheiro não declara metadados do IDprotector. É normal: os metadados removem-se facilmente.",
+      "verify.pixelTitle": "Marca invisível nos píxeis",
+      "verify.statusVerified": "Marca verificada",
+      "verify.statusFoundUnverified": "Marca encontrada, não verificada",
+      "verify.statusNone": "Nenhuma marca detetada",
+      "verify.noneExplain": "Não foi encontrada nenhuma marca. Atenção: isto não significa que o documento não estivesse protegido — capturas de ecrã, recompressão (JPEG, WhatsApp) ou redimensionamento destroem a marca.",
+      "verify.copyId": "Identificador da cópia",
+      "verify.created": "Criada",
+      "verify.keyLabel": "Tipo de chave",
+      "verify.keyOpen": "Marca aberta (sem frase secreta)",
+      "verify.keyPassphrase": "Verificada com a sua frase secreta",
+      "verify.agreement": "Consistência",
+      "verify.registryMatch": "Coincide com o registo desta sessão",
+      "verify.pageLabel": "Página",
+      "verify.pdfExtractFallback": "Os píxeis do PDF foram lidos pela via de recurso; se não aparecer marca, pode dever-se à extração e não ao ficheiro.",
+      "busy.verifying": "A analisar o ficheiro…",
+      "alert.verifyFailed": "Não foi possível analisar o ficheiro: "
     },
     de: {
       "doc.title": "IDprotector · Dokumente schützen",
@@ -620,7 +772,45 @@
       "watermark.unauthorized": "NICHT AUTORISIERT",
       "watermark.protectedWith": "Geschützt mit",
       "file.protectedSuffix": "geschuetzt",
-      "file.pagePrefix": "seite"
+      "file.pagePrefix": "seite",
+      "upload.verifyLink": "Rückverfolgbare Kopie erhalten? Hier prüfen",
+      "trace.title": "Rückverfolgbare Kopie (unsichtbare Markierung)",
+      "trace.enable": "Unsichtbare Kennung in diese Kopie einbetten",
+      "trace.labelLabel": "Empfänger oder Zweck",
+      "trace.labelPlaceholder": "z. B. Immobilien García — Miete",
+      "trace.passLabel": "Geheimphrase (optional)",
+      "trace.passPlaceholder": "Ohne Phrase kann jeder mit IDprotector die Markierung lesen",
+      "trace.passHint": "Mit Phrase kann nur, wer sie kennt, die Markierung verifizieren. Vergessene Phrasen sind nicht wiederherstellbar.",
+      "trace.note": "Die Markierung überlebt nur verlustfreie Dateien: Bilder werden als PNG exportiert, PDFs betten PNG ein (größere Datei). Screenshots und Neukompression zerstören sie.",
+      "trace.unavailable": "Nicht verfügbar: Diese Funktion benötigt einen sicheren Kontext (HTTPS oder localhost).",
+      "trace.issuedTitle": "Zuletzt erstellte Kopie",
+      "trace.issuedCount": "{n} Kopie(n) in dieser Sitzung erstellt. Das Verzeichnis wird beim Neuladen gelöscht.",
+      "trace.registryDownload": "Verzeichnis herunterladen (CSV)",
+      "verify.title": "Eine Kopie prüfen",
+      "verify.lead": "Prüfen Sie direkt im Browser, ob eine Datei eine unsichtbare IDprotector-Markierung trägt und welche Metadaten sie deklariert.",
+      "verify.dropTitle": "Datei zum Prüfen hierher ziehen",
+      "verify.dropText": "oder klicken, um ein Bild oder PDF zu wählen.",
+      "verify.passLabel": "Geheimphrase (nur falls die Kopie eine hat)",
+      "verify.passPlaceholder": "Für offene Markierungen leer lassen",
+      "verify.retry": "Erneut versuchen",
+      "verify.metaTitle": "Deklarierte Metadaten",
+      "verify.metaNone": "Die Datei deklariert keine IDprotector-Metadaten. Das ist normal: Metadaten lassen sich leicht entfernen.",
+      "verify.pixelTitle": "Unsichtbare Markierung in den Pixeln",
+      "verify.statusVerified": "Markierung verifiziert",
+      "verify.statusFoundUnverified": "Markierung gefunden, nicht verifiziert",
+      "verify.statusNone": "Keine Markierung erkannt",
+      "verify.noneExplain": "Keine Markierung gefunden. Achtung: Das heißt nicht, dass das Dokument ungeschützt war — Screenshots, Neukompression (JPEG, WhatsApp) oder Skalierung zerstören die Markierung.",
+      "verify.copyId": "Kopie-Kennung",
+      "verify.created": "Erstellt",
+      "verify.keyLabel": "Schlüsseltyp",
+      "verify.keyOpen": "Offene Markierung (ohne Geheimphrase)",
+      "verify.keyPassphrase": "Mit Ihrer Geheimphrase verifiziert",
+      "verify.agreement": "Konsistenz",
+      "verify.registryMatch": "Stimmt mit dem Sitzungsverzeichnis überein",
+      "verify.pageLabel": "Seite",
+      "verify.pdfExtractFallback": "Die PDF-Pixel wurden über den Ersatzweg gelesen; erscheint keine Markierung, kann das an der Extraktion liegen, nicht an der Datei.",
+      "busy.verifying": "Datei wird analysiert…",
+      "alert.verifyFailed": "Die Datei konnte nicht analysiert werden: "
     },
     it: {
       "doc.title": "IDprotector · Proteggi i tuoi documenti",
@@ -741,7 +931,45 @@
       "watermark.unauthorized": "NON AUTORIZZATO",
       "watermark.protectedWith": "Protetto con",
       "file.protectedSuffix": "protetto",
-      "file.pagePrefix": "pagina"
+      "file.pagePrefix": "pagina",
+      "upload.verifyLink": "Hai ricevuto una copia tracciabile? Verificala qui",
+      "trace.title": "Copia tracciabile (filigrana invisibile)",
+      "trace.enable": "Incorpora un identificatore invisibile in questa copia",
+      "trace.labelLabel": "Destinatario o finalità",
+      "trace.labelPlaceholder": "es. Agenzia García — affitto",
+      "trace.passLabel": "Frase segreta (facoltativa)",
+      "trace.passPlaceholder": "Senza frase, chiunque con IDprotector può leggere il contrassegno",
+      "trace.passHint": "Con la frase, solo chi la conosce può verificare il contrassegno. Se la dimentichi, non è recuperabile.",
+      "trace.note": "Il contrassegno sopravvive solo in file senza perdita: l'immagine viene esportata in PNG e il PDF incorpora PNG (file più grande). Screenshot e ricompressione lo distruggono.",
+      "trace.unavailable": "Non disponibile: questa funzione richiede un contesto sicuro (HTTPS o localhost).",
+      "trace.issuedTitle": "Ultima copia emessa",
+      "trace.issuedCount": "{n} copia/e emessa/e in questa sessione. Il registro si cancella al ricaricamento della pagina.",
+      "trace.registryDownload": "Scarica registro (CSV)",
+      "verify.title": "Verifica una copia",
+      "verify.lead": "Controlla, senza uscire dal browser, se un file contiene un contrassegno invisibile di IDprotector e quali metadati dichiara.",
+      "verify.dropTitle": "Trascina qui il file da controllare",
+      "verify.dropText": "o premi per scegliere un'immagine o un PDF.",
+      "verify.passLabel": "Frase segreta (solo se la copia ne ha una)",
+      "verify.passPlaceholder": "Lascia vuoto per i contrassegni aperti",
+      "verify.retry": "Riprova",
+      "verify.metaTitle": "Metadati dichiarati",
+      "verify.metaNone": "Il file non dichiara metadati IDprotector. È normale: i metadati si rimuovono facilmente.",
+      "verify.pixelTitle": "Contrassegno invisibile nei pixel",
+      "verify.statusVerified": "Contrassegno verificato",
+      "verify.statusFoundUnverified": "Contrassegno trovato, non verificato",
+      "verify.statusNone": "Nessun contrassegno rilevato",
+      "verify.noneExplain": "Nessun contrassegno trovato. Attenzione: non significa che il documento non fosse protetto — screenshot, ricompressione (JPEG, WhatsApp) o ridimensionamento distruggono il contrassegno.",
+      "verify.copyId": "Identificatore della copia",
+      "verify.created": "Creata",
+      "verify.keyLabel": "Tipo di chiave",
+      "verify.keyOpen": "Contrassegno aperto (senza frase segreta)",
+      "verify.keyPassphrase": "Verificato con la tua frase segreta",
+      "verify.agreement": "Coerenza",
+      "verify.registryMatch": "Corrisponde al registro di questa sessione",
+      "verify.pageLabel": "Pagina",
+      "verify.pdfExtractFallback": "I pixel del PDF sono stati letti con il percorso di riserva; se non compare un contrassegno, potrebbe dipendere dall'estrazione e non dal file.",
+      "busy.verifying": "Analisi del file…",
+      "alert.verifyFailed": "Impossibile analizzare il file: "
     }
   };
 
@@ -847,8 +1075,17 @@
     format: "image",        // chosen download format: "image" | "pdf"
     wm: SL.defaultWatermark(),
     wmManualSelected: 0,    // index of the manual watermark being edited
-    exportFooter: defaultExportFooter()
+    exportFooter: defaultExportFooter(),
+    // Traceable copy: hides a per-export copyId in the pixels (see stego.js)
+    // plus declarative file metadata. Off by default; never touches the
+    // normal export path while disabled.
+    traceable: { enabled: false, label: "", passphrase: "" }
   };
+
+  // Session-only registry of issued traceable copies (copyId -> recipient).
+  // Deliberately NOT persisted (the app promises no storage) and NOT part of
+  // state/reset(): it survives "protect more documents" but dies on reload.
+  var issuedCopies = [];
 
   var editor = null;
   var els = {};
@@ -931,7 +1168,7 @@
   /* ------------------------------------------------------------------ *
    * Screen navigation
    * ------------------------------------------------------------------ */
-  var SCREENS = ["upload", "redact", "watermark", "result"];
+  var SCREENS = ["upload", "redact", "watermark", "result", "verify"];
   function show(name) {
     SCREENS.forEach(function (s) {
       $("screen-" + s).classList.toggle("is-active", s === name);
@@ -940,6 +1177,7 @@
     if (name === "redact") enterRedact();
     if (name === "watermark") enterWatermark();
     if (name === "result") enterResult();
+    if (name === "verify") enterVerify();
   }
 
   function reset() {
@@ -953,6 +1191,8 @@
     state.wm = SL.defaultWatermark();
     state.wmManualSelected = 0;
     state.exportFooter = defaultExportFooter();
+    state.traceable = { enabled: false, label: "", passphrase: "" };
+    syncTraceControls();
     if (els.fileInput) els.fileInput.value = "";
     if (editor) editor.setGrayscale(false);
     var g = $("gray-toggle"); if (g) g.checked = false;
@@ -1740,29 +1980,72 @@
     });
   }
 
-  // Build the download in the format the user picked (state.format).
-  function buildOutput() {
-    return state.format === "pdf" ? buildPdf() : buildImage();
+  /* Traceable-copy helpers. prepareTrace() resolves to null when the option
+   * is off, so the plain export path below stays byte-for-byte unchanged. */
+  function prepareTrace() {
+    if (!state.traceable.enabled || !SL.stego.available) return Promise.resolve(null);
+    var copyId = SL.stego.randomCopyId();
+    var hex = SL.stego.toHex(copyId);
+    return SL.stego.buildPayload(copyId, state.traceable.passphrase).then(function (payload) {
+      return {
+        payload: payload,
+        copyIdHex: hex,
+        keyed: state.traceable.passphrase ? "passphrase" : "open",
+        meta: {
+          copyId: hex,
+          purpose: state.traceable.label,
+          created: new Date().toISOString(),
+          version: "idps1"
+        }
+      };
+    });
   }
 
-  function buildImage() {
+  function stampCanvas(c, trace) {
+    if (trace) SL.stego.embedIntoCanvas(c, trace.payload);
+    return c;
+  }
+
+  function pngWithMeta(bytes, trace) {
+    return SL.stego.pngInsertTextChunk(bytes, "idprotector", JSON.stringify(trace.meta));
+  }
+
+  // Build the download in the format the user picked (state.format).
+  function buildOutput() {
+    return prepareTrace().then(function (trace) {
+      var build = state.format === "pdf" ? buildPdf(trace) : buildImage(trace);
+      return build.then(function (out) {
+        if (trace) registerIssuedCopy(trace, out);
+        return out;
+      });
+    });
+  }
+
+  function buildImage(trace) {
     var suffix = t("file.protectedSuffix");
     if (state.pages.length === 1) {
-      var c = compose(state.pages[0], state.wm, 0);
+      var c = stampCanvas(compose(state.pages[0], state.wm, 0), trace);
       return canvasToBlob(c, "image/png").then(function (blob) {
+        if (!trace) return blob;
+        return blob.arrayBuffer().then(function (buf) {
+          return new Blob([pngWithMeta(new Uint8Array(buf), trace)], { type: "image/png" });
+        });
+      }).then(function (blob) {
         return { blob: blob, name: state.fileName + "-" + suffix + ".png", type: "image/png" };
       });
     }
-    // Several pages -> a .zip with one PNG per page.
+    // Several pages -> a .zip with one PNG per page (same copyId on all).
     var files = [];
     var chain = Promise.resolve();
     state.pages.forEach(function (page, i) {
       chain = chain.then(function () {
-        var c = compose(page, state.wm, i);
+        var c = stampCanvas(compose(page, state.wm, i), trace);
         return canvasToBlob(c, "image/png").then(function (blob) {
           return blob.arrayBuffer();
         }).then(function (buf) {
-          files.push({ name: t("file.pagePrefix") + "-" + (i + 1) + ".png", data: new Uint8Array(buf) });
+          var data = new Uint8Array(buf);
+          if (trace) data = pngWithMeta(data, trace);
+          files.push({ name: t("file.pagePrefix") + "-" + (i + 1) + ".png", data: data });
         });
       });
     });
@@ -1775,25 +2058,40 @@
     });
   }
 
-  function buildPdf() {
+  function buildPdf(trace) {
     // Flatten every page into an image and rebuild the PDF (redaction destroyed).
+    // Traceable copies embed lossless PNG (bigger file) so the pixel mark
+    // survives; otherwise JPEG keeps the size sensible.
     var PDFLib = global.PDFLib;
     return PDFLib.PDFDocument.create().then(function (doc) {
       var chain = Promise.resolve();
       state.pages.forEach(function (page, i) {
         chain = chain.then(function () {
-          var c = compose(page, state.wm, i);
-          return canvasToBlob(c, "image/jpeg", 0.92).then(function (blob) {
+          var c = stampCanvas(compose(page, state.wm, i), trace);
+          var toBlob = trace ? canvasToBlob(c, "image/png") : canvasToBlob(c, "image/jpeg", 0.92);
+          return toBlob.then(function (blob) {
             return blob.arrayBuffer();
           }).then(function (buf) {
-            return doc.embedJpg(buf).then(function (img) {
+            var embed = trace ? doc.embedPng(buf) : doc.embedJpg(buf);
+            return embed.then(function (img) {
               var p = doc.addPage([c.width, c.height]);
               p.drawImage(img, { x: 0, y: 0, width: c.width, height: c.height });
             });
           });
         });
       });
-      return chain.then(function () { return doc.save(); }).then(function (bytes) {
+      return chain.then(function () {
+        if (trace) {
+          doc.setTitle(state.fileName);
+          doc.setSubject(trace.meta.purpose || "");
+          doc.setKeywords(["idprotector", "copyId:" + trace.copyIdHex, "idps1"]);
+          doc.setProducer("IDprotector " + SL.VERSION);
+          doc.setCreator("IDprotector");
+          doc.setCreationDate(new Date());
+          doc.setModificationDate(new Date());
+        }
+        return doc.save();
+      }).then(function (bytes) {
         return {
           blob: new Blob([bytes], { type: "application/pdf" }),
           name: state.fileName + "-" + t("file.protectedSuffix") + ".pdf",
@@ -1803,29 +2101,341 @@
     });
   }
 
-  /* Minimal store-only ZIP writer (no compression, no dependency) so several
-   * protected images can be downloaded as one file. */
-  var CRC_TABLE = (function () {
-    var t = [];
-    for (var n = 0; n < 256; n++) {
-      var c = n;
-      for (var k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
-      t[n] = c >>> 0;
-    }
-    return t;
-  })();
-  function crc32(bytes) {
-    var crc = 0 ^ (-1);
-    for (var i = 0; i < bytes.length; i++) crc = (crc >>> 8) ^ CRC_TABLE[(crc ^ bytes[i]) & 0xFF];
-    return (crc ^ (-1)) >>> 0;
+  /* ------------------------------------------------------------------ *
+   * Issued-copies registry (session memory only) + trace panel UI
+   * ------------------------------------------------------------------ */
+  function registerIssuedCopy(trace, out) {
+    issuedCopies.push({
+      copyId: trace.copyIdHex,
+      label: trace.meta.purpose,
+      keyed: trace.keyed,
+      format: state.format,
+      fileName: out.name,
+      created: trace.meta.created
+    });
+    renderTraceInfo();
   }
+
+  function renderTraceInfo() {
+    var box = $("trace-issued");
+    if (!box) return;
+    var last = issuedCopies[issuedCopies.length - 1];
+    box.hidden = !last;
+    if (!last) return;
+    $("trace-copyid").textContent = last.copyId;
+    $("trace-copyid-label").textContent = last.label ? last.label : "";
+    $("trace-count").textContent = t("trace.issuedCount").replace("{n}", String(issuedCopies.length));
+  }
+
+  function csvCell(v) {
+    var s = String(v == null ? "" : v);
+    return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  }
+
+  function downloadRegistryCsv() {
+    var rows = [["copyId", "label", "keyed", "format", "fileName", "created"]];
+    issuedCopies.forEach(function (c) {
+      rows.push([c.copyId, c.label, c.keyed, c.format, c.fileName, c.created]);
+    });
+    var csv = rows.map(function (r) { return r.map(csvCell).join(","); }).join("\n");
+    var blob = new Blob([csv], { type: "text/csv" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url; a.download = "idprotector-registro.csv";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+  }
+
+  function syncTraceControls() {
+    var toggle = $("trace-enabled");
+    if (!toggle) return;
+    toggle.checked = state.traceable.enabled;
+    if (!SL.stego.available) {
+      toggle.disabled = true;
+      $("trace-unavailable").hidden = false;
+    }
+    $("trace-fields").hidden = !state.traceable.enabled;
+    $("trace-label").value = state.traceable.label;
+    $("trace-pass").value = state.traceable.passphrase;
+    renderTraceInfo();
+  }
+
+  /* ------------------------------------------------------------------ *
+   * Verify mode — reads the declared metadata and the invisible pixel
+   * mark from a dropped file, fully offline.
+   * ------------------------------------------------------------------ */
+  var verifyCache = { imageDatas: [], meta: null, fallback: false };
+
+  function enterVerify() {
+    if ($("verify-input")) $("verify-input").value = "";
+    verifyCache = { imageDatas: [], meta: null, fallback: false };
+    $("verify-results").hidden = true;
+  }
+
+  function parsePngMeta(bytes) {
+    var chunks = SL.stego.pngReadTextChunks(bytes);
+    for (var i = 0; i < chunks.length; i++) {
+      if (chunks[i].keyword === "idprotector") {
+        try { return JSON.parse(chunks[i].text); } catch (e) { /* malformed */ }
+      }
+    }
+    return null;
+  }
+
+  function pdfInfoMeta(info) {
+    var kw = String((info && info.Keywords) || "");
+    if (kw.indexOf("idprotector") === -1) return null;
+    var m = kw.match(/copyId:([0-9a-f]+)/);
+    return {
+      copyId: m ? m[1] : null,
+      purpose: (info && info.Subject) || "",
+      created: (info && info.CreationDate) || ""
+    };
+  }
+
+  /* Exact pixels of the image embedded in a PDF page. Preferred path reads
+   * the decoded image object from pdf.js (Flate is lossless, so the samples
+   * are exact); fallback renders at 1:1, which is an exact blit for our own
+   * exports (page units == image pixels) but not guaranteed by spec. */
+  function pdfPageImageData(page) {
+    function fromBitmap(bmp, w, h) {
+      var c = document.createElement("canvas");
+      c.width = w; c.height = h;
+      var ctx = c.getContext("2d");
+      ctx.drawImage(bmp, 0, 0);
+      return ctx.getImageData(0, 0, w, h);
+    }
+    return page.getOperatorList().then(function (ops) {
+      var objId = null;
+      for (var i = 0; i < ops.fnArray.length; i++) {
+        if (ops.fnArray[i] === global.pdfjsLib.OPS.paintImageXObject) {
+          objId = ops.argsArray[i][0];
+          break;
+        }
+      }
+      if (!objId) throw new Error("no image xobject");
+      return new Promise(function (resolve, reject) {
+        try {
+          page.objs.get(objId, function (img) {
+            if (img) resolve(img); else reject(new Error("empty image object"));
+          });
+        } catch (e) { reject(e); }
+      });
+    }).then(function (img) {
+      if (img.bitmap) return fromBitmap(img.bitmap, img.width, img.height);
+      if (typeof ImageBitmap !== "undefined" && img instanceof ImageBitmap) {
+        return fromBitmap(img, img.width, img.height);
+      }
+      if (img.data) {
+        var out = new ImageData(img.width, img.height);
+        var src = img.data, dst = out.data, n = img.width * img.height;
+        if (src.length === n * 4) {
+          dst.set(src);
+        } else if (src.length === n * 3) {
+          for (var p = 0; p < n; p++) {
+            dst[p * 4] = src[p * 3];
+            dst[p * 4 + 1] = src[p * 3 + 1];
+            dst[p * 4 + 2] = src[p * 3 + 2];
+            dst[p * 4 + 3] = 255;
+          }
+        } else {
+          throw new Error("unsupported image kind");
+        }
+        return out;
+      }
+      throw new Error("unsupported image object");
+    }).catch(function () {
+      verifyCache.fallback = true;
+      var vp = page.getViewport({ scale: 1 });
+      var c = document.createElement("canvas");
+      c.width = Math.round(vp.width);
+      c.height = Math.round(vp.height);
+      var ctx = c.getContext("2d");
+      return page.render({ canvasContext: ctx, viewport: vp }).promise.then(function () {
+        return ctx.getImageData(0, 0, c.width, c.height);
+      });
+    });
+  }
+
+  function handleVerifyFile(file) {
+    var kind = classify(file);
+    if (!kind) return;
+    busy(true, t("busy.verifying"));
+    verifyCache = { imageDatas: [], meta: null, fallback: false };
+    var work;
+    if (kind === "pdf") {
+      work = readFileAsArrayBuffer(file).then(function (buf) {
+        return global.pdfjsLib.getDocument({ data: new Uint8Array(buf) }).promise;
+      }).then(function (pdf) {
+        return pdf.getMetadata().catch(function () { return null; }).then(function (md) {
+          if (md) verifyCache.meta = pdfInfoMeta(md.info);
+          var chain = Promise.resolve();
+          for (var i = 1; i <= pdf.numPages; i++) {
+            (function (n) {
+              chain = chain.then(function () {
+                return pdf.getPage(n).then(pdfPageImageData).then(function (img) {
+                  verifyCache.imageDatas.push(img);
+                }).catch(function () { /* page without extractable pixels */ });
+              });
+            })(i);
+          }
+          return chain;
+        });
+      });
+    } else {
+      work = readFileAsArrayBuffer(file).then(function (buf) {
+        var bytes = new Uint8Array(buf);
+        if (SL.stego.isPng(bytes)) verifyCache.meta = parsePngMeta(bytes);
+        return loadImageBitmap(file);
+      }).then(function (bmp) {
+        // Natural size — NEVER bitmapToPage here, its downscale kills LSBs.
+        var w = bmp.naturalWidth || bmp.width;
+        var h = bmp.naturalHeight || bmp.height;
+        var c = document.createElement("canvas");
+        c.width = w; c.height = h;
+        var ctx = c.getContext("2d");
+        ctx.drawImage(bmp, 0, 0);
+        if (bmp.close) bmp.close();
+        verifyCache.imageDatas.push(ctx.getImageData(0, 0, w, h));
+      });
+    }
+    work.then(decodeVerifyPages).then(function (pixel) {
+      busy(false);
+      renderVerifyResults(pixel);
+    }).catch(function (err) {
+      busy(false); console.error(err);
+      alert(t("alert.verifyFailed") + (err && err.message ? err.message : err));
+    });
+  }
+
+  // Decode every cached page with the current passphrase; a verified mark on
+  // any page wins, otherwise the first found (unverified) one is reported.
+  function decodeVerifyPages() {
+    // Pixel verification needs Web Crypto; on an insecure context (plain-http
+    // LAN hosting) it is unavailable. Skip decoding rather than crashing, so
+    // the metadata card still renders.
+    if (!SL.stego.available) return Promise.resolve({ found: false, unavailable: true });
+    var pass = $("verify-pass").value;
+    var result = null;
+    var chain = Promise.resolve();
+    verifyCache.imageDatas.forEach(function (img, i) {
+      chain = chain.then(function () {
+        if (result && result.verified) return;
+        return SL.stego.decode(img, pass).then(function (r) {
+          if (r.found && (!result || (r.verified && !result.verified))) {
+            result = r;
+            result.page = i + 1;
+          }
+        });
+      });
+    });
+    return chain.then(function () { return result || { found: false }; });
+  }
+
+  function retryVerifyDecode() {
+    if (!verifyCache.imageDatas.length) return;
+    busy(true, t("busy.verifying"));
+    decodeVerifyPages().then(function (pixel) {
+      busy(false);
+      renderVerifyResults(pixel);
+    });
+  }
+
+  function findIssuedCopy(hex) {
+    for (var i = 0; i < issuedCopies.length; i++) {
+      if (issuedCopies[i].copyId === hex) return issuedCopies[i];
+    }
+    return null;
+  }
+
+  function addVerifyRow(parent, label, value, mono) {
+    var row = document.createElement("p");
+    row.className = "verify-row";
+    var l = document.createElement("span");
+    l.className = "verify-row__label";
+    l.textContent = label;
+    var v = document.createElement(mono ? "code" : "span");
+    v.textContent = value;
+    row.appendChild(l);
+    row.appendChild(v);
+    parent.appendChild(row);
+  }
+
+  function addVerifyNote(parent, text) {
+    var p = document.createElement("p");
+    p.className = "verify-muted";
+    p.textContent = text;
+    parent.appendChild(p);
+  }
+
+  function renderVerifyResults(pixel) {
+    var wrap = $("verify-results");
+    wrap.hidden = false;
+
+    // Card 1: declared file metadata (easy to read, easy to strip).
+    var metaBody = $("verify-meta-body");
+    metaBody.textContent = "";
+    var meta = verifyCache.meta;
+    if (meta) {
+      if (meta.copyId) addVerifyRow(metaBody, t("verify.copyId"), meta.copyId, true);
+      if (meta.purpose) addVerifyRow(metaBody, t("trace.labelLabel"), meta.purpose);
+      if (meta.created) addVerifyRow(metaBody, t("verify.created"), meta.created);
+    } else {
+      addVerifyNote(metaBody, t("verify.metaNone"));
+    }
+
+    // Card 2: invisible pixel mark.
+    var badge = $("verify-badge");
+    var pixelBody = $("verify-pixel-body");
+    pixelBody.textContent = "";
+    badge.className = "verify-badge";
+    if (pixel.unavailable) {
+      // Insecure context: we could not check the pixels at all.
+      badge.hidden = true;
+      addVerifyNote(pixelBody, t("trace.unavailable"));
+      $("verify-fallback").hidden = !verifyCache.fallback;
+      return;
+    }
+    badge.hidden = false;
+    if (pixel.found && pixel.verified) {
+      badge.classList.add("verify-badge--ok");
+      badge.textContent = t("verify.statusVerified");
+    } else if (pixel.found) {
+      badge.classList.add("verify-badge--warn");
+      badge.textContent = t("verify.statusFoundUnverified");
+    } else {
+      badge.classList.add("verify-badge--none");
+      badge.textContent = t("verify.statusNone");
+    }
+    if (pixel.found) {
+      addVerifyRow(pixelBody, t("verify.copyId"), pixel.copyIdHex, true);
+      if (pixel.verified) {
+        addVerifyRow(pixelBody, t("verify.keyLabel"),
+          t(pixel.keyed === "open" ? "verify.keyOpen" : "verify.keyPassphrase"));
+      }
+      addVerifyRow(pixelBody, t("verify.agreement"),
+        Math.round(pixel.agreement * 100) + "% · " + pixel.count);
+      if (pixel.page && verifyCache.imageDatas.length > 1) {
+        addVerifyRow(pixelBody, t("verify.pageLabel"), String(pixel.page));
+      }
+      var known = findIssuedCopy(pixel.copyIdHex);
+      if (known && known.label) addVerifyRow(pixelBody, t("verify.registryMatch"), known.label);
+    } else {
+      addVerifyNote(pixelBody, t("verify.noneExplain"));
+    }
+    $("verify-fallback").hidden = !verifyCache.fallback;
+  }
+
+  /* Minimal store-only ZIP writer (no compression, no dependency) so several
+   * protected images can be downloaded as one file. CRC32 lives in stego.js
+   * (shared with the PNG chunk writer). */
   function makeZip(files) {
     var enc = new TextEncoder();
     function u16(n) { return [n & 255, (n >> 8) & 255]; }
     function u32(n) { return [n & 255, (n >>> 8) & 255, (n >>> 16) & 255, (n >>> 24) & 255]; }
     var parts = [], central = [], offset = 0;
     files.forEach(function (f) {
-      var name = enc.encode(f.name), data = f.data, crc = crc32(data);
+      var name = enc.encode(f.name), data = f.data, crc = SL.stego.crc32(data);
       var local = [].concat(
         u32(0x04034b50), u16(20), u16(0), u16(0), u16(0), u16(0),
         u32(crc), u32(data.length), u32(data.length), u16(name.length), u16(0));
@@ -1887,20 +2497,42 @@
       setLanguage(e.target.value);
     });
 
-    // upload
-    var dz = $("dropzone");
-    els.fileInput.addEventListener("change", function (e) {
-      if (e.target.files && e.target.files.length) handleFiles(e.target.files);
+    // upload (shared dropzone wiring, reused by the verify screen)
+    function wireDropzone(dz, input, cb) {
+      input.addEventListener("change", function (e) {
+        if (e.target.files && e.target.files.length) cb(e.target.files);
+      });
+      ["dragenter", "dragover"].forEach(function (ev) {
+        dz.addEventListener(ev, function (e) { e.preventDefault(); dz.classList.add("is-drag"); });
+      });
+      ["dragleave", "drop"].forEach(function (ev) {
+        dz.addEventListener(ev, function (e) { e.preventDefault(); dz.classList.remove("is-drag"); });
+      });
+      dz.addEventListener("drop", function (e) {
+        if (e.dataTransfer.files && e.dataTransfer.files.length) cb(e.dataTransfer.files);
+      });
+    }
+    wireDropzone($("dropzone"), els.fileInput, handleFiles);
+    wireDropzone($("verify-dropzone"), $("verify-input"), function (files) {
+      handleVerifyFile(files[0]);
     });
-    ["dragenter", "dragover"].forEach(function (ev) {
-      dz.addEventListener(ev, function (e) { e.preventDefault(); dz.classList.add("is-drag"); });
+
+    // traceable copy panel (result screen)
+    $("trace-enabled").addEventListener("change", function (e) {
+      state.traceable.enabled = e.target.checked;
+      $("trace-fields").hidden = !state.traceable.enabled;
     });
-    ["dragleave", "drop"].forEach(function (ev) {
-      dz.addEventListener(ev, function (e) { e.preventDefault(); dz.classList.remove("is-drag"); });
+    $("trace-label").addEventListener("input", function (e) {
+      state.traceable.label = e.target.value;
     });
-    dz.addEventListener("drop", function (e) {
-      if (e.dataTransfer.files && e.dataTransfer.files.length) handleFiles(e.dataTransfer.files);
+    $("trace-pass").addEventListener("input", function (e) {
+      state.traceable.passphrase = e.target.value;
     });
+    $("trace-registry").addEventListener("click", downloadRegistryCsv);
+    syncTraceControls();
+
+    // verify screen
+    $("verify-retry").addEventListener("click", retryVerifyDecode);
 
     // nav buttons (data-nav)
     document.querySelectorAll("[data-nav]").forEach(function (b) {

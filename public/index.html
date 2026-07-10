@@ -6,7 +6,7 @@
   <title>IDprotector · Protege tus documentos</title>
   <meta name="description" content="Oculta datos sensibles y añade marcas de agua a tu DNI y documentos. 100% en tu navegador: nada se sube a ningún servidor." />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="css/styles.css?v=0.3.0" />
+  <link rel="stylesheet" href="css/styles.css?v=0.4.0" />
 </head>
 <body>
   <div class="lang-switch">
@@ -86,6 +86,8 @@
             <span data-i18n="privacy.offline">Funciona sin conexión</span>
           </li>
         </ul>
+
+        <button type="button" class="linkbtn linkbtn--verify" data-nav="verify" data-i18n="upload.verifyLink">¿Recibiste una copia trazable? Verifícala aquí</button>
       </div>
     </section>
 
@@ -374,11 +376,97 @@
             <span class="format__note" id="format-note"></span>
           </div>
 
+          <details class="legal-options trace" id="trace-panel">
+            <summary class="legal-options__summary">
+              <span class="field__label" data-i18n="trace.title">Copia trazable (marca invisible)</span>
+            </summary>
+            <div class="legal-options__body">
+              <label class="toggle toggle--sm">
+                <input type="checkbox" id="trace-enabled" />
+                <span class="toggle__track"><span class="toggle__thumb"></span></span>
+                <span class="toggle__label" data-i18n="trace.enable">Incrustar un identificador invisible en esta copia</span>
+              </label>
+              <p class="trace__note trace__note--warn" id="trace-unavailable" hidden data-i18n="trace.unavailable">No disponible: esta función necesita un contexto seguro (HTTPS o localhost).</p>
+              <div id="trace-fields" hidden>
+                <div class="legal-options__field">
+                  <label class="field__label" for="trace-label" data-i18n="trace.labelLabel">Destinatario o propósito</label>
+                  <input type="text" id="trace-label" maxlength="120" placeholder="p. ej. Inmobiliaria García — alquiler" data-i18n-placeholder="trace.labelPlaceholder" />
+                </div>
+                <div class="legal-options__field">
+                  <label class="field__label" for="trace-pass" data-i18n="trace.passLabel">Frase secreta (opcional)</label>
+                  <input type="password" id="trace-pass" autocomplete="off" placeholder="Sin frase, cualquiera con IDprotector podrá leer la marca" data-i18n-placeholder="trace.passPlaceholder" />
+                  <p class="trace__note" data-i18n="trace.passHint">Con frase, solo quien la conozca podrá verificar la marca. Si la olvidas, no se puede recuperar.</p>
+                </div>
+                <p class="trace__note" data-i18n="trace.note">La marca solo sobrevive en archivos sin pérdida: la imagen se exporta en PNG y el PDF incrusta PNG (archivo más grande). Capturas de pantalla y recompresión la destruyen.</p>
+                <div id="trace-issued" class="trace__issued" hidden>
+                  <p class="field__label" data-i18n="trace.issuedTitle">Última copia emitida</p>
+                  <p class="trace__id"><code id="trace-copyid"></code> <span id="trace-copyid-label"></span></p>
+                  <p class="trace__note" id="trace-count"></p>
+                  <button type="button" id="trace-registry" class="btn btn--outline" data-i18n="trace.registryDownload">Descargar registro (CSV)</button>
+                </div>
+              </div>
+            </div>
+          </details>
+
           <div class="result-actions">
             <button type="button" id="btn-share" class="btn btn--primary" data-i18n="result.share">Compartir</button>
             <button type="button" id="btn-download" class="btn btn--outline" data-i18n="result.download">Descargar</button>
           </div>
           <button type="button" class="linkbtn" data-nav="reset" data-i18n="result.more">Proteger más documentos</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= VERIFY ======================= -->
+    <section id="screen-verify" class="screen">
+      <div class="wrap wrap--narrow">
+        <button class="back" data-nav="upload" type="button" data-i18n="common.back">&larr; Atrás</button>
+        <div class="step">
+          <div class="step__head">
+            <h2 class="title title--sm" data-i18n="verify.title">Verificar una copia</h2>
+            <p class="lead lead--sm" data-i18n="verify.lead">Comprueba, sin salir de tu navegador, si un archivo lleva una marca invisible de IDprotector y qué metadatos declara.</p>
+          </div>
+
+          <label id="verify-dropzone" class="dropzone" for="verify-input">
+            <input id="verify-input" type="file" accept="image/*,application/pdf" hidden />
+            <div class="dropzone__inner">
+              <div class="dropzone__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="7" />
+                  <path d="M21 21l-4.3-4.3" />
+                </svg>
+              </div>
+              <div class="dropzone__text">
+                <strong data-i18n="verify.dropTitle">Arrastra el archivo a comprobar</strong>
+                <span data-i18n="verify.dropText">o pulsa para elegir una imagen o PDF.</span>
+              </div>
+            </div>
+          </label>
+
+          <div class="field verify-pass">
+            <label class="field__label" for="verify-pass" data-i18n="verify.passLabel">Frase secreta (solo si la copia se creó con una)</label>
+            <div class="verify-pass__row">
+              <input type="password" id="verify-pass" autocomplete="off" placeholder="Déjalo vacío para marcas abiertas" data-i18n-placeholder="verify.passPlaceholder" />
+              <button type="button" id="verify-retry" class="btn btn--outline" data-i18n="verify.retry">Reintentar</button>
+            </div>
+          </div>
+
+          <div id="verify-results" hidden>
+            <div class="verify-card">
+              <div class="verify-card__head">
+                <h3 class="verify-card__title" data-i18n="verify.pixelTitle">Marca invisible en los píxeles</h3>
+                <span id="verify-badge" class="verify-badge"></span>
+              </div>
+              <div id="verify-pixel-body"></div>
+            </div>
+            <div class="verify-card">
+              <div class="verify-card__head">
+                <h3 class="verify-card__title" data-i18n="verify.metaTitle">Metadatos declarados</h3>
+              </div>
+              <div id="verify-meta-body"></div>
+            </div>
+            <p class="verify-muted" id="verify-fallback" hidden data-i18n="verify.pdfExtractFallback">Los píxeles del PDF se leyeron por la vía de reserva; si no aparece marca, puede deberse a la extracción y no al archivo.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -391,14 +479,15 @@
   </div>
 
   <footer class="site-foot">
-    <span>IDprotector · <span data-i18n="footer.selfHosted">autohospedado</span> · <span id="app-version">v0.3.0</span></span>
+    <span>IDprotector · <span data-i18n="footer.selfHosted">autohospedado</span> · <span id="app-version">v0.4.0</span></span>
     <span class="site-foot__priv" data-i18n="footer.privacy">Nada de lo que subes sale de este dispositivo.</span>
   </footer>
 
   <script src="vendor/pdf.min.js"></script>
   <script src="vendor/pdf-lib.min.js"></script>
-  <script src="js/watermark.js?v=0.3.0"></script>
-  <script src="js/editor.js?v=0.3.0"></script>
-  <script src="js/app.js?v=0.3.0"></script>
+  <script src="js/watermark.js?v=0.4.0"></script>
+  <script src="js/editor.js?v=0.4.0"></script>
+  <script src="js/stego.js?v=0.4.0"></script>
+  <script src="js/app.js?v=0.4.0"></script>
 </body>
 </html>
