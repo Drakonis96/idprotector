@@ -23,35 +23,41 @@
 
   <main id="app">
 
-    <!-- ======================= UPLOAD ======================= -->
-    <section id="screen-upload" class="screen is-active">
-      <div class="wrap wrap--narrow">
-        <div class="brand">
+    <!-- ======================= HOME ======================= -->
+    <section id="screen-home" class="screen is-active">
+      <div class="wrap wrap--narrow home">
+        <div class="brand brand--center">
           <img class="brand__logo" src="assets/favicon.svg" width="32" height="32" alt="" aria-hidden="true" />
           <span class="brand__name">IDprotector</span>
         </div>
-        <h1 class="title" data-i18n-html="upload.title">Prepara tus documentos<br />antes de enviarlos</h1>
-        <p class="lead" data-i18n-html="upload.lead">
-          Cubre los datos que prefieras reservar y añade una marca de agua personalizada.
-          Todo ocurre <strong>dentro de tu navegador</strong>: tus archivos nunca se suben a
-          ningún servidor.
-        </p>
+        <h1 class="title title--center" data-i18n="home.title">¿Qué quieres hacer?</h1>
+        <p class="lead lead--center" data-i18n="home.lead">Elige una opción para empezar. Todo ocurre dentro de tu navegador: tus archivos nunca salen de tu dispositivo.</p>
 
-        <label id="dropzone" class="dropzone" for="file-input">
-          <input id="file-input" type="file" accept="image/*,application/pdf" multiple hidden />
-          <div class="dropzone__inner">
-            <div class="dropzone__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 16V4M12 4l-4 4M12 4l4 4" />
-                <path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" />
+        <div class="home-choices">
+          <button type="button" class="choice choice--protect" data-nav="upload">
+            <span class="choice__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3l7 3v5c0 4.4-3 8.3-7 9.5C8 19.3 5 15.4 5 11V6l7-3z" />
+                <path d="M9.5 12l1.8 1.8L15 10" />
               </svg>
-            </div>
-            <div class="dropzone__text">
-              <strong data-i18n="upload.dropTitle">Arrastra tus documentos aquí</strong>
-              <span data-i18n="upload.dropText">o pulsa para elegir imágenes o PDF. Puedes subir varios archivos.</span>
-            </div>
-          </div>
-        </label>
+            </span>
+            <span class="choice__title" data-i18n="home.protectTitle">Proteger documentos</span>
+            <span class="choice__text" data-i18n="home.protectText">Cubre datos sensibles, añade marcas de agua y genera una copia lista para enviar con mayor privacidad.</span>
+            <span class="choice__cta" data-i18n="home.protectCta">Proteger documentos</span>
+          </button>
+          <button type="button" class="choice choice--verify" data-nav="verify">
+            <span class="choice__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="7" />
+                <path d="M21 21l-4.3-4.3" />
+                <path d="M8.4 11l1.9 1.9L14 9.3" />
+              </svg>
+            </span>
+            <span class="choice__title" data-i18n="home.verifyTitle">Verificar copia trazable</span>
+            <span class="choice__text" data-i18n="home.verifyText">Comprueba si un archivo lleva una marca invisible de IDprotector y qué información declara.</span>
+            <span class="choice__cta" data-i18n="home.verifyCta">Verificar una copia</span>
+          </button>
+        </div>
 
         <ul class="privacy">
           <li>
@@ -86,8 +92,39 @@
             <span data-i18n="privacy.offline">Funciona sin conexión</span>
           </li>
         </ul>
+      </div>
+    </section>
 
-        <button type="button" class="linkbtn linkbtn--verify" data-nav="verify" data-i18n="upload.verifyLink">¿Recibiste una copia trazable? Verifícala aquí</button>
+    <!-- ======================= UPLOAD ======================= -->
+    <section id="screen-upload" class="screen">
+      <div class="wrap wrap--narrow">
+        <button class="back" data-nav="home" type="button" data-i18n="common.back">&larr; Atrás</button>
+        <div class="brand brand--center">
+          <img class="brand__logo" src="assets/favicon.svg" width="32" height="32" alt="" aria-hidden="true" />
+          <span class="brand__name">IDprotector</span>
+        </div>
+        <h1 class="title title--center" data-i18n-html="upload.title">Prepara tus documentos<br />antes de enviarlos</h1>
+        <p class="lead lead--center" data-i18n-html="upload.lead">
+          Cubre los datos que prefieras reservar y añade una marca de agua personalizada.
+          Todo ocurre <strong>dentro de tu navegador</strong>: tus archivos nunca se suben a
+          ningún servidor.
+        </p>
+
+        <label id="dropzone" class="dropzone" for="file-input">
+          <input id="file-input" type="file" accept="image/*,application/pdf" multiple hidden />
+          <div class="dropzone__inner">
+            <div class="dropzone__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 16V4M12 4l-4 4M12 4l4 4" />
+                <path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" />
+              </svg>
+            </div>
+            <div class="dropzone__text">
+              <strong data-i18n="upload.dropTitle">Arrastra tus documentos aquí</strong>
+              <span data-i18n="upload.dropText">o pulsa para elegir imágenes o PDF. Puedes subir varios archivos.</span>
+            </div>
+          </div>
+        </label>
       </div>
     </section>
 
@@ -420,7 +457,7 @@
     <!-- ======================= VERIFY ======================= -->
     <section id="screen-verify" class="screen">
       <div class="wrap wrap--narrow">
-        <button class="back" data-nav="upload" type="button" data-i18n="common.back">&larr; Atrás</button>
+        <button class="back" data-nav="home" type="button" data-i18n="common.back">&larr; Atrás</button>
         <div class="step">
           <div class="step__head">
             <h2 class="title title--sm" data-i18n="verify.title">Verificar una copia</h2>
@@ -479,8 +516,14 @@
   </div>
 
   <footer class="site-foot">
-    <span>IDprotector · <span data-i18n="footer.selfHosted">autohospedado</span> · <span id="app-version">v0.4.0</span></span>
-    <span class="site-foot__priv" data-i18n="footer.privacy">Nada de lo que subes sale de este dispositivo.</span>
+    <div class="site-foot__row">
+      <span>IDprotector · <span data-i18n="footer.selfHosted">autohospedado</span> · <span id="app-version">v0.4.0</span></span>
+      <span class="site-foot__priv" data-i18n="footer.privacy">Nada de lo que subes sale de este dispositivo.</span>
+    </div>
+    <p class="site-foot__policy">
+      <strong data-i18n="footer.policyTitle">Política de privacidad</strong>
+      <span data-i18n="footer.policyText">IDprotector no recopila, almacena ni transmite ningún dato. Todo el procesamiento ocurre en local, dentro de tu navegador, y ningún archivo sale de tu dispositivo. No se usan cookies de seguimiento ni servicios de análisis.</span>
+    </p>
   </footer>
 
   <script src="vendor/pdf.min.js"></script>
